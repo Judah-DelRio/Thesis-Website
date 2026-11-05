@@ -1,0 +1,1721 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Archetype Lineup Lab</title>
+<meta name="description" content="16 NBA playing styles, who plays them, and how their skills fit together on the floor, from every possession 2013-14 to 2025-26.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Box score. Every color answers one question and no color answers two:
+   good or bad?  red helps, blue crowds (cobalt), only on numbers, bars and the grid, on both ends (defense counts points prevented);
+   what kind of player?  sky = off-ball shooting, lavender = on-ball creation, maroon = paint presence, only on skill chips, skill
+   cards, the How he plays bars, the star chart spokes and the style cards' top edge (its highest trait score);
+   how does a five grade?  the S to F ladder, only on grade badges;
+   everything else is newsprint (light) or near-black (dark), ink, hairline rules, and one amber accent, the highlighter.
+   Numbers are monospace and tabular everywhere. Dark and light share one set of tokens. */
+:root{
+  --paper:#ECEAE4; --surface:#FAF9F6; --surface-2:#F1EFEA; --ink:#141414; --ink-2:#363636; --muted:#63625D; --line:#D2CFC7;
+  --acc:#E8910A; --acc-ink:#1C1400; --acc-soft:rgba(232,145,10,.22); --acc-line:rgba(232,145,10,.75);
+  --rim:#8A5A00; --rim-soft:rgba(232,145,10,.16); --bar:var(--acc); --bar-2:#D6D3CB; --teal:var(--bar); --share:#ABA89F;
+  --c-imp:var(--ink); --c-off:var(--ink-2); --c-def:var(--ink-2); --good:#D0102A; --bad:#1A4AD6; --good-soft:rgba(208,16,42,.13); --bad-soft:rgba(26,74,214,.13); --mid:#E2DFD7; --faded:.38;
+  --up:var(--good); --down:var(--bad); --pos:var(--good); --neg:var(--bad);
+  --sk-sp:#0A80BF; --sk-cr:#6440D9; --sk-pt:#A01A3C;
+  --warn-bg:#FFF4DA; --warn-ink:#734600;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --radius:4px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0B0C11; --surface:#1A1C24; --surface-2:#262932; --ink:#F1EFE8; --ink-2:#D3D0C8; --muted:#A09F98; --line:#353947;
+  --acc:#FFB628; --acc-ink:#1C1400; --acc-soft:rgba(255,182,40,.24); --acc-line:rgba(255,182,40,.8);
+  --rim:#FFB628; --rim-soft:rgba(255,182,40,.18); --bar:var(--acc); --bar-2:#383B46; --teal:var(--bar); --share:#767570;
+  --c-imp:var(--ink); --c-off:var(--ink-2); --c-def:var(--ink-2); --good:#FF5245; --bad:#6B8CFF; --good-soft:rgba(255,82,69,.24); --bad-soft:rgba(107,140,255,.26); --mid:#353947; --faded:.55;
+  --sk-sp:#3DCBFF; --sk-cr:#B08CFF; --sk-pt:#FF5C86;
+  --warn-bg:#3A2D10; --warn-ink:#F2C66B; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0B0C11; --surface:#1A1C24; --surface-2:#262932; --ink:#F1EFE8; --ink-2:#D3D0C8; --muted:#A09F98; --line:#353947;
+  --acc:#FFB628; --acc-ink:#1C1400; --acc-soft:rgba(255,182,40,.24); --acc-line:rgba(255,182,40,.8);
+  --rim:#FFB628; --rim-soft:rgba(255,182,40,.18); --bar:var(--acc); --bar-2:#383B46; --teal:var(--bar); --share:#767570;
+  --c-imp:var(--ink); --c-off:var(--ink-2); --c-def:var(--ink-2); --good:#FF5245; --bad:#6B8CFF; --good-soft:rgba(255,82,69,.24); --bad-soft:rgba(107,140,255,.26); --mid:#353947; --faded:.55;
+  --sk-sp:#3DCBFF; --sk-cr:#B08CFF; --sk-pt:#FF5C86;
+  --warn-bg:#3A2D10; --warn-ink:#F2C66B; color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:120px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.wrap{max-width:1160px;margin:0 auto;min-width:0}
+a{color:inherit;text-decoration-color:var(--acc-line);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--rim)}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line);padding-block:14px 0}
+.brand{display:flex;align-items:baseline;gap:6px 16px;flex-wrap:wrap}
+.brand h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,4vw,40px);line-height:1;margin:0;letter-spacing:.005em}
+.brand .sub{color:var(--muted);font-size:13.5px}
+nav.tabs{display:flex;gap:20px;margin-top:10px;overflow-x:auto;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs button{font:600 14.5px/1 var(--body);background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:8px 0 9px;cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--acc)}
+nav.tabs button:hover{color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+section.tab{padding-top:24px}
+.sheet{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:20px;align-items:start}
+.sheet.even{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+@media (max-width:860px){.sheet,.sheet.even{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border-radius:var(--radius);padding:22px 24px;min-width:0;border:1px solid var(--line)}
+@media (max-width:480px){.panel{padding:16px 14px}}
+h2{font:800 clamp(24px,2.6vw,30px)/1.1 var(--display);letter-spacing:.01em;margin:0 0 4px;text-wrap:balance}
+h3{font:700 15.5px/1.3 var(--body);margin:0 0 8px}
+h4{font:600 14px/1.3 var(--body);margin:0 0 4px;color:var(--ink)}
+p{margin:0 0 8px;max-width:68ch}
+p:last-child{margin-bottom:0}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.lede{font-size:15.5px;color:var(--ink-2);max-width:76ch}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.pos{color:var(--good)} .neg{color:var(--bad)}
+.stack{display:flex;flex-direction:column;gap:18px}
+.stack > hr{border:0;border-top:1px solid var(--line);margin:0}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.nw{white-space:nowrap}
+.blk{border-top:1px solid var(--line);padding-top:14px}
+.blk:first-child{border-top:0;padding-top:0}
+.flagships{list-style:none;margin:0;padding:0}
+.fp{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:3px 12px;align-items:start;padding:11px 0;border-top:1px solid var(--line)}
+.fp:first-child{border-top:0;padding-top:2px}
+.fp .lu-n{margin-top:3px}
+.fp-main{display:flex;flex-direction:column;gap:2px;min-width:0}
+.fp-name{font-size:16.5px;font-weight:700;line-height:1.3}
+.fp-name .muted{font-weight:500;margin-left:4px}
+.fp-sub{font-size:13.5px;color:var(--ink-2);line-height:1.45}
+.fp-rate{display:flex;flex-direction:column;align-items:flex-end;text-align:right;white-space:nowrap;padding-top:1px}
+.fp-rate b{font:700 24px/1.05 var(--display);letter-spacing:.01em}
+.fp-rate small{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+@media (max-width:640px){.fp{grid-template-columns:22px minmax(0,1fr)} .fp-rate{grid-column:2;flex-direction:row;align-items:baseline;gap:8px;justify-content:flex-start;padding-top:0}}
+/* explanations fold away under a short heading */
+details.more{margin-top:6px}
+details.more > summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--rim);list-style:none;display:inline-block}
+details.more > summary::-webkit-details-marker{display:none}
+details.more > summary::before{content:"+ "}
+details.more[open] > summary::before{content:"\2212 "}
+details.more > summary:hover{color:var(--ink)}
+details.more > div{margin-top:6px;font-size:13.5px;color:var(--ink-2)}
+details.more > div p{max-width:72ch}
+/* stat tiles */
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.tile{background:var(--surface-2);border-radius:8px;padding:10px 12px;min-width:0}
+.tile .k{font-size:13px;font-weight:500;color:var(--muted)}
+.tile .v{font:600 30px/1.15 var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.01em;margin-top:2px}
+.tile .s{font-size:12.5px;color:var(--muted);margin-top:2px;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.tile .s.txt{font-family:var(--body)}
+@media (max-width:420px){.tile{padding:8px 10px}.tile .v{font-size:24px}}
+/* search */
+.search{position:relative}
+.search input{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);color:var(--ink)}
+@media (max-width:600px){.search input{font-size:16px}}
+.results{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:4;background:var(--surface);border:1px solid var(--line);border-radius:8px;max-height:320px;overflow:auto;box-shadow:0 10px 28px rgba(0,0,0,.18)}
+.results button{display:flex;width:100%;justify-content:space-between;gap:10px;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:9px 12px;color:var(--ink);font:inherit;cursor:pointer}
+.results button:hover,.results button.active{background:var(--rim-soft)}
+.results .meta{font-size:13px;color:var(--muted);white-space:nowrap;text-align:right}
+.chip{font-size:11.5px;font-weight:600;padding:1px 7px;border-radius:999px;background:var(--warn-bg);color:var(--warn-ink);white-space:nowrap}
+.toggle{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:var(--muted)}
+.toggle input{margin-top:3px}
+.linkbtn{background:none;border:0;padding:0;font:inherit;font-weight:600;color:var(--rim);text-decoration:underline;text-decoration-color:var(--acc-line);text-underline-offset:3px;cursor:pointer}
+.linkbtn:hover{text-decoration-color:var(--rim)}
+.flag{background:var(--warn-bg);color:var(--warn-ink);border-radius:8px;padding:10px 12px;font-size:14px}
+/* facts list (trust tab) */
+.meth{display:grid;gap:18px}
+.meth section{display:grid;gap:6px}
+.meth p{margin:0;max-width:80ch;font-size:14.5px;line-height:1.55}
+.meth h3{margin:0}
+.meth .n{color:var(--muted);font-weight:500;margin-right:6px}
+.facts{display:flex;flex-direction:column}
+.fact{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 16px;padding:12px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.fact:last-child{border-bottom:0}
+.fact b{font-weight:600}
+.fact .num{font-size:14.5px;text-align:right;white-space:nowrap}
+.fact .why{grid-column:1/-1;font-size:13.5px;color:var(--muted);max-width:72ch}
+.fact details.more{grid-column:1/-1;margin-top:0}
+ul.plain{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
+ul.plain li{max-width:68ch}
+svg text{fill:var(--muted);font-family:var(--body)}
+/* share bars */
+.bars{display:flex;flex-direction:column;gap:5px}
+.sbar{display:grid;grid-template-columns:minmax(0,180px) minmax(0,1fr) 48px;gap:10px;align-items:center;font-size:14px}
+.sbar .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:600px){.sbar .nm{white-space:normal;line-height:1.25}}
+@media (max-width:480px){nav.tabs{gap:14px} nav.tabs button{font-size:14px}.sbar{grid-template-columns:minmax(0,124px) minmax(0,1fr) 44px}}
+.sbar .track{height:10px;background:var(--surface-2);border-radius:5px;overflow:hidden}
+.sbar .fill{display:block;height:100%;background:var(--share);border-radius:0 4px 4px 0}
+.sbar.top .nm{font-weight:600}
+.sbar.top .fill{background:var(--acc)}
+.sbar .v{font-family:var(--mono);font-size:13.5px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+details.all{margin-top:4px}
+details.all > summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--rim);list-style:none;display:inline-block}
+details.all > summary::-webkit-details-marker{display:none}
+details.all > summary::before{content:"+ "}
+details.all[open] > summary::before{content:"\2212 "}
+details.all .bars{margin-top:8px}
+/* star chart (unchanged) */
+.star{position:relative;margin-top:16px}
+@media (max-width:480px){.star{margin-inline:-14px}}
+.star svg{display:block;width:100%;height:auto;overflow:visible}
+.star .disc{fill:var(--surface-2)}
+.star .ring{fill:none;stroke:var(--line);stroke-width:1}
+.star .spoke{stroke:var(--line);stroke-width:1}
+.star .spoke.s0,.star .spoke.s1,.star .spoke.s2{stroke:var(--skc);stroke-width:1.25;opacity:.5}
+.star .spoke.hot{stroke:var(--ink);opacity:.6}
+.star .shape{fill:color-mix(in srgb,var(--ink) 14%,transparent);stroke:var(--ink);stroke-width:2;stroke-linejoin:round}
+.star .dot{fill:var(--acc);stroke:var(--surface-2);stroke-width:2}
+.star .ringv{font-family:var(--mono);font-size:10px;paint-order:stroke;stroke:var(--surface-2);stroke-width:3px;stroke-linejoin:round}
+.star .lab{fill:var(--muted);font-weight:500;paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
+.star .lead{fill:none;stroke:var(--muted);stroke-width:1;opacity:.6}
+.star .lead.hot{stroke:var(--ink);opacity:.8}
+.star .lab.on{fill:var(--ink);font-weight:600;opacity:1}
+.star .lab.hot{fill:var(--ink);opacity:1}
+.star .lab .pv{font-family:var(--mono);font-weight:500;fill:var(--rim)}
+.star .hit{fill:transparent;cursor:default}
+.star .lab{cursor:default}
+.star .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--surface);font-size:13px;line-height:1.3;padding:5px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,calc(-100% - 10px))}
+.star .tip b{font-family:var(--mono);font-weight:500;margin-left:6px}
+.star .knum{font-family:var(--mono);font-size:11px}
+.star .key{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;margin:4px 16px 0;font-size:13px;line-height:1.3}
+.star .key ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px}
+.star .key li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:4px;color:var(--muted);cursor:default}
+.star .key .kn{font-family:var(--mono);font-size:11.5px;text-align:right;padding-top:1px}
+.star .key li.s0 .kn,.star .key li.s1 .kn,.star .key li.s2 .kn{color:var(--skc);font-weight:600}
+.star .key li.on{color:var(--ink);font-weight:600}
+.star .key li.on b{font-family:var(--mono);font-weight:500;color:var(--rim)}
+.star .key li.hot{color:var(--ink)}
+.star-note{margin:6px 0 0}
+/* style cards */
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px} @media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+@media (max-width:600px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}
+.card{background:var(--surface);border:0;border-radius:var(--radius);padding:12px 14px;cursor:pointer;text-align:left;font:inherit;color:var(--ink);display:flex;flex-direction:column;gap:3px;box-shadow:0 1px 2px rgba(0,0,0,.06);min-width:0}
+@media (max-width:600px){.card{padding:10px 12px}.card .names{display:none}}
+.card:hover{background:var(--surface-2)}
+.card[aria-pressed="true"]{outline:2px solid var(--acc);outline-offset:-2px}
+.card{box-shadow:inset 0 4px 0 var(--skc,var(--line)),0 1px 2px rgba(0,0,0,.06)}
+.skkey{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin:10px 0 0;font-size:12.5px;line-height:1.3;color:var(--muted);max-width:none}
+.skkey>span:first-child{margin-right:4px}
+.card .gn{font:800 22px/1.05 var(--display);letter-spacing:.005em}
+@media (max-width:600px){.card .gn{font-size:18px}}
+.card .val{font-size:13.5px;color:var(--muted)}
+.card .val .num{color:var(--ink);font-weight:500}
+.card .names{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* tables */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:6px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12.5px;font-weight:600;color:var(--muted);white-space:nowrap}
+td.num,th.num{text-align:right;white-space:nowrap}
+th.num{font-family:var(--body)}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+tr.sum td{font-weight:600;border-top:2px solid var(--line)}
+.tablewrap{overflow-x:auto;max-width:100%}
+@media (max-width:600px){.hide-sm{display:none}}
+.trait{display:grid;grid-template-columns:minmax(0,1fr) 90px 40px;gap:12px;align-items:center;font-size:14px;padding:5px 0;border-bottom:1px solid var(--line)}
+.trait .pc{font-size:13px;text-align:right;color:var(--muted)}
+.trait .t{height:8px;background:var(--surface-2);border-radius:4px;overflow:hidden}
+.trait .t i{display:block;height:100%;background:var(--teal);border-radius:0 4px 4px 0}
+.trait .t i.lo{background:var(--bar-2)}
+.seasons{display:flex;flex-wrap:wrap;gap:6px}
+.seasons button{font:500 12.5px/1 var(--mono);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 9px;cursor:pointer}
+.seasons button[aria-pressed="true"]{border-color:var(--acc);background:var(--rim-soft)}
+.loading{color:var(--muted);padding:48px 0;text-align:center}
+footer{margin-top:32px;border-top:1px solid var(--line);padding-top:14px;font-size:13px;color:var(--muted)}
+/* factor bars: six diverging bars in points per 100 */
+.facs{display:flex;flex-direction:column;gap:10px}
+.facg{display:flex;flex-direction:column;gap:2px}
+.fac{display:grid;grid-template-columns:96px minmax(0,1fr) 54px;gap:0 10px;align-items:center;min-height:30px}
+.fac .k{font-size:13.5px;line-height:1.2}
+.fac .k small{display:block;font:400 11.5px/1.2 var(--mono);color:var(--muted);white-space:nowrap}
+.fac svg{display:block;width:100%;height:16px}
+.fac .zero{stroke:var(--muted);stroke-width:1;opacity:.7}
+.fac rect.pos{fill:var(--good)} .fac rect.neg{fill:var(--bad)}
+.fac .v{font-family:var(--mono);font-size:14px;text-align:right;font-variant-numeric:tabular-nums}
+.facax{display:grid;grid-template-columns:96px minmax(0,1fr) 54px;gap:0 10px}
+.facax .ticks{position:relative;height:16px;font:11.5px/1 var(--mono);color:var(--muted)}
+.facax .ticks span{position:absolute;top:2px;transform:translateX(-50%)}
+.facsum{font-size:13.5px;margin-top:4px}
+@media (max-width:420px){.fac,.facax{grid-template-columns:84px minmax(0,1fr) 50px;gap:0 8px}.fac .k{font-size:13px}}
+/* rating spread strips */
+.rrow{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr) 54px;gap:12px;align-items:center;padding:3px 6px;margin:0 -6px;border-radius:6px;font:inherit;color:var(--ink);text-align:left;background:none;border:0;width:calc(100% + 12px);cursor:pointer}
+.rrow:hover,.rrow[aria-pressed="true"]{background:var(--surface-2)}
+.rrow .nm{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rrow .v{font-family:var(--mono);font-size:14px;text-align:right;font-variant-numeric:tabular-nums}
+.rrow svg,.strip svg{display:block;width:100%;height:22px}
+.raxis{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr) 54px;gap:12px;padding:6px 0 0;font-size:12px;color:var(--muted)}
+.raxis.full{grid-template-columns:minmax(0,1fr)}
+.raxis.tx{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr) 58px;gap:0 14px}
+.raxis .ticks{position:relative;height:18px;border-top:1px solid var(--line)}
+.raxis .ticks span{position:absolute;top:3px;transform:translateX(-50%);font-family:var(--mono);white-space:nowrap}
+@media (max-width:600px){.rrow,.raxis{grid-template-columns:minmax(0,118px) minmax(0,1fr) 46px;gap:8px}.rrow .nm{font-size:13px;white-space:normal;line-height:1.2}.rrow .v{font-size:13px}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:14px;height:10px;border-radius:2px;vertical-align:-1px;margin-right:6px}
+.legend i.thin{height:4px;background:var(--share);vertical-align:2px}
+.legend i.thick{background:var(--teal)}
+.legend i.tick{width:2px;height:12px;background:var(--ink);vertical-align:-2px}
+/* segmented controls */
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{font:600 13px/1 var(--body);padding:8px 12px;border:0;background:var(--surface);color:var(--muted);cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.seg button:focus-visible{outline-offset:-2px}
+.pick{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-size:13.5px;color:var(--muted)}
+/* style fit */
+.pairgrid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:860px){.pairgrid{grid-template-columns:minmax(0,1fr)}}
+.heatwrap{overflow-x:auto;max-width:100%}
+.heat{display:block;width:100%;min-width:560px;height:auto}
+.heat rect.c{cursor:pointer}
+.heat rect.same{stroke:var(--muted);stroke-width:.8}
+.heat rect.sel,.heat rect.same.sel{stroke:var(--ink);stroke-width:2.5}
+.heat:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.ramp{display:inline-block;width:110px;height:10px;border-radius:2px;vertical-align:-1px;margin:0 6px;background:linear-gradient(90deg,var(--bad),var(--mid),var(--good))}
+.readout{min-height:3.1em;font-size:14px;background:var(--surface-2);border-radius:8px;padding:10px 12px}
+.termbox{max-width:800px}
+/* the three skills as chips: one hue each, never red or blue, the same chip above the chart and inside it */
+.sk{display:inline-flex;align-items:center;gap:6px;font:650 12px/1.3 var(--body);padding:3px 9px 3px 7px;border-radius:999px;color:var(--skc);background:color-mix(in srgb,var(--skc) 14%,var(--surface-2));border:1px solid color-mix(in srgb,var(--skc) 42%,transparent);white-space:nowrap;vertical-align:middle}
+.sk::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--skc);flex:none}
+.s0{--skc:var(--sk-sp)} .s1{--skc:var(--sk-cr)} .s2{--skc:var(--sk-pt)}
+.skills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0 10px}
+.skill{background:var(--surface-2);border:1px solid var(--line);border-top:3px solid var(--skc);border-radius:6px;padding:11px 13px 12px;font-size:13.5px;line-height:1.45;min-width:0}
+.skill p{margin:7px 0 0;max-width:none}
+.skill .how{margin-top:4px;font-size:12.5px;color:var(--muted)}
+@media (max-width:680px){.skills{grid-template-columns:minmax(0,1fr);gap:8px}}
+/* the six pairings, one card: chip + chip, a bar from zero, the 95% range as a thin line */
+.termcard{margin-top:14px;background:var(--surface-2);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:6px;padding:14px 18px 12px}
+.termhead{display:flex;justify-content:space-between;align-items:baseline;gap:4px 20px;flex-wrap:wrap}
+.termhead h3{margin:0;font-size:16px}
+.termhead .legend{margin:0}
+.termcard .sub{margin:2px 0 10px;font-size:13px;line-height:1.4;color:var(--muted);max-width:72ch}
+.legend i.lz{background:linear-gradient(90deg,var(--bad) 50%,var(--good) 50%);opacity:.38}
+.terms{display:block;border-top:1px solid var(--line)}
+.term{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr) 58px;gap:0 14px;align-items:stretch;font-size:14px}
+.term+.term{border-top:1px solid var(--line)}
+.term:hover{background:color-mix(in srgb,var(--ink) 4%,transparent)}
+.term .nm{min-width:0;padding:9px 0 8px}
+.term .pair{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.term .pair .with{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.term .pair .plus{font:600 13px/1 var(--mono);color:var(--muted)}
+.term .why{display:block;margin-top:5px;font-size:12.5px;line-height:1.3;color:var(--muted);white-space:normal}
+.term .why::first-letter{text-transform:uppercase}
+.term .plot{position:relative;min-height:38px}
+.plot .zero{position:absolute;left:50%;top:0;bottom:0;border-left:1px solid var(--muted);opacity:.55}
+.plot .bar{position:absolute;top:50%;height:16px;transform:translateY(-50%);border-radius:2px}
+.term.pos .bar{background:var(--good)} .term.neg .bar{background:var(--bad)}
+.term.flat .bar{opacity:.38}
+.plot .ci{position:absolute;top:50%;height:0;margin-top:-1px;border-top:2px solid var(--ink);opacity:.72}
+.plot .ci::before,.plot .ci::after{content:"";position:absolute;top:-5px;width:2px;height:10px;background:var(--ink)}
+.plot .ci::before{left:0} .plot .ci::after{right:0}
+.term .v{display:flex;align-items:center;justify-content:flex-end;font:600 15px/1 var(--mono);font-variant-numeric:tabular-nums}
+.termcard .raxis.tx{padding-top:0}
+.termcard .raxis .ticks{border-top:1px solid var(--muted);height:20px}
+.termcard .raxis .ticks span.z{color:var(--ink);font-weight:600}
+.termcard .note{margin:10px 0 0;font-size:12.5px;line-height:1.4;color:var(--muted);max-width:none}
+.termcard details.more{margin-top:8px}
+.termcard details.more>div p{max-width:none;margin:0 0 6px}
+.termcard details.more>div p b{color:var(--ink)}
+@media (max-width:600px){.term,.raxis.tx{grid-template-columns:minmax(0,1fr) 50px;gap:0 10px}.term .nm{grid-column:1/-1;padding-bottom:0}.term .plot{min-height:34px;margin-bottom:6px}.term .v{font-size:14px;margin-bottom:6px}.raxis.tx>span:first-child{display:none}.raxis.tx .ticks span:first-child{transform:none}.raxis.tx .ticks span:last-child{transform:translateX(-100%)}.termcard{padding:12px 12px 10px}}
+.finding{border-top:2px solid var(--ink);padding:14px 0 0}
+.finding h3{font:800 clamp(22px,2.4vw,28px)/1.15 var(--display);letter-spacing:.01em;margin:0 0 6px;text-wrap:balance}
+.finding .why{font-size:13.5px;color:var(--muted);max-width:72ch;margin:0}
+.finding ul.plain{margin:8px 0 0;padding-left:20px;max-width:80ch}
+.finding ul.plain li{font-size:15px;line-height:1.5;margin:2px 0}
+.sec{margin-top:26px}
+.sec>h3{font:800 20px/1.2 var(--display);margin:0 0 6px}
+.sec>p.lede{margin:0 0 10px}
+.whyrow{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+.verdict{font-weight:600}
+/* lineup check */
+.lu-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:24px 36px;align-items:start}
+.lu-col{display:flex;flex-direction:column;gap:24px;min-width:0}
+.lu-col h3{margin:0 0 8px;font:800 20px/1.2 var(--display);letter-spacing:.01em;padding-left:10px;border-left:4px solid var(--acc)}
+.lu-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.lu-rh{display:flex;align-items:baseline;gap:6px 16px;flex-wrap:wrap}
+.lu-rh h3{margin-right:auto}
+.lu-jump{display:none}
+#lu-load-h:focus{outline:none}
+ol.lu-slots{list-style:none;margin:0;padding:0}
+.lu-slot{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:6px 10px;align-items:center;min-height:64px;padding:12px 14px;margin:0 0 8px;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius)}
+.lu-slot .lu-who b{font-size:17px}
+.lu-who .muted{color:var(--ink-2)}
+.lu-rt > span{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:12px}
+.lu-rt .rt-net{color:var(--ink)} .lu-rt .rt-off,.lu-rt .rt-def{color:var(--ink-2)}
+.ledger th.c-off,.ledger th.c-def,.ledger th.c-net{color:var(--ink)}
+.lu-grade{display:flex;align-items:center;gap:14px;margin:12px 0 4px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface-2)}
+.lu-grade .g{font:700 40px/1 var(--display);min-width:56px;padding:8px 0;text-align:center;border-radius:6px;color:#fff;background:var(--gc)}
+.gS{--gc:#7B3FE4} .gA{--gc:#B0173A} .gB{--gc:#E07B18} .gC{--gc:#F2F2F2;color:#111 !important;border:1px solid #BBB} .gD{--gc:#2F6FD6} .gF{--gc:#111;border:1px solid #555}
+.lu-grade .t{font-size:13.5px;line-height:1.4}
+.gchip{display:inline-block;min-width:24px;text-align:center;font:700 12px/1.7 var(--body);border-radius:4px;padding:0 4px;margin-right:6px;color:#fff;background:var(--gc)}
+.whyh .out{font-size:1em;color:var(--rim);text-transform:none;letter-spacing:0;margin-left:0}
+.lu-n{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--acc);color:var(--acc-ink);font-size:12px;font-weight:700}
+.lu-who{min-width:0;line-height:1.3}
+.lu-who b{font-weight:650}
+.lu-style{font-size:14px;color:var(--ink-2)}
+.lu-style::before{content:"· "}
+.lu-slot .lu-rt{grid-column:2/-1;grid-row:2;display:flex;flex-wrap:wrap;gap:2px 14px;font-size:12.5px;color:var(--muted)}
+.lu-rt .num{color:var(--ink);font-size:13px}
+.lu-rt .num.pos{color:var(--good)} .lu-rt .num.neg{color:var(--bad)}
+.lu-slot .lu-trs{grid-column:2/-1;grid-row:3}
+.lu-slot details.lu-more{grid-column:2/-1;grid-row:2;min-width:0;align-self:start}
+.lu-slot details.lu-more>summary{cursor:pointer;list-style:none;display:inline-block;font-size:12.5px;line-height:20px;font-weight:600;color:var(--rim)}
+.lu-slot details.lu-more>summary::-webkit-details-marker{display:none}
+.lu-slot details.lu-more>summary::before{content:"+ "}
+.lu-slot details.lu-more[open]>summary::before{content:"\2212 "}
+.lu-slot details.lu-more>div{display:grid;gap:12px;margin-top:8px}
+.lu-grp{display:grid;gap:6px;min-width:0}
+.lu-gh{font:700 11.5px/1.3 var(--body);letter-spacing:.05em;text-transform:uppercase;color:var(--rim)}
+.lu-gh small{display:block;font:400 12px/1.35 var(--body);letter-spacing:0;text-transform:none;color:var(--ink-2)}
+.lu-rt > span i{font-style:normal;font-weight:500;color:var(--ink-2)}
+.lu-rt > span i::before{content:"\00b7";margin:0 2px 0 1px}
+.lu-slot details.lu-more .lu-rt,.lu-slot details.lu-more .lu-trs{grid-column:auto;grid-row:auto}
+.lu-trs{display:grid;grid-template-columns:1fr;gap:5px}
+.lu-tr{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:0 8px;align-items:center}
+.lu-tr .k{font-size:12px;line-height:1.2;color:var(--ink-2)}
+.lu-tr .bar{position:relative;height:12px;background:var(--surface);border:1px solid var(--line);border-radius:3px}
+.lu-tr .bar::before{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:var(--muted)}
+.lu-tr .bar i{position:absolute;top:0;bottom:0;border-radius:2px}
+.lu-tr .bar i{background:var(--skc,var(--ink-2))}
+.lu-tr i.lo{opacity:.55}
+.lu-tr .k{color:var(--skc,var(--ink-2));font-weight:600}
+.lu-tr .w{font-size:12px;color:var(--ink-2);text-align:right;white-space:nowrap;min-width:118px}
+.lu-tr .w b{font-weight:500;color:var(--ink);margin-left:2px}
+.lu-act{grid-column:3;grid-row:1;display:flex;gap:6px;justify-content:flex-end;align-self:start}
+.lu-best{grid-column:3;grid-row:2;align-self:start;justify-self:end;position:relative;z-index:1;background:none;border:0;padding:0;font:600 12.5px/20px var(--body);color:var(--rim);cursor:pointer;white-space:nowrap}
+.lu-best{margin-top:10px}
+@media (max-width:400px){.lu-best .arr{display:none}.lu-slot{padding:12px 10px;gap:6px 8px}}
+@media (max-width:345px){.lu-best{grid-row:3;margin-top:2px}}
+.lu-best:hover{text-decoration:underline;text-underline-offset:3px}
+.lu-best.done{color:var(--ink-2);font-weight:500;cursor:default}
+.lu-best.done:hover{text-decoration:none}
+.lu-btn{font:600 13px/1 var(--body);min-height:34px;padding:0 11px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);cursor:pointer}
+.lu-btn:hover{border-color:var(--acc)}
+.lu-x{width:34px;padding:0;font-size:19px;font-weight:500}
+.lu-find input{padding:9px 12px}
+.lu-slot.lu-open{grid-template-columns:22px minmax(0,1fr)}
+.lu-open > span:last-child{border:1px dashed var(--line);border-radius:8px;padding:9px 12px;font-size:14px;color:var(--muted)}
+.lu-msg{margin:4px 0 0;color:var(--warn-ink)}
+.lu-msg:empty{display:none}
+.lu-total{display:flex;gap:8px 16px;align-items:center;flex-wrap:wrap}
+.lu-total .big{font:600 44px/1 var(--mono);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.lu-total .unit{flex:1 1 240px;min-width:0;font-size:14px;line-height:1.4;color:var(--ink-2)}
+.lu-rank{margin:10px 0 0;font-size:15px}
+.lu-exp{margin-top:14px;padding:12px 14px;background:var(--surface-2);border-radius:10px}
+.lu-exp h3{margin:0 0 6px}
+.lu-exp p{margin:0}
+.lu-exp p + p{margin-top:6px}
+table.ledger{font-size:14px;margin:4px 0 8px}
+table.ledger th:first-child,table.ledger td:first-child{padding-left:0}
+table.ledger th.num,table.ledger td.num{padding-right:0;width:24%}
+table.ledger td .none{display:block;font:400 11.5px/1.2 var(--body);color:var(--muted);white-space:nowrap}
+@media (max-width:600px){table.ledger{font-size:13px}table.ledger th,table.ledger td{padding:6px 3px}table.ledger td.num,table.ledger th.num{padding-left:10px}table.ledger th.num,table.ledger td.num{width:auto}}
+.lu-dist{margin:8px 0 0}
+.lu-dist .plot{position:relative;height:96px;padding-top:24px}
+.lu-dist svg{display:block;width:100%;height:100%;overflow:visible}
+.lu-dist .bin{fill:var(--acc);opacity:.75}
+.lu-dist .band{fill:color-mix(in srgb,var(--ink) 12%,transparent)}
+.lu-dist .zero{stroke:var(--muted);stroke-width:1;stroke-dasharray:2 3}
+.lu-dist .mk{stroke:var(--ink);stroke-width:2.5}
+.lu-mk{position:absolute;top:2px;font:500 12.5px/1.2 var(--mono);color:var(--ink);white-space:nowrap;transform:translateX(-50%)}
+.lu-mk.start{transform:translateX(-4px)}
+.lu-mk.end{transform:translateX(calc(-100% + 4px))}
+.lu-axis{position:relative;height:20px;border-top:1px solid var(--line);font:12px/1 var(--mono);color:var(--muted)}
+.lu-axis span{position:absolute;top:5px;transform:translateX(-50%)}
+.lu-dist figcaption{margin-top:4px}
+.lu-real{margin:10px 0 0}
+ol.lu-pairs{list-style:none;margin:0;padding:0}
+.lu-pairs li{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr) 50px;gap:12px;align-items:center;padding:5px 0;border-bottom:1px solid var(--line)}
+.lu-pairs li:last-child{border-bottom:0}
+.lu-pairs .nm{font-size:15px;line-height:1.3;min-width:0}
+.lu-pairs .nm b{font-weight:650}
+.lu-pairs .why{display:block;font-size:13.5px;line-height:1.4;color:var(--ink-2)}
+.lu-pairs .why .num{color:var(--ink)}
+.lu-pairs .sub{display:block;font-size:13px;line-height:1.35;color:var(--ink-2);margin-top:2px}
+.lu-pairs li>.act{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:2px 14px;align-items:baseline;margin:-3px 0 1px;font-size:13px}
+details.lu-why[open]{flex-basis:100%}
+.lu-swap{font:700 12.5px/1 var(--body);padding:6px 10px;border:1.5px solid var(--acc);border-radius:6px;background:transparent;color:var(--rim);cursor:pointer}
+.lu-swap:hover{background:var(--acc);color:var(--acc-ink)}
+.lu-sea{display:inline-flex;align-items:center;gap:8px;margin:0 0 10px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.lu-sea select{font:400 14px/1.3 var(--body);color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:6px 8px;max-width:100%}
+details.lu-moret{margin-top:10px}
+details.lu-moret>summary{font-size:13px}
+details.lu-moret>ol{margin-top:4px}
+.pill{display:inline-block;font-size:11.5px;font-weight:650;line-height:1.3;padding:2px 8px;border-radius:999px;background:var(--acc-soft);color:var(--ink);white-space:nowrap;vertical-align:1px}
+details.lu-why{display:block}
+details.lu-why>summary{cursor:pointer;list-style:none;display:inline-block;font-size:13px;font-weight:600;color:var(--rim)}
+details.lu-why>summary::-webkit-details-marker{display:none}
+details.lu-why>summary::before{content:"+ "}
+details.lu-why[open]>summary::before{content:"\2212 "}
+table.mini{border-collapse:collapse;margin:6px 0 2px;font-size:12.5px;max-width:100%}
+table.mini th{font-weight:600;color:var(--ink-2);text-align:left;padding:1px 10px 3px 0;white-space:nowrap}
+table.mini tr.tot td{border-top:1px solid var(--line);font-weight:600;padding-top:3px}
+table.mini td{padding:2px 10px 2px 0;vertical-align:top;line-height:1.3}
+table.mini td.num{white-space:nowrap}
+table.mini td.r{color:var(--ink-2)}
+.lu-total .g{font:700 26px/1 var(--display);min-width:44px;text-align:center;padding:9px 10px;border-radius:6px;color:#fff;background:var(--gc)}
+.lu-rec .lede2,.lu-pairs-wrap .lede2{margin-bottom:6px}
+.lu-rec .lede2,.lu-pairs-wrap .lede2{font-size:14px;line-height:1.45;color:var(--ink-2);margin:0 0 8px}
+.lu-rec{margin-bottom:14px}
+details.lu-rec>summary{font:800 20px/1.2 var(--display);letter-spacing:.01em;color:var(--ink);padding-left:10px;border-left:4px solid var(--acc)}
+details.lu-rec>div{margin-top:4px}
+.ledger td .sub{display:block;font:400 12px/1.25 var(--body);color:var(--muted)}
+.lu-rec-h{margin:12px 0 2px;font:700 12px/1.2 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--rim)}
+.lu-pairs svg{display:block;width:100%;height:22px}
+.lu-pairs .zero{stroke:var(--muted);stroke-width:1}
+.lu-pairs rect.up{fill:var(--good)}
+.lu-pairs rect.down{fill:var(--bad)}
+.lu-pairs .v{font-size:13.5px;font-weight:600;text-align:right}
+/* each replacement or addition is its own choice: a card with the name as its title, the fit as its number, the action on its own line */
+ol.lu-opts{display:grid;gap:8px}
+.lu-opts li{grid-template-columns:minmax(0,1fr) minmax(110px,150px) 60px;gap:4px 14px;align-items:center;padding:12px 14px 10px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px}
+.lu-opts li:last-child{border-bottom:1px solid var(--line)}
+.lu-opts li:hover{border-color:var(--acc-line)}
+.lu-opts li.keep{background:transparent;border-style:dashed}
+.lu-opts .nm b{display:block;font:800 19px/1.1 var(--display);letter-spacing:.01em;color:var(--ink)}
+.lu-opts .nm b a{color:inherit;text-decoration:none}
+.lu-opts .nm b a:hover,.lu-opts .nm b a:focus-visible{color:var(--rim)}
+.lu-opts .nm b small{font:600 13px/1.2 var(--body);color:var(--muted);margin-left:7px;letter-spacing:0}
+.lu-opts .nm .sub{margin-top:5px}
+.lu-opts .nm .sub.imp{margin-top:2px;color:var(--muted)}
+.lu-opts .sub a{color:var(--ink);text-decoration-color:var(--acc-line)}
+.lu-opts svg{height:26px}
+.lu-opts .v{font-size:17px}
+.lu-opts li>.act{margin:8px 0 0;padding-top:8px;border-top:1px solid var(--line);gap:4px 16px}
+.lu-opts li.keep>.act{border-top-style:dashed}
+.lu-key{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:8px;font-size:13px;color:var(--muted)}
+.lu-key i{display:inline-block;width:12px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.lu-key i.up{background:var(--good)}
+.lu-key i.down{background:var(--bad)}
+.lu-presets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.lu-pre{display:flex;flex-direction:column;gap:3px;text-align:left;font:inherit;color:var(--ink);background:var(--surface-2);border:1px solid transparent;border-radius:8px;padding:10px 12px;cursor:pointer;min-width:0}
+.lu-pre b{font:800 19px/1.05 var(--display);letter-spacing:.01em}
+.lu-pre span{font-size:13px;line-height:1.3;color:var(--muted)}
+.lu-pre:hover{border-color:var(--line)}
+.lu-pre[aria-pressed="true"]{border-color:var(--acc);background:var(--rim-soft)}
+.lu-pick{display:flex;flex-wrap:wrap;gap:10px 14px}
+.lu-pick label{display:flex;flex-direction:column;gap:4px;flex:1 1 140px;font-size:13px;font-weight:600;color:var(--ink-2);min-width:0}
+.lu-pick select{font:400 15px/1.3 var(--body);color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:9px 10px;max-width:100%}
+ol.lu-fives{list-style:none;margin:10px 0 0;padding:0}
+.lu-fives button{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;width:100%;text-align:left;font:inherit;font-size:14px;color:var(--ink);background:none;border:0;border-bottom:1px solid var(--line);padding:8px 8px;cursor:pointer}
+.lu-fives button:hover{background:var(--surface-2)}
+.lu-fives button[aria-pressed="true"]{background:var(--rim-soft);box-shadow:inset 3px 0 0 var(--acc)}
+.lu-fives .f{font-size:14px;text-align:right}
+.lu-fives .m{grid-column:1/-1;font-size:13px;color:var(--ink-2)}
+.lu-more{margin-top:8px}
+@media (max-width:860px){
+  .lu-grid{grid-template-columns:minmax(0,1fr);gap:24px}
+  .lu-col{display:contents}
+  .lu-roster{order:1} .lu-verdict{order:2} .lu-rec{order:3} .lu-pairs-wrap{order:4} .lu-load{order:5}
+  .lu-jump{display:inline}
+}
+@media (max-width:600px){
+  .lu-trs{gap:5px}
+  .lu-tr{grid-template-columns:58px minmax(0,1fr) auto}
+  .lu-tr .w{min-width:104px;font-size:11.5px}
+  .lu-total .big{font-size:38px}
+  .lu-pairs li{grid-template-columns:minmax(0,1fr) 100px 46px;gap:10px}
+  .lu-opts li{grid-template-columns:minmax(0,1fr) 90px 54px;gap:4px 10px;padding:10px 12px 8px}
+  .lu-opts .nm b{font-size:17px}
+  .lu-opts .nm b small{display:block;margin:2px 0 0}
+  .lu-opts .v{font-size:15px}
+  .lu-pairs .v{font-size:13px}
+}
+@media (max-width:380px){.lu-presets{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:no-preference){.fill,.trait i{transition:width .25s ease}}
+/* six factors table */
+table.factors th{font-size:13px;color:var(--muted);font-weight:600}
+table.factors th[scope="row"]{color:var(--ink);font-size:14.5px;white-space:nowrap}
+table.factors td.fc{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;gap:0 10px;align-items:center;padding:10px 6px}
+table.factors td.fc .code{grid-column:1;font-family:var(--mono);font-size:11.5px;color:var(--muted);align-self:end}
+table.factors td.fc .big{grid-column:2;grid-row:1/3;font:800 26px/1 var(--display);letter-spacing:.01em;text-align:right}
+table.factors td.fc .bar{grid-column:1;height:5px;background:var(--surface-2);border-radius:3px;overflow:hidden;min-width:70px;align-self:start;margin-top:3px}
+table.factors td.fc .bar i{display:block;height:100%}
+table.factors td.fc .bar i.pos{background:var(--good)} table.factors td.fc .bar i.neg{background:var(--bad)}
+table.factors td.fc .nat{grid-column:1/3;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+table.factors tr.sum td,table.factors tr.sum th{border-top:2px solid var(--line);border-bottom:0;padding-top:10px}
+table.factors tr.sum .big{font:800 26px/1 var(--display)}
+@media (max-width:480px){table.factors td.fc{padding:8px 4px}table.factors td.fc .big{font-size:22px}table.factors td.fc .bar{min-width:46px}}
+.team{color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="brand">
+    <h1>Archetype Lineup Lab</h1>
+    <div class="sub">16 NBA playing styles, who plays them, how their skills fit on the floor · 2013-14 to 2025-26</div>
+  </div>
+  <nav class="tabs" role="tablist">
+    <button role="tab" id="tab-archetypes" aria-selected="true" data-tab="archetypes">Styles</button>
+    <button role="tab" id="tab-players" aria-selected="false" data-tab="players">Players</button>
+    <button role="tab" id="tab-pairs" aria-selected="false" data-tab="pairs">Style fit</button>
+    <button role="tab" id="tab-lineup" aria-selected="false" data-tab="lineup">Lineup check</button>
+    <button role="tab" id="tab-trust" aria-selected="false" data-tab="trust">Methodology</button>
+  </nav>
+</header>
+
+<div id="boot" class="loading">Loading almost 7,000 player-seasons…</div>
+
+<section class="tab" id="archetypes" hidden>
+  <div class="stack">
+    <div>
+      <h2 id="arch-title">The styles</h2>
+      <p class="lede">A style is how a player plays, not how good he is. Most players mix several. Grouped by the skill each style leans on most (off-ball shooting, on-ball creation, paint presence), then A to Z; pick one.</p>
+    </div>
+    <div class="grid" id="group-grid"></div>
+    <p class="skkey"><span>Top edge: the skill the style leans on most.</span><span class="sk s0">Off-ball shooting</span><span class="sk s1">On-ball creation</span><span class="sk s2">Paint presence</span></p>
+    <div class="sheet" id="group-detail"></div>
+    <div class="panel stack" id="group-ratings"></div>
+  </div>
+</section>
+
+<section class="tab" id="players" hidden>
+  <div class="sheet">
+    <div class="panel stack">
+      <div>
+        <h2>Players</h2>
+        <p class="lede" id="players-intro">Search a player, pick a season. The bars and star show how much of each style he used.</p>
+      </div>
+      <div class="search" id="player-search"></div>
+      <div id="player-head"></div>
+      <div id="player-mix"></div>
+    </div>
+    <div class="panel stack" id="player-detail"></div>
+  </div>
+</section>
+
+<section class="tab" id="pairs" hidden>
+  <div class="stack">
+    <div class="panel stack" id="pairs-panel"></div>
+  </div>
+</section>
+
+<section class="tab" id="lineup" hidden>
+  <div class="stack">
+    <div class="panel stack" id="lineup-panel"></div>
+  </div>
+</section>
+
+<section class="tab" id="trust" hidden>
+  <div class="panel stack" id="trust-main"></div>
+</section>
+
+<footer>Data: NBA box-score, player-tracking and Synergy play-type stats for the styles; box-score and rim-defense stats for the ratings’ prior; NBA play-by-play and substitution stints for the possessions, 2013-14 to 2025-26. Regular season only.</footer>
+</div>
+
+<script>
+(function(){
+  var core = null;
+  var players = [], groups = [], G = 0, codes = [], NAMES = {}, PCOL = {};
+  var gn = function(c){ return NAMES[c] || c; };
+  var state = { player: null, group: null, pairOut: "net", ratingOut: "net" };
+  var $ = function(s){ return document.querySelector(s); };
+  var esc = function(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]; }); };
+  var DIACRITICS = new RegExp("[" + String.fromCharCode(0x300) + "-" + String.fromCharCode(0x36f) + "]", "g");
+  var norm = function(s){ return s.normalize("NFD").replace(DIACRITICS, "").toLowerCase().replace(/[.'’‘`]/g, "").replace(/-/g, " ").replace(/\s+/g, " "); };
+  var MINUS = String.fromCharCode(0x2212);
+  var sign = function(v, d){ d = d == null ? 1 : d; var r = Math.abs(v).toFixed(d); if (+r === 0) return r; return (v > 0 ? "+" : MINUS) + r; };
+  // a signed number, coloured: blue above zero, orange below (same meaning on both ends)
+  var sv = function(v, d, extra){ var r = sign(v, d); var cls = r.charAt(0) === "+" ? " pos" : r.charAt(0) === MINUS ? " neg" : ""; return '<span class="num' + cls + (extra ? " " + extra : "") + '">' + r + '</span>'; };
+  var pct = function(v){ return Math.round(100 * v) + "%"; };
+  var mpg = function(p){ return p.GP > 0 ? (p.MIN / p.GP).toFixed(1) : "0.0"; };
+  var order = function(p){ return p.shares.map(function(v, i){ return i; }).sort(function(a, b){ return p.shares[b] - p.shares[a]; }); };
+  var styleLine = function(p){ var o = order(p); return gn(codes[o[0]]) + ", some " + gn(codes[o[1]]); };
+  var OUTS = ["net", "off", "def"], OUT_NAME = { net: "Total impact", off: "Offense", def: "Defense" };
+  var pv = function(r, o){ return r[PCOL[o]]; };
+  var pse = function(r, o){ return r[PCOL[o + "_se"]]; };
+  var fmtP = function(p){ return p < 0.0001 ? "< 0.0001" : p < 0.01 ? String(+p.toPrecision(2)) : p.toFixed(p < 0.1 ? 3 : 2); };
+  var TRAIT = { spacing: "off-ball shooting", on_ball_creation: "on-ball creation", interior: "paint presence" };
+  // the skill a style leans on: its highest trait score (every style gets one, however slight the lean)
+  var SK_OF = null;
+  function skCls(code){
+    if (!SK_OF){ SK_OF = {}; groups.forEach(function(g){ var t = g.traits, m = Math.max(t[0], t[1], t[2]); SK_OF[g.group] = t.indexOf(m); }); }
+    var d = SK_OF[code]; return d == null || d < 0 ? "" : " s" + d;
+  }
+  var termName = function(t){ return String(t).replace(/\b(spacing|on_ball_creation|interior)\b/g, function(m){ return TRAIT[m]; }).replace(" x ", " × "); };
+  // Numbers from checks run beside the pipeline (Thesis\reports\pipeline_checks\review_k16_2026-11-05\): fresh null seasons, power,
+  // held-out prediction, the exposure-held-fixed refit, the own-stats refit, the Curry example. Sizes are per pairing.
+  var REVIEW = { sims_per_check: 300, fa_low: 1.7, fa_high: 4.7, holm_low: 1.3, holm_high: 2.3, curry_style: "+0.1", curry_own: "+1.1",
+                 own_offense_holm: 0.0008, own_defense_holm: 0.65, own_cc: -0.27, own_ii: -0.16, own_si: 0.02,
+                 exp_off_one: 0.027, exp_off_many: 0.10, exp_family: 0.020, exp_def: 0.12, exp_cc: -0.50, exp_si: 0.20, exp_ii: 0.24,
+                 pow_full: 100, pow_half: 64, pow_pair2: 2.5, pow_pair4: 3.5, pow_dense: 5,
+                 ho_folds: 5, ho_share: 4, ho_share_anchored: 1, ho_folds_anchored: 4 };
+  // The rating method, in one paragraph and in one line. Both are filled from core.json when it loads (window, half-life, penalty).
+  var RATING_TEXT = "", RATING_SHORT = "";
+  function setRatingText(F){
+    var hl = F.rating_half_life_days, w = F.rating_window_seasons, before = w - 1;
+    RATING_SHORT = w + "-season rating: this season and the " + (before === 1 ? "one" : before === 2 ? "two" : String(before)) + " before it, older games weighted down (a game’s weight halves every " + hl + " days).";
+    RATING_TEXT = "His effect on points per 100 possessions, where 0 is a league-average possession. Fitted on every possession of the season and the " +
+      (before === 2 ? "two" : String(before)) + " before it (" + w + " seasons), with older games weighted down: a game’s weight halves every " + hl + " days. " +
+      "All ten players on the floor are fitted at once, so his teammates and opponents are held fixed; the fit of his lineups’ skills is taken out first (Style fit tab); " +
+      "a short run of minutes is pulled toward what his box score predicts, not toward average (ridge penalty " + Number(F.rating_prior_penalty).toLocaleString() + "; Methodology tab); each season is centered on the league average. " +
+      "The rating holds teammates and opponents fixed and carries what comes with his role.";
+  }
+
+  function store(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+  function load(k){ try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch(e){ return null; } }
+
+  var tabs = ["archetypes","players","pairs","lineup","trust"];
+  function showTab(t, keepScroll){
+    if (t === "about") t = "trust";
+    if (t === "combos") t = "pairs";
+    if (t === "builder") t = "lineup";
+    if (tabs.indexOf(t) < 0) t = "archetypes";
+    tabs.forEach(function(x){ $("#" + x).hidden = x !== t; $("#tab-" + x).setAttribute("aria-selected", x === t); });
+    store("lab-tab", t);
+    setHash(hashFor(t));
+    if (t === "players") drawStar();
+    if (!keepScroll) window.scrollTo(0, 0);
+  }
+  document.querySelectorAll("nav.tabs button").forEach(function(b){ b.addEventListener("click", function(){ showTab(b.dataset.tab); }); });
+  // the address bar carries the tab, the player-season (#players/<row>) or the five (#lineup/<rows>), so a link opens the same view
+  function hashFor(t){ return t === "players" && typeof state.player === "number" ? "players/" + state.player : t === "lineup" && typeof LU !== "undefined" && LU && LU.length ? "lineup/" + LU.join(",") : t; }
+  function setHash(h){ try { if (location.hash !== "#" + h) history.replaceState(null, "", "#" + h); } catch(e){} }
+
+  // ---------- search ----------
+  function searchRows(q, includeLow){
+    var terms = norm(q).split(/\s+/).filter(Boolean);
+    if (!terms.length) return [];
+    var hits = [];
+    for (var i = 0; i < players.length; i++){
+      var p = players[i];
+      var ok = true;
+      for (var t = 0; t < terms.length; t++) if (p._key.indexOf(terms[t]) < 0){ ok = false; break; }
+      if (ok) hits.push(p);
+    }
+    var first = terms[0];
+    hits.sort(function(a, b){
+      var sa = a._name.indexOf(first) === 0 ? 0 : 1, sb = b._name.indexOf(first) === 0 ? 0 : 1;
+      if (sa !== sb) return sa - sb;
+      if (a._name !== b._name) return b.MIN - a.MIN;
+      return a.season < b.season ? 1 : -1;
+    });
+    return hits.slice(0, 40);
+  }
+  function makeSearch(host, opts){
+    host.innerHTML = '<input type="search" id="' + opts.id + '" placeholder="' + esc(opts.placeholder) + '" autocomplete="off" aria-label="' + esc(opts.placeholder) + '"><div class="results" hidden></div>';
+    var input = host.querySelector("input"), box = host.querySelector(".results"), active = -1, items = [];
+    function render(){
+      items = searchRows(input.value, opts.includeLow());
+      active = items.length ? 0 : -1;
+      if (!input.value.trim()){ box.hidden = true; return; }
+      box.innerHTML = items.length ? items.map(function(p, i){
+        return '<button type="button" data-row="' + p.row_id + '" class="' + (i === active ? "active" : "") + '"><span>' + esc(p.player) + ' <span class="muted num">' + p.season + '</span> <span class="muted small">' + esc(p.team) + '</span></span><span class="meta">' + esc(gn(p.main_group)) + '</span></button>';
+      }).join("") : '<div class="muted" style="padding:12px">No match. Try a last name, or add a season like 2016-17.</div>';
+      box.hidden = false;
+    }
+    input.addEventListener("input", render);
+    input.addEventListener("focus", function(){ if (input.value.trim()) render(); });
+    input.addEventListener("keydown", function(e){
+      if (box.hidden || !items.length) return;
+      var btns = box.querySelectorAll("button");
+      if (e.key === "ArrowDown" || e.key === "ArrowUp"){
+        e.preventDefault(); active = (active + (e.key === "ArrowDown" ? 1 : -1) + items.length) % items.length;
+        btns.forEach(function(b, i){ b.classList.toggle("active", i === active); });
+        btns[active].scrollIntoView({block:"nearest"});
+      } else if (e.key === "Enter"){ e.preventDefault(); choose(items[active].row_id); }
+      else if (e.key === "Escape"){ box.hidden = true; }
+    });
+    box.addEventListener("mousedown", function(e){ var b = e.target.closest("button[data-row]"); if (!b) return; e.preventDefault(); choose(+b.dataset.row); });
+    input.addEventListener("blur", function(){ setTimeout(function(){ box.hidden = true; }, 120); });
+    function choose(r){ opts.onPick(r); input.value = ""; box.hidden = true; }
+    return { refresh: function(){ if (!box.hidden) render(); } };
+  }
+
+  // ---------- share bars (how much of each style a player has) ----------
+  function bars(vals, count){
+    var idx = vals.map(function(v, i){ return i; }).sort(function(a, b){ return vals[b] - vals[a]; });
+    if (count) idx = idx.slice(0, count);
+    var mx = vals[idx[0]] || 1;
+    return '<div class="bars">' + idx.map(function(i, k){
+      return '<div class="sbar' + (k === 0 ? " top" : "") + '"><span class="nm" title="' + esc(gn(codes[i])) + '">' + esc(gn(codes[i])) + '</span><span class="track"><span class="fill" style="width:' + (100 * vals[i] / mx).toFixed(1) + '%"></span></span><span class="v">' + pct(vals[i]) + '</span></div>';
+    }).join("") + '</div>';
+  }
+  function allBars(vals, title, count){
+    return bars(vals, count || 6) + '<details class="all"><summary>' + esc(title) + '</summary>' + bars(vals) + '</details>';
+  }
+
+  // ---------- star chart: one spoke per style; neighbouring spokes are similar styles (order from build_site.py) ----------
+  // Every style's full name sits at the end of its own spoke. Where there isn't room for that (phones), the spokes are
+  // numbered and the names are listed below the star, each column on the side of the star its spokes are on.
+  var measureCtx = null;
+  function textW(t, size, weight){
+    if (!measureCtx) measureCtx = document.createElement("canvas").getContext("2d");
+    measureCtx.font = weight + " " + size + "px " + getComputedStyle(document.body).fontFamily;
+    return measureCtx.measureText(t).width;
+  }
+  function wrapOpts(name, size, weight){                       // every way to set a name on 1-3 lines, breaking at spaces (or, last resort, after a hyphen)
+    var out = [];
+    function parts(toks, hy){
+      var m = toks.length;
+      function emit(cuts){
+        var lines = [], a = 0;
+        cuts.concat([m]).forEach(function(b){ lines.push(toks.slice(a, b).join(hy ? "" : " ")); a = b; });
+        out.push({ lines: lines, w: Math.max.apply(null, lines.map(function(t){ return textW(t, size, weight); })), hy: hy });
+      }
+      emit([]);
+      for (var i = 1; i < m; i++){ emit([i]); for (var j = i + 1; j < m; j++) emit([i, j]); }
+    }
+    parts(name.split(" "), false);
+    var ht = []; name.split(" ").forEach(function(w, i){ w.replace(/-/g, "-\u0002").split("\u0002").forEach(function(pc, j){ ht.push((i && !j ? " " : "") + pc); }); });
+    if (/-/.test(name)) parts(ht, true);
+    return out.filter(function(o){ return o.lines.length <= 3 && o.lines.every(function(t){ return t.trim(); }); })
+      .map(function(o){ o.lines = o.lines.map(function(t){ return t.trim(); }); return o; });
+  }
+  var starCache = {};
+  function drawStar(){
+    var box = $("#player-star"); if (!box || state.player == null) return;
+    var p = players[state.player], vals = p.shares, ord = core.meta.star_order, n = ord.length;
+    var Wd = box.clientWidth; if (!Wd) return;                  // hidden tab: drawn when the tab opens
+    var narrow = Wd < 420, FS, LH, OPTS, PAD = 2, M;
+    var lead = ord.slice().sort(function(a, b){ return vals[b] - vals[a]; }).slice(0, 3).filter(function(g){ return Math.round(100 * vals[g]) >= 1; });
+    var ang = function(k){ return -Math.PI / 2 + 2 * Math.PI * k / n; };
+    function setFont(f){
+      FS = f; LH = Math.round(FS * 1.18);
+      OPTS = ord.map(function(g){ var on = lead.indexOf(g) >= 0; return wrapOpts(gn(codes[g]), FS, on ? 600 : 500).map(function(o){
+        var lines = on ? o.lines.concat([pct(vals[g])]) : o.lines; return { lines: lines, w: o.w, h: lines.length * LH, hy: o.hy }; }); });
+    }
+    // Each name sits at the end of its own spoke, its box touching the circle on the side the spoke points to, and may slide
+    // a little along the circle. A name with no room there moves straight out along its spoke, and its spoke is extended to it
+    // by a tick; every tick on the chart has the same length TL.
+    // spots at the spoke end, nearest first: 3 to 11 px out, up to 48 px (66 on narrow charts) along the circle
+    var NEAR = [], TR = narrow ? 66 : 48;
+    for (var dd = 3; dd <= 11; dd += 2) for (var tt = -TR; tt <= TR; tt += 3) NEAR.push([dd, tt]);
+    NEAR.sort(function(u, v){ return (u[0] + 1.6 * Math.abs(u[1])) - (v[0] + 1.6 * Math.abs(v[1])); });
+    function place(R, TL, par){
+      var X = Wd / 2 - PAD, boxes = [], L = [];
+      function hitsBox(b, q){ return b.x0 < q.x1 + M && q.x0 < b.x1 + M && b.y0 < q.y1 + M && q.y0 < b.y1 + M; }
+      function segHitsBox(s, q){                                // segment vs box (inflated), by sampling
+        if (Math.max(s[0], s[2]) < q.x0 - 2 || Math.min(s[0], s[2]) > q.x1 + 2 || Math.max(s[1], s[3]) < q.y0 - 2 || Math.min(s[1], s[3]) > q.y1 + 2) return false;
+        for (var i = 0; i <= 12; i++){ var x = s[0] + (s[2] - s[0]) * i / 12, y = s[1] + (s[3] - s[1]) * i / 12; if (x > q.x0 - 2 && x < q.x1 + 2 && y > q.y0 - 2 && y < q.y1 + 2) return true; }
+        return false;
+      }
+      var order = []; for (var k = par; k < n; k += 2) order.push(k); for (k = 1 - par; k < n; k += 2) order.push(k);   // every other spoke first
+      var lanes = ord.map(function(g, k){ var c = Math.cos(ang(k)), s = Math.sin(ang(k)); return [(R + 2) * c, (R + 2) * s, (R + 2 + TL) * c, (R + 2 + TL) * s]; });
+      for (var oi = 0; oi < n; oi++){
+        k = order[oi];
+        var a = ang(k), c = Math.cos(a), s = Math.sin(a), tx = -s, ty = c, e = [(R + 2) * c, (R + 2) * s];
+        var avail = X - (R + 4) * Math.abs(c);
+        // wrap: least room along the circle's tangent, among options that fit across
+        var opts = OPTS[k].filter(function(o){ return o.w <= Math.max(avail, 1); });
+        if (!opts.length) return null;
+        opts.sort(function(u, v){ function cost(o){ return o.w * Math.abs(s) + o.h * Math.abs(c) + (o.hy ? 40 : 0) + o.lines.length * 2; } return cost(u) - cost(v); });
+        var best = null, wi, o, q;
+        var free = function(q){ return q.x0 >= -X && q.x1 <= X && Math.hypot(Math.max(q.x0, Math.min(0, q.x1)), Math.max(q.y0, Math.min(0, q.y1))) >= R + 4 &&
+          !boxes.some(function(b){ return hitsBox(b, q); }) && !lanes.some(function(z, j){ return j !== k && segHitsBox(z, q); }); };   // no name covers another spoke's tick lane
+        for (wi = 0; wi < Math.min(opts.length, 3) && !best; wi++){        // at the spoke end, with no tick
+          o = opts[wi];
+          for (var ci = 0; ci < NEAR.length; ci++){
+            var d = R + NEAR[ci][0], t = NEAR[ci][1];
+            var px = d * c + t * tx, py = d * s + t * ty;
+            q = { x0: px - o.w * (1 - c) / 2, y0: py - o.h * (1 - s) / 2 }; q.x1 = q.x0 + o.w; q.y1 = q.y0 + o.h;
+            if (Math.hypot(Math.max(q.x0, Math.min(e[0], q.x1)) - e[0], Math.max(q.y0, Math.min(e[1], q.y1)) - e[1]) > 7 || !free(q)) continue;
+            best = { k: k, o: o, q: q, tk: null }; break;
+          }
+        }
+        var tk = [e[0], e[1], (R + 2 + TL) * c, (R + 2 + TL) * s], ax = (R + 4 + TL) * c, ay = (R + 4 + TL) * s;
+        if (!best && boxes.some(function(b){ return segHitsBox(tk, b); })) return null;
+        for (wi = 0; wi < Math.min(opts.length, 3) && !best; wi++){        // straight out along the spoke, joined by a tick of length TL
+          o = opts[wi]; var spots = [], j;                                  // the tick's end touches the box's inner edge anywhere along it
+          if (Math.abs(s) >= 0.35) for (j = 4; j <= o.w - 4; j += 4) spots.push([ax - j, s < 0 ? ay - o.h : ay]);
+          if (Math.abs(c) >= 0.35) for (j = 4; j <= o.h - 4; j += 4) spots.push([c < 0 ? ax - o.w : ax, ay - j]);
+          spots.sort(function(u, v){ function off(z){ return Math.abs((z[0] + o.w / 2 - ax) * -s + (z[1] + o.h / 2 - ay) * c); } return off(u) - off(v); });
+          for (var si = 0; si < spots.length && !best; si++){
+            q = { x0: spots[si][0], y0: spots[si][1] }; q.x1 = q.x0 + o.w; q.y1 = q.y0 + o.h;
+            if (free(q)) best = { k: k, o: o, q: q, tk: tk };
+          }
+        }
+        if (!best) return null;
+        boxes.push(best.q); L[k] = best;
+      }
+      return L;
+    }
+    // the circle and tick length that fit best (each pixel of tick costs 0.75 px of radius); 6px between names unless that
+    // costs more than 12px of radius, then 3px
+    var cap = Math.min(165, Wd / 2 - 40), better = function(r, tl, top){ return !top || r - 0.75 * tl > top.R - 0.75 * top.TL; };
+    var fit = function(m){                                     // radius in steps of 6, then 3; never below 80
+      M = m; var top = null;
+      [0, 1].forEach(function(par){ [12, 18, 24, 30, 36, 42, 50].forEach(function(tl){
+        for (var r = cap; r >= 80 && better(r, tl, top); r -= 6){
+          var got = place(r, tl, par), up = got && r < cap && place(r + 3, tl, par);
+          if (got){ top = up ? { R: r + 3, TL: tl, L: up } : { R: r, TL: tl, L: got }; break; }
+        }
+      }); });
+      return top;
+    };
+    var ck = state.player + "|" + Wd + "|" + (document.fonts ? document.fonts.status : ""), pick = null;
+    if (starCache.key === ck){ setFont(starCache.FS); pick = starCache.pick; }   // same player and width: reuse the layout
+    else {
+      (narrow ? [11] : [12.5, 11.5, 11]).some(function(f){          // the largest type size, down to 11px, that fits
+        setFont(f);
+        var w6 = fit(6), w3 = w6 && w6.R >= cap - 12 ? null : fit(3);
+        pick = w6 && (!w3 || w6.R >= w3.R - 12) ? w6 : w3;
+        return pick;
+      });
+      starCache = { key: ck, FS: FS, pick: pick };
+    }
+    var keyed = !pick || pick.R < 80;                         // no room for names around a readable circle: number the spokes
+    var R = keyed ? Wd / 2 - 28 : pick.R, L = keyed ? [] : pick.L;
+    var RINGS = [0.1, 0.25, 0.5, 1], rad = function(v){ return R * Math.sqrt(Math.max(v, 0)); };
+    var yMin = keyed ? -R - 20 : -R, yMax = keyed ? R + 20 : R; L.forEach(function(l){ if (l){ yMin = Math.min(yMin, l.q.y0); yMax = Math.max(yMax, l.q.y1); } });
+    var cx = Wd / 2, cy = -yMin + 6, Ht = yMax - yMin + 12;
+    var xy = function(k, r){ return [cx + r * Math.cos(ang(k)), cy + r * Math.sin(ang(k))]; };
+    var f = function(v){ return v.toFixed(1); };
+    var s = '<svg viewBox="0 0 ' + f(Wd) + ' ' + f(Ht) + '" role="img" aria-label="' + esc(p.player + " " + p.season + ": " + lead.map(function(g){ return gn(codes[g]) + " " + pct(vals[g]); }).join(", ")) + '">';
+    s += '<circle class="disc" cx="' + f(cx) + '" cy="' + f(cy) + '" r="' + f(R) + '"/>';
+    RINGS.forEach(function(v){ s += '<circle class="ring" cx="' + f(cx) + '" cy="' + f(cy) + '" r="' + f(rad(v)) + '"/>'; });
+    ord.forEach(function(g, k){ var e = xy(k, R); s += '<line class="spoke' + skCls(codes[g]) + '" data-k="' + k + '" x1="' + f(cx) + '" y1="' + f(cy) + '" x2="' + f(e[0]) + '" y2="' + f(e[1]) + '"/>'; });
+    s += '<polygon class="shape" points="' + ord.map(function(g, k){ return xy(k, rad(vals[g])).map(f).join(","); }).join(" ") + '"/>';
+    // ring values along the gap between two top spokes where this player's shape is smallest, with a halo
+    var gk = [0, n - 1, 1, n - 2].sort(function(u, v){ function g(k){ return Math.max(vals[ord[k]], vals[ord[(k + 1) % n]]); } return g(u) - g(v) || 0; })[0];
+    RINGS.forEach(function(v){
+      var a = ang(gk + 0.5), r = rad(v), x = cx + r * Math.cos(a), y = cy + r * Math.sin(a);
+      s += '<text class="ringv" text-anchor="middle" x="' + f(x) + '" y="' + f(y + 3.5) + '">' + Math.round(100 * v) + '%</text>';
+    });
+    lead.forEach(function(g){ var q = xy(ord.indexOf(g), rad(vals[g])); s += '<circle class="dot" cx="' + f(q[0]) + '" cy="' + f(q[1]) + '" r="4.5"/>'; });
+    var leaders = "", names = "";
+    L.forEach(function(l, k){
+      if (!l) return;
+      var c = Math.cos(ang(k)), q = l.q, anchor = c > 0.35 ? "start" : c < -0.35 ? "end" : "middle";
+      var x = cx + (anchor === "start" ? q.x0 : anchor === "end" ? q.x1 : (q.x0 + q.x1) / 2), y = cy + q.y0 + LH * 0.78;
+      if (l.tk) leaders += '<line class="lead" data-k="' + k + '" x1="' + f(cx + l.tk[0]) + '" y1="' + f(cy + l.tk[1]) + '" x2="' + f(cx + l.tk[2]) + '" y2="' + f(cy + l.tk[3]) + '"/>';
+      names += '<text class="lab' + (lead.indexOf(ord[k]) >= 0 ? " on" : "") + '" data-k="' + k + '" text-anchor="' + anchor + '" font-size="' + FS + '" x="' + f(x) + '" y="' + f(y) + '">' +
+        l.o.lines.map(function(t, i){ var last = lead.indexOf(ord[k]) >= 0 && i === l.o.lines.length - 1; return '<tspan' + (last ? ' class="pv"' : '') + ' x="' + f(x) + '"' + (i ? ' dy="' + LH + '"' : '') + '>' + esc(t) + '</tspan>'; }).join("") + '</text>';
+    });
+    if (keyed) ord.forEach(function(g, k){
+      var q = xy(k, R + 14);
+      names += '<text class="lab knum' + (lead.indexOf(g) >= 0 ? " on" : "") + '" data-k="' + k + '" text-anchor="middle" x="' + f(q[0]) + '" y="' + f(q[1] + 4) + '">' + (k + 1) + '</text>';
+    });
+    s += leaders + names;
+    ord.forEach(function(g, k){                                 // hover targets: one wedge per spoke
+      var a0 = ang(k - 0.5), a1 = ang(k + 0.5), rr = R + 8;
+      s += '<path class="hit" data-k="' + k + '" d="M' + f(cx) + ' ' + f(cy) + 'L' + f(cx + rr * Math.cos(a0)) + ' ' + f(cy + rr * Math.sin(a0)) +
+        'A' + f(rr) + ' ' + f(rr) + ' 0 0 1 ' + f(cx + rr * Math.cos(a1)) + ' ' + f(cy + rr * Math.sin(a1)) + 'Z"/>';
+    });
+    var key = "";
+    if (keyed){                                                // left column: the left half top to bottom; right column: the right half
+      var half = Math.ceil(n / 2), cols = [[], []];
+      for (var k = 0; k < half; k++) cols[1].push(k);
+      for (k = n - 1; k >= half; k--) cols[0].push(k);
+      key = '<div class="key">' + cols.map(function(col){ return '<ol>' + col.map(function(k){
+        var g = ord[k], on = lead.indexOf(g) >= 0;
+        return '<li data-k="' + k + '" class="' + (on ? 'on' : '') + skCls(codes[g]) + '"><span class="kn">' + (k + 1) + '</span><span>' + esc(gn(codes[g])) + (on ? ' <b>' + pct(vals[g]) + '</b>' : '') + '</span></li>'; }).join("") + '</ol>'; }).join("") + '</div>';
+    }
+    box.innerHTML = s + '</svg><div class="tip" hidden></div>' + key;
+    var tip = box.querySelector(".tip"), hot = null;
+    function show(k){
+      if (hot != null) box.querySelectorAll('[data-k="' + hot + '"]').forEach(function(e){ e.classList.remove("hot"); });
+      hot = k; if (k == null){ tip.hidden = true; return; }
+      box.querySelectorAll('.spoke[data-k="' + k + '"],.lab[data-k="' + k + '"],.lead[data-k="' + k + '"],.key li[data-k="' + k + '"]').forEach(function(e){ e.classList.add("hot"); });
+      var g = ord[k], q = xy(k, Math.max(rad(vals[g]), rad(0.1))), sc = box.clientWidth / Wd;
+      tip.innerHTML = esc(gn(codes[g])) + '<b>' + pct(vals[g]) + '</b>';
+      tip.hidden = false; var tw = tip.offsetWidth / 2, bw = box.clientWidth;
+      tip.style.left = Math.max(tw, Math.min(bw - tw, q[0] * sc)) + "px"; tip.style.top = (q[1] * sc) + "px";
+    }
+    box.querySelectorAll(".hit,.lab,.key li").forEach(function(h){
+      h.addEventListener("pointerenter", function(){ show(+h.dataset.k); });
+      h.addEventListener("click", function(){ show(+h.dataset.k); });
+    });
+    box.querySelector("svg").addEventListener("pointerleave", function(e){ if (e.pointerType === "mouse") show(null); });
+  }
+
+
+  // ---------- players ----------
+  function rankShort(p, o){
+    var r = p.rating_rank[o];
+    return r >= 0.5 ? "better than " + Math.min(99, Math.round(100 * r)) + "%" : "behind " + Math.min(99, Math.round(100 * (1 - r))) + "%";
+  }
+  function rankLine(p, o){
+    return OUT_NAME[o] + ': ' + rankShort(p, o) + ' of NBA players in ' + p.season + '.';
+  }
+  function trio(p){
+    var R = ratingShown(p.rating);
+    return '<div class="tiles">' + OUTS.map(function(o){ var v = R[o]; return '<div class="tile"><div class="k">' + OUT_NAME[o] + '</div><div class="v ' + (v > 0.05 ? 'pos' : v < -0.05 ? 'neg' : '') + '">' + sign(v) + '</div><div class="s txt">' + rankShort(p, o) + '</div></div>'; }).join("") + '</div>';
+  }
+  // the six factors: Shooting efficiency / Turnovers / Rebounding, each on offense and defense, in points per 100 (factors_pts) with
+  // the native value (factors) as secondary text
+  var FAC_GROUPS = [["Shooting efficiency", 0, 1, "TS pts"], ["Turnovers", 2, 3, "TOV per 100"], ["Rebounding", 4, 5, "per 100 chances"]];
+  var FAC_WHAT = { oTS: "how well his lineups shoot", dTS: "how badly opponents shoot", oTOV: "how rarely his lineups turn it over", dTOV: "how often opponents turn it over", oREB: "offensive rebounds his lineups get", dREB: "offensive rebounds he denies" };
+  function factorTable(p){
+    var F = core.fit.factors, pts = p.factors_pts, nat = p.factors;
+    if (!pts || !nat) return '';
+    var mx = 0; pts.forEach(function(v){ mx = Math.max(mx, Math.abs(v)); }); mx = Math.max(1, mx);
+    var cell = function(i){
+      var v = pts[i], code = F.names[i], w = Math.round(100 * Math.abs(v) / mx);
+      return '<td class="fc"><span class="code">' + code + '</span>' + sv(v, 1, "big") + '<span class="bar" aria-hidden="true"><i class="' + (v >= 0 ? "pos" : "neg") + '" style="width:' + w + '%"></i></span><span class="nat">' + sign(nat[i]) + ' ' + FAC_GROUPS.filter(function(g){ return g[1] === i || g[2] === i; })[0][3] + '</span></td>';
+    };
+    return '<div class="tablewrap"><table class="factors"><thead><tr><th></th><th>Offense</th><th>Defense</th></tr></thead><tbody>' +
+      FAC_GROUPS.map(function(g){ return '<tr><th scope="row">' + g[0] + '</th>' + cell(g[1]) + cell(g[2]) + '</tr>'; }).join("") +
+      '<tr class="sum"><th scope="row">Six factors</th><td colspan="2">' + sv(p.rating.net, 1, "big") + ' <span class="muted small">= his net rating</span></td></tr></tbody></table></div>' +
+      '<p class="muted small" style="margin:8px 0 0">Points per 100 possessions. Offense is what his lineups produce; defense is what they take from opponents, so + is good on both. Small text is the native stat.</p>' +
+      '<details class="more"><summary>The six, defined</summary><div><ul class="plain">' + F.names.map(function(n){ return '<li><b>' + n + '</b>: ' + FAC_WHAT[n] + '.</li>'; }).join("") + '</ul>' +
+      '<p>Each is the same ' + core.fit.rating_window_seasons + '-season possession fit as the rating, on true shooting, turnovers per 100 and offensive rebounds per 100 chances; one regression converts each to points (' + F.names.map(function(n, i){ return n + " " + F.points_per_unit[i].toFixed(2); }).join(", ") + ' points per unit) and the six explain ' + pct(F.r2_net_rating) + ' of the variation in net ratings.</p></div></details>';
+  }
+  function factorBars(p){
+    var F = core.fit.factors, pts = p.factors_pts, nat = p.factors;
+    if (!pts || !nat) return '';
+    var mx = 0; pts.forEach(function(v){ mx = Math.max(mx, Math.abs(v)); });
+    mx = Math.max(1, Math.ceil(mx * 2) / 2);
+    var X = function(v){ return 50 + 50 * v / mx; };
+    var row = function(label, i){
+      var v = pts[i], x0 = X(Math.min(0, v)), w = Math.abs(X(v) - 50), cls = v >= 0 ? "pos" : "neg", unit = FAC_GROUPS.filter(function(g){ return g[1] === i || g[2] === i; })[0][3];
+      return '<div class="fac"><span class="k">' + label + '<small>' + sign(nat[i]) + ' ' + unit + '</small></span>' +
+        '<svg viewBox="0 0 100 16" preserveAspectRatio="none" aria-hidden="true"><rect class="' + cls + '" x="' + x0.toFixed(2) + '" y="3" width="' + w.toFixed(2) + '" height="10" rx="1"/><line class="zero" x1="50" x2="50" y1="0" y2="16" vector-effect="non-scaling-stroke"/></svg>' +
+        sv(v, 1, "v") + '</div>';
+    };
+    return '<div class="facs">' + FAC_GROUPS.map(function(g){ return '<div class="facg"><h4>' + g[0] + '</h4>' + row("Offense", g[1]) + row("Defense", g[2]) + '</div>'; }).join("") +
+      '<div class="facax"><span></span><div class="ticks"><span style="left:0">' + sign(-mx) + '</span><span style="left:50%">0</span><span style="left:100%">' + sign(mx) + '</span></div><span></span></div></div>' +
+      '<p class="facsum">The six add up to his ' + sv(p.rating.net) + ' net rating.</p>' +
+      '<details class="more"><summary>What the six are</summary><div><p>Points per 100 possessions, net of teammates and opponents, from the same ' + core.fit.rating_window_seasons + '-season fit as the rating but on three outcomes: true shooting (TS percentage points), turnovers per 100 possessions (sign flipped, so higher is better) and offensive rebounds per 100 chances. Defense is what he takes from opponents. One regression turns each unit into points (' +
+      F.names.map(function(n, i){ return n + " " + F.points_per_unit[i].toFixed(2); }).join(", ") + ' points per unit); the six explain ' + pct(F.r2_net_rating) + ' of the variation in net ratings.</p></div></details>';
+  }
+  function renderPlayer(r){
+    state.player = r; store("lab-player", r);
+    if (!$("#players").hidden) setHash(hashFor("players"));
+    var p = players[r];
+    var seasons = players.filter(function(q){ return q.PLAYER_ID === p.PLAYER_ID; }).sort(function(a, b){ return a.season < b.season ? -1 : 1; });
+    $("#player-head").innerHTML = '<div><h2 style="margin:0">' + esc(p.player) + ' <span class="muted num" style="font-weight:400;font-size:17px">' + p.season + '</span></h2>' +
+      '<p class="team" style="margin:2px 0 0">' + esc(teamName(p.team)) + '</p>' +
+      '<p style="margin:4px 0 0">' + esc(styleLine(p)) + '</p>' +
+      '<p class="muted small" style="margin:2px 0 0"><span class="num">' + mpg(p) + '</span> min/game · <span class="num">' + p.GP + '</span> games · <span class="num">' + Math.round(p.MIN).toLocaleString() + '</span> minutes</p></div>' +
+      '<div class="seasons" style="margin-top:12px">' + seasons.map(function(q){ return '<button aria-pressed="' + (q.row_id === r) + '" data-row="' + q.row_id + '">' + q.season + '</button>'; }).join("") + '</div>';
+    $("#player-head").querySelectorAll(".seasons button").forEach(function(b){ b.addEventListener("click", function(){ renderPlayer(+b.dataset.row); }); });
+    $("#player-mix").innerHTML = '<h3>Style mix</h3>' + allBars(p.shares, "All " + G + " styles") +
+      '<div class="star" id="player-star"></div><p class="muted small star-note">All ' + G + ' styles at once. Neighbouring spokes play alike: shooters at the top, bigs at the bottom. Point at or tap a spoke for its share.</p>';
+    drawStar();
+    var traj = seasons.map(function(q){ var o = order(q); return '<tr><td class="num">' + q.season + '<span class="muted small" style="font-family:var(--body)"><br>' + esc(q.team) + '</span></td><td>' + esc(gn(codes[o[0]])) + '<span class="muted small hide-sm"><br>some ' + esc(gn(codes[o[1]])) + '</span></td><td class="num">' + sv(q.rating.net) + '</td><td class="num">' + sv(q.rating.off) + '</td><td class="num">' + sv(q.rating.def) + '</td><td class="num hide-sm">' + mpg(q) + '</td></tr>'; }).join("");
+    $("#player-detail").innerHTML =
+      '<div><h3>Rating, ' + p.season + '</h3>' + trio(p) +
+      '<p class="small" style="margin:8px 0 0">' + esc(rankLine(p, "net")) + '</p>' +
+      '<p class="muted small" style="margin:4px 0 0">Per 100 possessions, 0 = league average. ' + esc(RATING_SHORT) + ' Defense is points prevented, so + is good on both ends.</p>' +
+      '<details class="more"><summary>How the rating is made</summary><div><p>' + esc(RATING_TEXT) + '</p></div></details></div>' +
+      '<div class="blk"><h3>Where his rating comes from</h3>' + factorTable(p) + '</div>' +
+      '<div class="blk"><h3>Season by season</h3><div class="tablewrap"><table><thead><tr><th>Season</th><th>Style</th><th class="num">Total</th><th class="num">Off</th><th class="num">Def</th><th class="num hide-sm">Min/g</th></tr></thead><tbody>' + traj + '</tbody></table></div>' +
+      '<p class="muted small" style="margin:6px 0 0">Each season’s rating uses that season and the ' + (core.fit.rating_window_seasons - 1) + ' before it, older games weighted down.</p></div>';
+  }
+  function groupByCode(code){ return groups.filter(function(g){ return g.group === code; })[0]; }
+
+  // ---------- archetypes ----------
+  function plain(desc){ var s = String(desc); return s.charAt(0).toUpperCase() + s.slice(1); }
+  function openGroup(code){
+    var i = groups.findIndex(function(g){ return g.group === code; }); if (i < 0) return;
+    state.group = i; store("lab-group", i); renderGroups(); showTab("archetypes", true);
+    setTimeout(function(){ $("#group-detail").scrollIntoView({behavior:"smooth", block:"start"}); }, 30);
+  }
+  // rating spread strips share one scale across the styles, for the outcome being shown
+  var RS = { lo: 0, hi: 0 };
+  function ratingScale(o){
+    var lo = Infinity, hi = -Infinity;
+    groups.forEach(function(g){ var d = g.ratings_of_main_group_players[o]; lo = Math.min(lo, d.p10); hi = Math.max(hi, d.p90); });
+    RS.lo = Math.floor(lo - 0.3); RS.hi = Math.ceil(hi + 0.3);
+  }
+  function strip(d){
+    var X = function(v){ return (100 * (v - RS.lo) / (RS.hi - RS.lo)).toFixed(2); };
+    return '<svg viewBox="0 0 100 22" preserveAspectRatio="none" aria-hidden="true">' +
+      '<line x1="' + X(0) + '" x2="' + X(0) + '" y1="0" y2="22" stroke="var(--muted)" stroke-width="0.4" opacity=".7" vector-effect="non-scaling-stroke"/>' +
+      '<rect x="' + X(d.p10) + '" y="9.5" width="' + (X(d.p90) - X(d.p10)).toFixed(2) + '" height="3" fill="var(--share)" opacity=".7"/>' +
+      '<rect x="' + X(d.p25) + '" y="6" width="' + (X(d.p75) - X(d.p25)).toFixed(2) + '" height="10" fill="var(--teal)"/>' +
+      '<rect x="' + (X(d.mean) - 0.35).toFixed(2) + '" y="3" width="0.7" height="16" fill="var(--ink)"/></svg>';
+  }
+  function ratingAxis(full){
+    var ticks = []; for (var t = Math.ceil(RS.lo); t <= Math.floor(RS.hi); t++) ticks.push(t);
+    var inner = '<div class="ticks">' + ticks.map(function(t){ return '<span style="left:' + (100 * (t - RS.lo) / (RS.hi - RS.lo)).toFixed(2) + '%">' + (t > 0 ? "+" : t < 0 ? MINUS : "") + Math.abs(t) + '</span>'; }).join("") + '</div>';
+    return full ? '<div class="raxis full">' + inner + '</div>' : '<div class="raxis"><span></span>' + inner + '<span></span></div>';
+  }
+  function renderGroups(){
+    skCls(""); var lean = function(i){ return SK_OF[groups[i].group]; };      // the skill each style leans on most: off-ball, on-ball, paint
+    var sorted = groups.map(function(g, i){ return i; }).sort(function(a, b){ return lean(a) - lean(b) || gn(groups[a].group).localeCompare(gn(groups[b].group)); });
+    if (state.group == null) state.group = sorted[0];
+    $("#group-grid").innerHTML = sorted.map(function(i){
+      var g = groups[i];
+      var names = g.flagship_players.slice(0, 3).map(function(e){ return esc(e.player); });
+      return '<button class="card' + skCls(g.group) + '" aria-pressed="' + (i === state.group) + '" data-g="' + i + '"><span class="gn">' + esc(gn(g.group)) + '</span>' +
+        '<span class="val"><span class="num">' + (100 * g.minutes_share).toFixed(1) + '%</span> of minutes</span>' +
+        '<span class="names" title="' + names.join(", ") + '">' + names.join(", ") + '</span></button>';
+    }).join("");
+    $("#group-grid").querySelectorAll(".card").forEach(function(c){ c.addEventListener("click", function(){ state.group = +c.dataset.g; store("lab-group", state.group); renderGroups(); $("#group-detail").scrollIntoView({behavior:"smooth", block:"start"}); }); });
+    var g = groups[state.group], RG = g.ratings_of_main_group_players, o = state.ratingOut, d = RG[o];
+    ratingScale(o);
+    var rows = g.purest_seasons.map(function(e){ return '<tr><td><a href="#players" data-row="' + e.row_id + '">' + esc(e.player) + '</a> <span class="muted small">' + esc(e.team) + '</span></td><td class="num">' + e.season + '</td><td class="num">' + pct(e.share) + '</td></tr>'; }).join("");
+    var hi = g.highest_mean_z_features.slice(0, 5).sort(function(a, b){ return b.percentile - a.percentile; }), lo = g.lowest_mean_z_features.slice(0, 5).sort(function(a, b){ return a.percentile - b.percentile; });   // the five are picked by the center's z; shown in the order of the percentile the reader sees
+    var ordinal = function(n){ var m = n % 100; return n + (m >= 11 && m <= 13 ? "th" : ["th", "st", "nd", "rd"][Math.min(n % 10, 4) < 4 ? n % 10 : 0] || "th"); };
+    var tr = function(arr, isLo){ return arr.map(function(f){ var q = Math.max(1, Math.min(99, Math.round(100 * f.percentile))); return '<div class="trait"><span>' + esc(plain(f.description)) + '</span><span class="t"><i class="' + (isLo ? "lo" : "") + '" style="width:' + q + '%"></i></span><span class="pc num">' + ordinal(q) + '</span></div>'; }).join(""); };
+    var all = g.player_seasons_main_group;
+    var flag = g.flagship_players.map(function(e, k){
+      var span = e.seasons === 1 ? e.first_season : e.first_season + ' to ' + e.last_season;
+      return '<li class="fp"><span class="lu-n">' + (k + 1) + '</span><span class="fp-main">' +
+        '<span class="fp-name"><a href="#players" data-row="' + e.row_id + '">' + esc(e.player) + '</a><span class="muted small">' + esc(e.teams.join(", ")) + '</span></span>' +
+        '<span class="fp-sub"><span class="num">' + e.seasons + '</span> ' + (e.seasons === 1 ? 'season' : 'seasons') + ' with this as his main style (' + span + ') · <span class="num">' + pct(e.share) + '</span> of his game in it</span>' +
+        '<span class="fp-sub"><span class="num">' + e.ppg.toFixed(1) + '</span> pts, <span class="num">' + e.rpg.toFixed(1) + '</span> reb, <span class="num">' + e.apg.toFixed(1) + '</span> ast per game in those seasons · best season ' + sv(e.peak_net, 1) + ' in ' + e.peak_season + ' (' + esc(e.peak_team) + ')</span>' +
+        '</span><span class="fp-rate"><b>' + sv(e.net, 1) + '</b><small>Total impact, avg</small></span></li>';
+    }).join("");
+    $("#group-detail").innerHTML = '<div class="panel stack"><div><h2>' + esc(gn(g.group)) + '</h2>' +
+        '<p style="margin:6px 0 4px">' + esc(g.note) + '</p>' +
+        '<p class="muted small" style="margin:0"><span class="num">' + all.toLocaleString() + '</span> player-seasons have this as their main style · <span class="num">' + (100 * g.minutes_share).toFixed(1) + '%</span> of all minutes</p></div>' +
+      '<div class="blk"><h3>Flagship players</h3>' +
+        '<p class="muted small" style="margin:0 0 8px">The players who have carried this style the longest: ' + (core.meta.purest_minutes || 1000).toLocaleString() + '+ minute seasons with it as their main style, most seasons first, ties to the better average rating. A player has to be at least ' + Math.round(100 * (core.meta.flagship_share || 0.5)) + '% this style across those seasons to be listed.</p>' +
+        '<ol class="flagships">' + flag + '</ol></div>' +
+      '<div class="blk"><details class="more"><summary>Purest seasons</summary><div><p class="muted small" style="margin:0 0 6px">The player-seasons with ' + (core.meta.purest_minutes || 1000).toLocaleString() + '+ minutes that come closest to this style alone.</p><div class="tablewrap"><table><thead><tr><th>Player</th><th class="num">Season</th><th class="num">Share</th></tr></thead><tbody>' + rows + '</tbody></table></div></div></details></div></div>' +
+      '<div class="panel stack"><div><h3>Does more of</h3><p class="muted small" style="margin:0 0 4px">Where the typical player of this style ranks among all NBA player-seasons on the stat (minutes-weighted percentile).</p>' + tr(hi, false) + '</div><div class="blk"><h3>Does less of</h3>' + tr(lo, true) + '</div>' +
+      '<div class="blk"><h3>Ratings of the players who mainly play it</h3><p class="small" style="margin:0 0 6px">' + OUT_NAME[o] + ' rating of <span class="num">' + RG.player_seasons.toLocaleString() + '</span> player-seasons (<span class="num">' + RG.players.toLocaleString() + '</span> players): average ' + sv(d.mean) + ' per 100, weighted by possessions; middle half ' + sv(d.p25) + ' to ' + sv(d.p75) + '.</p>' +
+        '<div class="strip">' + strip(d) + ratingAxis(true) + '</div>' +
+        '<p class="muted small" style="margin:6px 0 0"><span class="num">' + pct(RG.top_five_share_of_possessions) + '</span> of their possessions belong to five players: ' + RG.top_five_players.map(function(e){ return esc(e.player); }).join(", ") + '. This says how good the players who play the style have been, not what the style is worth. ' + esc(RATING_SHORT) + '</p></div></div>';
+    $("#group-detail").querySelectorAll("a[data-row]").forEach(function(a){ a.addEventListener("click", function(ev){ ev.preventDefault(); renderPlayer(+a.dataset.row); showTab("players"); }); });
+    renderGroupRatings();
+  }
+  function renderGroupRatings(){
+    var o = state.ratingOut; ratingScale(o);
+    var sorted = groups.map(function(g, i){ return i; }).sort(function(a, b){ return groups[b].ratings_of_main_group_players[o].mean - groups[a].ratings_of_main_group_players[o].mean; });
+    $("#group-ratings").innerHTML = '<div><h2>Who plays each style: their ratings</h2><p class="lede">Each strip is the spread of ratings among the players whose main style it is, weighted by possessions, sorted by the average.</p>' +
+      '<details class="more"><summary>What this does and does not say</summary><div><p>This ranks the players who play each style, not the styles: a style whose players happen to be stars sits high even if the style itself adds nothing. The site puts no value on a style (see <button type="button" class="linkbtn" data-tab="trust">Methodology</button>). ' + esc(RATING_SHORT) + '</p></div></details></div>' +
+      '<div class="pick">Rating <span class="seg" role="group" aria-label="Rating">' + OUTS.map(function(x){ return '<button type="button" data-out="' + x + '" aria-pressed="' + (x === o) + '">' + OUT_NAME[x] + '</button>'; }).join("") + '</span></div>' +
+      '<div>' + sorted.map(function(i){ var g = groups[i], d = g.ratings_of_main_group_players[o]; return '<button type="button" class="rrow" aria-pressed="' + (i === state.group) + '" data-g="' + i + '"><span class="nm">' + esc(gn(g.group)) + '</span>' + strip(d) + sv(d.mean, 1, "v") + '</button>'; }).join("") + ratingAxis() + '</div>' +
+      '<div class="legend" style="margin-top:0"><span><i class="tick"></i>average, weighted by possessions</span><span><i class="thick"></i>middle half (25th to 75th percentile)</span><span><i class="thin"></i>10th to 90th percentile</span><span>per 100 possessions, 0 = league average</span></div>';
+    $("#group-ratings").querySelectorAll(".seg button").forEach(function(b){ b.addEventListener("click", function(){ state.ratingOut = b.dataset.out; store("lab-rating-out", state.ratingOut); renderGroups(); }); });
+    $("#group-ratings").querySelectorAll(".rrow").forEach(function(b){ b.addEventListener("click", function(){ state.group = +b.dataset.g; store("lab-group", state.group); renderGroups(); $("#group-detail").scrollIntoView({behavior:"smooth", block:"start"}); }); });
+    $("#group-ratings").querySelectorAll("[data-tab]").forEach(function(b){ b.addEventListener("click", function(){ showTab(b.dataset.tab); }); });
+  }
+
+  // ---------- style fit ----------
+  var PIDX = {};
+  var pts = function(v){ return sign(v, 2); };
+  var svp = function(v){ return sv(v, 2); };
+  var rng = function(v, se){ return pts(v - 1.96 * se) + ' to ' + pts(v + 1.96 * se); };
+  var cellColor = function(v, mx){ var t = Math.min(Math.abs(v) / mx, 1); return "color-mix(in srgb, " + (v >= 0 ? "var(--good)" : "var(--bad)") + " " + Math.round(100 * t) + "%, var(--mid))"; };
+  var WHO = { spacing: "off-ball shooter", on_ball_creation: "creator", interior: "big" };
+  var TERM_IJ = [[0, 0], [0, 1], [0, 2], [1, 1], [1, 2], [2, 2]];
+  var FIT_OUT = { off: "Offense", def: "Defense", net: "Net synergy effect" };
+  function pairingName(t){ return t.a === t.b ? "Two " + WHO[t.a] + "s" : WHO[t.a].charAt(0).toUpperCase() + WHO[t.a].slice(1) + " + " + WHO[t.b]; }
+  function termOf(a, b){ return core.fit.terms.filter(function(t){ return (t.a === a && t.b === b) || (t.a === b && t.b === a); })[0]; }
+  var TERM_WHY = ["two off-ball shooters open the floor", "off-ball shooter and creator, neither helps nor hurts", "the off-ball shooter opens the lane for the big", "both want the ball", "creator and big get in each other’s way", "both want the paint"];
+  var TERM_NAME = ["Two off-ball shooters", "Off-ball shooter + creator", "Off-ball shooter + big", "Two on-ball creators", "Creator + big", "Two bigs"];
+  var TERM_SENT = {
+    off: ["The floor opens up: two off-ball shooters stretch the defense, and every drive and post-up gets more room.",
+          "The classic drive-and-kick, but each already brings his own value, so the pair adds little extra.",
+          "Spacing and a rim threat don’t compete: the off-ball shooter pulls help out, the big owns the paint.",
+          "Both want the ball, and only one can have it; the other stands and watches.",
+          "The creator drives into the paint where the big already lives, and the lane gets crowded.",
+          "Two bigs share one paint: no spacing, and nobody gets a clean roll or drive."],
+    def: ["Defense leans slightly negative with two players on the floor mainly for their shot.",
+          "Defense reads a hair positive, close to neutral.",
+          "Defense reads about neutral, a shade below zero.",
+          "Defense leans positive here, the largest lean of the six pairings.",
+          "Defense leans a touch positive, close to zero.",
+          "Defense reads negative too, the one pairing in the red on both ends."],
+    net: ["Two off-ball shooters open the floor for everyone else, and nothing on defense takes it back.",
+          "Each already brings his own value, so the pair adds only a little extra.",
+          "Spacing and a rim threat don’t compete: the off-ball shooter pulls help out, the big owns the paint.",
+          "Both want the ball, and only one can have it. The crowding on offense is the whole story.",
+          "The creator drives into the paint where the big already lives, and the lane gets crowded.",
+          "Two bigs share one paint: no spacing and no clean roll. The worst fit on the board."] };
+  var termIndex = function(t){ var ij = [["spacing", "spacing"], ["spacing", "on_ball_creation"], ["spacing", "interior"], ["on_ball_creation", "on_ball_creation"], ["on_ball_creation", "interior"], ["interior", "interior"]]; for (var k = 0; k < 6; k++) if ((ij[k][0] === t.a && ij[k][1] === t.b) || (ij[k][0] === t.b && ij[k][1] === t.a)) return k; return 0; };
+  var betaOf = function(o){ var T = core.fit.terms, out = [0, 0, 0, 0, 0, 0]; T.forEach(function(t){ out[termIndex(t)] = t[o] / t.pairing; }); return out; };   // per unit x, for the outcome
+  function pairContrib(r, o){ var A = groups[r[0]].traits, B = groups[r[1]].traits, x = pairX(A, B), bo = betaOf(o); return x.map(function(xv, t){ return xv * bo[t]; }); }
+  var SKI = { spacing: 0, on_ball_creation: 1, interior: 2 }, TERM_IJ2 = [[0, 0], [0, 1], [0, 2], [1, 1], [1, 2], [2, 2]];
+  function pairWhyWords(r, o){           // the skill pairing that moves this cell most, said in basketball terms
+    var c = pairContrib(r, o), t = 0; c.forEach(function(cv, u){ if (Math.abs(cv) > Math.abs(c[t])) t = u; });
+    var A = groups[r[0]].traits, B = groups[r[1]].traits, i = TERM_IJ2[t][0], j = TERM_IJ2[t][1];
+    if (i === j){ var hA = A[i] > 0, hB = B[i] > 0, pat = hA && hB ? "both" : !hA && !hB ? "neither" : "mixed";
+      return { 0: { both: "two off-ball shooters open the floor", neither: "neither shoots off the catch", mixed: "one shoots off the catch, the other does not" },
+               1: { both: "both want the ball", neither: "nobody to run the offense", mixed: "one runs the offense, the other defers" },
+               2: { both: "both want the paint", neither: "nobody inside", mixed: "one inside, one outside" } }[i][pat]; }
+    var p1 = A[i] * B[j], p2 = B[i] * A[j], X = Math.abs(p1) >= Math.abs(p2) ? [A[i], B[j]] : [B[i], A[j]], hi = X[0] > 0, hj = X[1] > 0;
+    if (t === 1) return hi && hj ? "off-ball shooter and creator, each does his own thing" : hi ? "an off-ball shooter with no one to create for him" : hj ? "a creator with no off-ball shooter to kick to" : "neither shoots off the ball nor creates";
+    if (t === 2) return hi && hj ? "the off-ball shooter opens the lane for the big" : hi ? "an off-ball shooter with no one inside" : hj ? "a player who doesn’t shoot off the ball clogs the lane next to the big" : "no off-ball shooter and no one inside";
+    return hi && hj ? "the creator drives into the big’s space" : hi ? "the creator has the lane to himself" : hj ? "the big has the paint and no one driving into it" : "neither drives and no one is inside";
+  }
+  var pairName = function(r){ return r[0] === r[1] ? "Two " + gn(codes[r[0]]) + "s" : gn(codes[r[0]]) + " + " + gn(codes[r[1]]); };
+  var ppct = function(r, o){ return Math.max(1, Math.min(100, Math.round(100 * r[PCOL[o + "_pct"]]))); };
+  var ordinal = function(n){ var m = n % 100; return n + (m >= 11 && m <= 13 ? "th" : [1, 2, 3].indexOf(n % 10) >= 0 ? ["st", "nd", "rd"][n % 10 - 1] : "th"); };
+  var verdict = function(q){ return q <= 10 ? "One of the worst fits among the pairings." : q <= 40 ? "Below a typical pairing." : q <= 60 ? "About a typical pairing." : q <= 90 ? "Better than most pairings." : "One of the best fits among the pairings."; };
+  var winsOf = function(ptsSeason){ return ptsSeason * core.meta.wins_per_point / 82; };
+  var PAIR_POSS = 1500;      // a heavy-use pair's possessions together in a season, for the season-scale figures
+  var seasonPts = function(per100){ return per100 * PAIR_POSS / 100; };
+  var pctColor = function(q){ var t = Math.min(1, Math.abs(q - 50) / 50); return "color-mix(in srgb, " + (q >= 50 ? "var(--good)" : "var(--bad)") + " " + Math.round(100 * t) + "%, var(--mid))"; };
+  function pairText(r){
+    var o = state.pairOut, q = ppct(r, o), v = pv(r, o), sp = seasonPts(v), N = core.pairs.rows.length, rk = 1;
+    core.pairs.rows.forEach(function(x){ if (pv(x, o) > v) rk++; });
+    return '<b>' + esc(pairName(r)) + '</b>: ' + (rk === 1 ? 'the best fit of all ' + N + ' pairings.' : rk === N ? 'the worst fit of all ' + N + ' pairings.' : 'ranks <span class="num">' + rk + '</span> of ' + N + ' pairings (' + ordinal(q) + ' percentile). <span class="verdict">' + verdict(q) + '</span>') +
+      '<span class="muted small" style="display:block;margin-top:4px">Two players purely of these styles: ' + svp(v) + ' points per 100 (95% range ' + rng(v, pse(r, o)) + '), about ' + sv(sp, 0) + ' points over ' + PAIR_POSS.toLocaleString() + ' possessions together. The main reason: ' + pairWhyWords(r, o) + '. Projected from the six skill terms; not tested on its own.</span>';
+  }
+  function pairHeatmap(ord){
+    var c = 19, L = 178, T = 4, B = 150, n = ord.length, W = L + n * c + 8, H = T + n * c + B, s = "", o = state.pairOut;
+    s += '<svg class="heat" tabindex="0" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + FIT_OUT[o] + ': every pair of styles by percentile. Use the arrow keys to move between cells.">';
+    for (var i = 0; i < n; i++){
+      s += '<text x="' + (L - 8) + '" y="' + (T + i * c + c / 2 + 4) + '" font-size="12" text-anchor="end">' + esc(gn(codes[ord[i]])) + '</text>';
+      for (var j = 0; j <= i; j++){
+        var r = PIDX[ord[i] * G + ord[j]], q = ppct(r, o);
+        s += '<rect class="c' + (i === j ? ' same' : '') + '" data-k="' + r._k + '" data-i="' + i + '" data-j="' + j + '" x="' + (L + j * c + 1) + '" y="' + (T + i * c + 1) + '" width="' + (c - 2) + '" height="' + (c - 2) + '" rx="2" style="fill:' + pctColor(q) + '"><title>' + esc(pairName(r)) + ': ' + ordinal(q) + ' percentile</title></rect>';
+      }
+    }
+    for (j = 0; j < n; j++){
+      var x = L + j * c + c / 2, y = T + n * c + 8;
+      s += '<text x="' + x + '" y="' + y + '" font-size="12" text-anchor="end" transform="rotate(-55 ' + x + ' ' + y + ')">' + esc(gn(codes[ord[j]])) + '</text>';
+    }
+    return s + '</svg>';
+  }
+  function posterPair(t, o){           // an example pairing: both styles high on the term's skills, moved the way the term says
+    var bo = betaOf(o); if (Math.abs(bo[t] * 2) < 0.08) return null;
+    var i = TERM_IJ2[t][0], j = TERM_IJ2[t][1], best = null, bx = 0;
+    core.pairs.rows.forEach(function(r){ var A = groups[r[0]].traits, B = groups[r[1]].traits;
+      if (!((A[i] > 0 && B[j] > 0) || (B[i] > 0 && A[j] > 0))) return;
+      var q = ppct(r, o); if (bo[t] > 0 ? q < 50 : q > 50) return;
+      var x = Math.abs(pairX(A, B)[t]); if (x > bx){ bx = x; best = r; } });
+    return best;
+  }
+  var SK_ROLE = ["Off-ball shooter", "On-ball creator", "Big"];
+  var SK_TEXT = [["Off-ball shooting is spacing: threes off the catch rather than off the dribble, corner threes and spot-ups, and how open he is when he lets fly.", "Measured with three-point and spot-up tracking."],
+                 ["On-ball creation is running the offense: the ball in his hands, driving, working pick-and-roll, pulling up, setting up teammates.", "Measured with usage, possession and passing tracking."],
+                 ["Paint presence is living in the paint: finishing at the rim, boxing out and chasing boards, protecting the basket.", "Measured with rim, paint and rebounding tracking."]];
+  var skChip = function(i){ return '<span class="sk s' + i + '">' + esc(SK_ROLE[i]) + '</span>'; };
+  function skillsStrip(){
+    return '<div class="skills">' + SK_ROLE.map(function(_, i){ return '<div class="skill s' + i + '">' + skChip(i) + '<p>' + esc(SK_TEXT[i][0]) + '</p><p class="how">' + esc(SK_TEXT[i][1]) + '</p></div>'; }).join("") + '</div>';
+  }
+  function termChart(o, note){
+    var T = core.fit.terms, mx = 0;
+    T.forEach(function(t){ mx = Math.max(mx, Math.abs(t[o]) + 1.96 * t[o + "_se"]); });
+    var step = [0.25, 0.5, 1, 2].filter(function(st){ return 2 * Math.ceil(mx / st - 1e-9) + 1 <= 5; })[0] || 2; mx = Math.ceil(mx / step - 1e-9) * step;
+    var X = function(v){ return (50 + 50 * v / mx).toFixed(2); };
+    var ticks = []; for (var t = -mx; t <= mx + 1e-9; t += step) ticks.push(t);
+    var byIdx = T.slice().sort(function(a, b){ return termIndex(a) - termIndex(b); });
+    var rows = byIdx.map(function(t){
+      var k = termIndex(t), v = t[o], se = t[o + "_se"], lo = v - 1.96 * se, hi = v + 1.96 * se, cls = lo > 0 ? "up" : hi < 0 ? "down" : "flat", sg = v >= 0 ? "pos" : "neg", ij = TERM_IJ2[k];
+      var x0 = +X(0), xv = +X(v), xl = +X(lo), xh = +X(hi);
+      return '<div class="term ' + cls + ' ' + sg + '" title="' + esc(TERM_NAME[k]) + ': ' + pts(v) + ' (range ' + rng(v, se) + ')">' +
+        '<span class="nm"><span class="pair">' + skChip(ij[0]) + '<span class="with"><span class="plus">+</span>' + skChip(ij[1]) + '</span></span><span class="why">' + esc(TERM_WHY[k]) + '</span></span>' +
+        '<span class="plot" aria-hidden="true"><i class="zero"></i><i class="bar" style="left:' + Math.min(x0, xv).toFixed(2) + '%;width:' + Math.abs(xv - x0).toFixed(2) + '%"></i><i class="ci" style="left:' + X(lo) + '%;width:' + (xh - xl).toFixed(2) + '%"></i></span>' +
+        sv(v, 2, "v") + '</div>';
+    }).join("");
+    var axis = '<div class="raxis tx"><span></span><div class="ticks">' + ticks.map(function(t){ var z = Math.abs(t) < 1e-9; return '<span' + (z ? ' class="z"' : '') + ' style="left:' + X(t) + '%">' + (z ? "0" : sign(t, step < 0.5 ? 2 : 1)) + '</span>'; }).join("") + '</div><span></span></div>';
+    var head = '<div class="termhead"><h3 class="whyh"><span class="out">' + esc(FIT_OUT[o]) + '</span></h3>' +
+      '<div class="legend"><span><i style="background:var(--good)"></i>helps</span><span><i style="background:var(--bad)"></i>crowds</span><span><i class="lz"></i>range includes zero</span></div></div>' +
+      '<p class="sub">Points per 100 possessions that one pairing adds (red) or costs (blue), for two players who are both one standard deviation above average at the paired skills.</p>';
+    var why = '<details class="more"><summary>Why each pairing, with an example from the grid</summary><div>' + byIdx.map(function(t){ var k = termIndex(t), pp = posterPair(k, o);
+      return '<p><b>' + esc(TERM_NAME[k]) + '</b> <span class="num">' + pts(t[o]) + '</span>: ' + esc(TERM_SENT[o][k]) + (pp ? ' Example: ' + esc(pairName(pp)) + ', ' + sign(pv(pp, "net")) + ' in the grid below.' : '') + '</p>'; }).join("") + '</div></details>';
+    return '<div class="termcard">' + head + '<div class="terms">' + rows + axis + '</div>' +
+      '<p class="note">The thin line is the 95% range. When it crosses zero the bar is faded: the effect may be nothing.</p>' + why + (note || '') + '</div>';
+  }
+  function finding(){
+    var o = "net", rows = core.pairs.rows, by = rows.slice().sort(function(a, b){ return pv(a, o) - pv(b, o); });
+    var w0 = by[0], w1 = by[1], best = by[by.length - 1];
+    var say = function(r){ return '<b>' + esc(pairName(r)) + '</b>: <span class="num">' + sign(pv(r, o)) + '</span>'; };
+    return '<div class="finding"><h3>Finding: on offense, creators crowd creators and bigs crowd bigs</h3>' +
+      '<ul class="plain"><li>' + say(w0) + ' per 100 possessions, the worst fit of the ' + rows.length + ' style pairings (every two of the ' + G + ' styles, a style with itself included).</li>' +
+      '<li>' + say(w1) + '.</li>' +
+      '<li>' + say(best) + ', the best fit: one inside, one outside.</li></ul>' +
+      '<p class="why" style="margin-top:10px">Neither player is the problem; the pairing is. Every player’s own value is already counted, so these numbers are only what a pair gains or loses by sharing the floor. What was tested is the six skill terms as a block (The tests, at the bottom of the page); the style pairings here and in the grid are what those terms imply for two whole styles, projected, not fitted one by one.</p>' +
+      '<p class="why" style="margin-top:6px">Every number on this page is one thing: net fit, offense plus defense, in points per 100 possessions, for two players who are purely the named styles. Section 1 shows it for a mild dose of each skill, so its numbers are small. Section 2 shows it for whole styles, so its numbers are bigger. Section 3 adds it up for a lineup.</p></div>';
+  }
+  function testsBlock(){
+    var F = core.fit;
+    var offT = F.tests.filter(function(x){ return x.test.indexOf("offense given") === 0; }), defT = F.tests.filter(function(x){ return x.test.indexOf("defense given") === 0; });
+    var minH = function(a){ return Math.min.apply(null, a.map(function(x){ return x.p_holm; })); };
+    return '<details class="more"><summary>The tests</summary><div>' +
+      '<p>The six offense terms, tested as a block with the defense’s six fitted: Holm p = <span class="num">' + fmtP(minH(offT)) + '</span> over <span class="num">' + F.draws.toLocaleString() + '</span> calibrated bootstrap draws. Defense given offense: Holm p = <span class="num">' + fmtP(minH(defT)) + '</span>; there is no defensive style effect on points. Full detail under <button type="button" class="linkbtn" data-tab="trust">Methodology</button>.</p></div></details>';
+  }
+  function renderPairs(){
+    var P = core.pairs, rows = P.rows, o = state.pairOut;
+    rows.forEach(function(r, k){ r._k = k; PIDX[r[0] * G + r[1]] = PIDX[r[1] * G + r[0]] = r; });
+    var ord = core.meta.star_order;
+    var byPct = rows.slice().sort(function(a, b){ return pv(b, o) - pv(a, o); });
+    var big = byPct.slice(0, 5).concat(byPct.slice(-5));
+    var RANK = {}; byPct.forEach(function(r, i){ RANK[r._k] = i + 1; });
+    var tr = big.map(function(r){ var q = ppct(r, o); return '<tr><td>' + esc(pairName(r)) + '</td><td class="num" style="color:' + (q >= 50 ? "var(--good)" : "var(--bad)") + '">' + RANK[r._k] + '</td><td class="num muted">' + ordinal(q) + '</td><td class="hide-sm muted">' + esc(pairWhyWords(r, o)) + '</td></tr>'; }).join("");
+    $("#pairs-panel").innerHTML = '<div><h2>Style fit</h2><p class="lede">How the ' + G + ' styles fit together on the floor. Built from every possession since ' + core.meta.seasons[0] + ', knowing all ten players who were out there, so each player is compared with himself next to different teammates.</p></div>' +
+      finding() +
+      '<div class="sec"><h3>1. Where it comes from: three skills</h3><p class="lede">Every style is a mix of three skills, and the model fits one number for each way two skills can meet, six in all. Styles that want the same thing get in each other’s way; an off-ball shooter and a big add to each other.</p>' +
+      '<div class="termbox">' + skillsStrip() + '<p class="muted small" style="margin:0 0 4px">Every style carries a level of each skill, and a player’s levels come from the styles he mixes. So they describe his role, not how well he does it: Curry’s off-ball shooting reads near average this way because his main style is an on-ball one, and the model never sees his percentages.</p>' +
+      termChart("net", '<p class="note">Net means offense and defense added together. The defense side of every pairing is close to zero, so these bars are almost all offense. The test behind them is under The tests, at the bottom of the page.</p>') + '</div></div>' +
+      '<div class="sec"><h3>2. Every pair of styles</h3><p class="lede">Those six numbers, applied to each style’s skill mix, give one number for every pair of styles. Each cell is a projection from those six terms, not a separate estimate: no pair of styles was tested on its own, and no single cell is a finding by itself. Click a cell to read it, or tab to the grid and use the arrow keys: red fits, blue crowds, and styles next to each other on the grid play alike.</p>' +
+      '<div class="pairgrid"><div class="stack" style="gap:10px"><div class="heatwrap">' + pairHeatmap(ord) + '</div>' +
+      '<div class="legend" style="margin-top:0"><span>worst fit<span class="ramp"></span>best fit</span><span>percentile among the ' + rows.length + ' pairings</span></div>' +
+      '<div class="readout" id="pair-read" aria-live="polite"></div></div>' +
+      '<div><h4 style="margin:0 0 6px">Best and worst fits</h4><div class="tablewrap"><table><thead><tr><th>Pairing</th><th class="num">Rank of ' + rows.length + '</th><th class="num">Percentile</th><th class="hide-sm">Why</th></tr></thead><tbody>' + tr + '</tbody></table></div>' +
+      '<p class="muted small" style="margin:6px 0 0">The most extreme cells belong to the most extreme styles, whose skills sit furthest from average; two full-time players of those styles rarely share the floor.</p></div></div></div>' +
+      '<div class="sec"><h3>3. In a real five</h3><p class="lede">Five players make ten pairings, and they add up. <button type="button" class="linkbtn" data-tab="lineup">Lineup check</button> does the sum for any five you pick and ranks it against every real five since ' + core.meta.seasons[0] + '.</p></div>' +
+      '<div class="sec">' + testsBlock() + '</div>';
+    $("#pairs-panel").querySelectorAll("[data-tab]").forEach(function(b){ b.addEventListener("click", function(){ showTab(b.dataset.tab); }); });
+    var svg = $("#pairs-panel .heat"), read = $("#pair-read");
+    function show(k){ var r = rows[k]; read.innerHTML = pairText(r); svg.querySelectorAll("rect.sel").forEach(function(e){ e.classList.remove("sel"); }); var el = svg.querySelector('rect[data-k="' + k + '"]'); if (el) el.classList.add("sel"); }
+    svg.addEventListener("click", function(e){ var k = e.target.getAttribute("data-k"); if (k != null) show(+k); });
+    svg.addEventListener("keydown", function(e){   // arrow keys walk the grid; the readout follows the selected cell
+      var d = { ArrowLeft: [0, -1], ArrowRight: [0, 1], ArrowUp: [-1, 0], ArrowDown: [1, 0] }[e.key]; if (!d) return;
+      e.preventDefault();
+      var sel = svg.querySelector("rect.sel"), ci = sel ? +sel.getAttribute("data-i") : 0, cj = sel ? +sel.getAttribute("data-j") : 0;
+      var i = Math.max(0, Math.min(ord.length - 1, ci + d[0])), j = Math.max(0, Math.min(i, cj + d[1]));
+      var el = svg.querySelector('rect[data-i="' + i + '"][data-j="' + j + '"]'); if (el) show(+el.getAttribute("data-k"));
+    });
+    show(byPct[byPct.length - 1]._k);
+  }
+
+  // ---------- lineup check: how five player-seasons' skills fit, offense plus defense, next to the real fives ----------
+  // Five fixed slots (add, swap in place, remove), each player's three skills as bars and his three ratings, the total
+  // against the real possessions and the real fives, and the ten pairings that make up the total. The math is the twelve
+  // trait terms as net: a pair's x is pairX(a, b), its points are x · (beta[0..5] − beta[6..11]), the lineup total is the
+  // sum over its pairs, and its range is ±1.96 × sqrt(x_tot' Vn x_tot) with Vn = Voo + Vdd − Vod − Vdo.
+  var LU = [], LU_EDIT = null, LU_MSG = "", LU_ALL = false, LU_TS = null, LU_OPEN = {}, LU_MORE = false, LU_SEA = load("lab-trade-season") || "";   // LU_OPEN: which player cards are open
+  var LROWS = null, LKEY = {}, LBYTS = {}, LHIST = null, LBEST = null, LG = null, LU_FROM_LINK = null;   // LU_FROM_LINK: a five named in the address   // LG: the five grade bands
+  var GRADES = ["F", "D", "C", "B", "A", "S"], GSHARE = [0.0228, 0.1587, 0.5, 0.8413, 0.9772];   // bell-curve shares: 2.3 / 13.6 / 34.1 / 34.1 / 13.6 / 2.3%
+  function gradeOf(v){ var b = 0; LG.cuts.forEach(function(c){ if (v >= c) b++; }); return GRADES[b]; }
+  function gradeChip(v){ var g = gradeOf(v); return '<span class="gchip g' + g + '" aria-label="synergy grade ' + g + '">' + g + '</span>'; }
+  var SKILL = ["Off-ball shooting", "On-ball creation", "Paint presence"], SKILL_K = ["Off-ball", "On-ball", "Paint"];
+  var SKILL_DEF = ["Spacing: threes off the catch rather than off the dribble, corner threes and spot-ups, and how open he is when he shoots", "Running the offense: the ball in his hands, driving, pick-and-roll, pull-ups, setting up teammates", "Living in the paint: finishing at the rim, rebounding, protecting the basket"];
+  function ratingShown(r){ var net = +r.net.toFixed(1), off = +r.off.toFixed(1); return { net: net, off: off, def: +(net - off).toFixed(1) }; }   // shown to one decimal, so total = offense + defense on screen
+  var TRADE_MIN = 1000;              // a trade target needs this many minutes in his season (the site's one minutes floor)
+  function rankWord(f){ return f >= 0.9 ? "elite" : f >= 0.7 ? "good" : f >= 0.3 ? "average" : f >= 0.1 ? "weak" : "poor"; }
+  var DOES = ["shoots off the ball", "creates", "lives in the paint"], DO = ["shoot off the ball", "create", "live in the paint"], DOESNT = ["doesn’t shoot off the ball", "doesn’t need the ball", "stays outside"];
+  var TEAM = { ATL: "Atlanta", BKN: "Brooklyn", BOS: "Boston", CHA: "Charlotte", CHI: "Chicago", CLE: "Cleveland", DAL: "Dallas", DEN: "Denver", DET: "Detroit", GSW: "Golden State",
+    HOU: "Houston", IND: "Indiana", LAC: "LA Clippers", LAL: "LA Lakers", MEM: "Memphis", MIA: "Miami", MIL: "Milwaukee", MIN: "Minnesota", NOP: "New Orleans", NYK: "New York",
+    OKC: "Oklahoma City", ORL: "Orlando", PHI: "Philadelphia", PHX: "Phoenix", POR: "Portland", SAC: "Sacramento", SAS: "San Antonio", TOR: "Toronto", UTA: "Utah", WAS: "Washington" };
+  var teamName = function(t){ return TEAM[t] || t; };
+  // a few real fives that tell the story; found in core.fit.lineups by season, team and surnames
+  var HX = { lo: -3, hi: 4.5, bw: 0.25 };                       // the real-fives chart: fixed scale, so it holds still while you swap
+  var numSort = function(a, b){ return a - b; };
+  var fiveKey = function(ids){ return ids.slice().sort(numSort).join(","); };
+
+  // all together: the five's own ratings plus their fit, against an average real five (whose fit is core.fit.fit_mean)
+  function ownSum(ids, o){ var s = 0; ids.forEach(function(r){ s += players[r].rating[o]; }); return s; }
+  function expectedOf(ids, fit){ return ownSum(ids, "net") + fit - core.fit.fit_mean; }
+  function pairX(a, b){ return TERM_IJ.map(function(ij){ return a[ij[0]] * b[ij[1]] + b[ij[0]] * a[ij[1]]; }); }
+  function lineupFit(ids){
+    var F = core.fit, bo = F.beta.slice(0, 6), bd = F.beta.slice(6, 12), V = F.cov, bn = bo.map(function(b, q){ return b - bd[q]; });
+    var dot = function(x, v){ var s = 0; for (var i = 0; i < x.length; i++) s += x[i] * v[i]; return s; };
+    var xt = [0, 0, 0, 0, 0, 0], prs = [];
+    for (var i = 0; i < ids.length; i++) for (var j = i + 1; j < ids.length; j++){
+      var x = pairX(players[ids[i]].traits, players[ids[j]].traits); for (var q = 0; q < 6; q++) xt[q] += x[q];
+      prs.push({ i: i, j: j, v: dot(x, bn), c: x.map(function(xv, t){ return xv * bn[t]; }) });
+    }
+    var tot = dot(xt, bn), vv = 0;
+    for (i = 0; i < 6; i++) for (j = 0; j < 6; j++) vv += xt[i] * (V[i][j] + V[i + 6][j + 6] - V[i][j + 6] - V[i + 6][j]) * xt[j];
+    return { tot: tot, off: dot(xt, bo), def: -dot(xt, bd), se: Math.sqrt(Math.max(vv, 0)), prs: prs };
+  }
+  function lineupIndex(){
+    if (LROWS) return;
+    var L = core.fit.lineups, ci = {}; L.columns.forEach(function(c, i){ ci[c] = i; });
+    LROWS = L.rows.map(function(r, k){ return { k: k, season: r[ci.season], team: r[ci.team], ids: r[ci.players], poss: r[ci.poss], fit: r[ci.fit] }; });
+    LROWS.forEach(function(l){ l.exp = expectedOf(l.ids, l.fit); LKEY[fiveKey(l.ids)] = l; var t = l.season + "|" + l.team; (LBYTS[t] = LBYTS[t] || []).push(l); });
+    LBEST = LROWS.slice().sort(function(a, b){ return b.exp - a.exp; })[0];
+    var lo = Infinity, hi = -Infinity; LROWS.forEach(function(l){ if (l.fit < lo) lo = l.fit; if (l.fit > hi) hi = l.fit; });
+    var sorted = LROWS.map(function(l){ return l.fit; }).sort(numSort);
+    LG = { lo: lo, hi: hi, cuts: GSHARE.map(function(q){ return sorted[Math.floor(q * sorted.length)]; }), n: [0, 0, 0, 0, 0, 0] };
+    LROWS.forEach(function(l){ LG.n[GRADES.indexOf(gradeOf(l.fit))]++; });
+    Object.keys(LBYTS).forEach(function(t){ LBYTS[t].sort(function(a, b){ return b.poss - a.poss; }); });
+    var n = Math.round((HX.hi - HX.lo) / HX.bw); LHIST = []; for (var i = 0; i < n; i++) LHIST.push(0);
+    LROWS.forEach(function(l){ var b = Math.floor((l.fit - HX.lo) / HX.bw); if (b >= 0 && b < n) LHIST[b]++; });
+  }
+  // where a total sits among the real possessions: linear between the stored possession-weighted percentiles
+  function fitPct(v){
+    var P = core.fit.fit_percentiles, ks = Object.keys(P).map(Number).sort(numSort);
+    if (v <= P[ks[0]]) return { p: ks[0], edge: "low" };
+    if (v >= P[ks[ks.length - 1]]) return { p: ks[ks.length - 1], edge: "high" };
+    for (var i = 1; i < ks.length; i++) if (v <= P[ks[i]]) return { p: ks[i - 1] + (ks[i] - ks[i - 1]) * (v - P[ks[i - 1]]) / (P[ks[i]] - P[ks[i - 1]]) };
+  }
+  // surnames for the pair list; full names when two share one, the season when one player appears twice
+  function lastName(p){ var t = p.player.replace(/\s+(jr\.?|sr\.?|ii|iii|iv)$/i, "").trim().split(" "); return t[t.length - 1]; }
+  function shortNames(ids){
+    var ln = ids.map(function(r){ return lastName(players[r]); });
+    return ids.map(function(r, k){
+      if (ln.filter(function(x){ return x === ln[k]; }).length < 2) return ln[k];
+      var twice = ids.filter(function(q){ return players[q].PLAYER_ID === players[r].PLAYER_ID; }).length > 1;
+      return twice ? ln[k] + " " + players[r].season : players[r].player;
+    });
+  }
+  // guards first, bigs last, for fives loaded from the data
+  function roleOrder(ids){ return ids.slice().sort(function(a, b){ var p = players[a].traits, q = players[b].traits; return (q[1] - q[2]) - (p[1] - p[2]); }); }
+  // the main reason for a pair: the trait term that pushes hardest in the direction of the pair's total, in plain words
+  function said(n, k, yes){ return n + " " + (yes ? DOES[k] : DOESNT[k]); }
+  function pairWhy(pr, A, B, nA, nB){
+    if (Math.abs(pr.v) < 0.05) return "little either way";
+    var s = pr.v > 0 ? 1 : -1, t = 0;
+    pr.c.forEach(function(c, u){ if (c * s > pr.c[t] * s) t = u; });
+    var k = TERM_IJ[t][0], l = TERM_IJ[t][1];
+    if (k === l){
+      var a = A[k] >= 0, b = B[k] >= 0;
+      if (a && b) return "both " + DO[k];
+      if (!a && !b) return ["neither shoots off the ball", "neither creates", "both stay outside"][k];
+      return said(a ? nA : nB, k, true) + ", " + said(a ? nB : nA, k, false);
+    }
+    var flip = Math.abs(B[k] * A[l]) > Math.abs(A[k] * B[l]);   // the larger side: A's k with B's l, or B's k with A's l
+    return flip ? said(nB, k, B[k] >= 0) + ", " + said(nA, l, A[l] >= 0) : said(nA, k, A[k] >= 0) + ", " + said(nB, l, B[l] >= 0);
+  }
+
+  function traitCell(v, k){
+    var c = Math.max(-3, Math.min(3, v)), x0 = 50 + 50 * Math.min(0, c) / 3, w = 50 * Math.abs(c) / 3;
+    var word = v >= 1.5 ? "central to his style" : v >= 0.5 ? "a big part of his style" : v > -0.5 ? "a typical share of his style" : v > -1.5 ? "a small part of his style" : "hardly part of his style";
+    var short = v >= 1.5 ? "central" : v >= 0.5 ? "big part" : v > -0.5 ? "typical" : v > -1.5 ? "small part" : "hardly any";
+    return '<span class="lu-tr s' + k + '" role="img" aria-label="' + SKILL[k] + ': ' + word + ' (' + sign(v) + ')"><span class="k" aria-hidden="true" title="' + SKILL_DEF[k] + '">' + SKILL_K[k] + '</span>' +
+      '<span class="bar" aria-hidden="true"><i class="' + (v >= 0 ? "hi" : "lo") + '" style="left:' + x0.toFixed(1) + '%;width:' + w.toFixed(1) + '%"></i></span>' +
+      '<span class="w" aria-hidden="true">' + short + ' <b class="num">' + sign(v) + '</b></span></span>';
+  }
+  function ratingLine(p){
+    var r = ratingShown(p.rating);
+    return '<span class="lu-rt" aria-label="Rating: total impact ' + sign(r.net) + ', offense ' + sign(r.off) + ', defense ' + sign(r.def) + '">' +
+      OUTS.map(function(o){ return '<span class="rt-' + o + '" title="' + OUT_NAME[o] + ': ' + rankShort(p, o) + ' of NBA players in ' + p.season + '">' + OUT_NAME[o] + ' ' + sv(r[o]) + '<i>' + rankWord(p.rating_rank[o]) + '</i></span>'; }).join("") + '</span>';
+  }
+  // a player's best season: his highest net rating among seasons with BEST_MIN+ minutes (any season if he has none)
+  var BEST_MIN = 500;
+  function bestSeasonRow(r){
+    var p = players[r], all = players.filter(function(q){ return q.PLAYER_ID === p.PLAYER_ID; });
+    var pool = all.filter(function(q){ return q.MIN >= BEST_MIN; }); if (!pool.length) pool = all;
+    return pool.reduce(function(a, b){ return b.rating.net > a.rating.net ? b : a; }).row_id;
+  }
+  function bestBtn(k){
+    var r = LU[k], b = bestSeasonRow(r), p = players[r];
+    if (b === r) return '<span class="lu-best done" title="This is his best season">Best season ✓</span>';
+    return '<button type="button" class="lu-best" data-best="' + k + '" title="' + esc(players[b].season + ", " + sign(players[b].rating.net) + " net") + '" aria-label="Switch ' + esc(p.player) + ' to his best season, ' + esc(players[b].season) + '">Best season<span class="arr"> →</span></button>';
+  }
+  function rosterHTML(){
+    var li = [];
+    for (var k = 0; k < 5; k++){
+      var n = '<span class="lu-n num" aria-hidden="true">' + (k + 1) + '</span>';
+      if (k < LU.length && LU_EDIT !== k){
+        var p = players[LU[k]];
+        li.push('<li class="lu-slot">' + n + '<span class="lu-who"><b>' + esc(p.player) + '</b> <span class="muted nw num">' + p.season + '</span> <span class="muted nw">' + esc(p.team) + '</span> <span class="lu-style">' + esc(gn(p.main_group)) + '</span></span>' +
+          '<details class="lu-more" data-row="' + LU[k] + '"' + (LU_OPEN[LU[k]] ? ' open' : '') + '><summary>Ratings and how he plays</summary><div>' +
+          '<div class="lu-grp"><span class="lu-gh">How good <small>points per 100 possessions, three-season rating; total = offense + defense; the word is his rank among that season’s players</small></span>' + ratingLine(p) + '</div>' +
+          '<div class="lu-grp"><span class="lu-gh">How he plays <small>style tendencies from his archetype mix, not ratings of his shooting or passing; 0 is the league average, 1 is one standard deviation above it</small></span><span class="lu-trs">' + p.traits.map(traitCell).join("") + '</span></div></div></details>' +
+          '<span class="lu-act"><button type="button" class="linkbtn small" data-drop="' + k + '" aria-label="Remove ' + esc(p.player) + '">Remove</button></span>' + bestBtn(k) + '</li>');
+      } else if (k === LU_EDIT){
+        li.push('<li class="lu-slot lu-edit">' + n + '<div class="search lu-find" id="lu-swap"></div><span class="lu-act"><button type="button" class="lu-btn" data-cancel>Cancel</button></span></li>');
+      } else if (k === LU.length){
+        li.push('<li class="lu-slot lu-edit">' + n + '<div class="search lu-find" id="lu-add"></div></li>');
+      } else li.push('<li class="lu-slot lu-open">' + n + '<span>Open slot</span></li>');
+    }
+    return '<div class="lu-roster"><div class="lu-rh"><h3>The five</h3>' + (LU.length ? '<button type="button" class="linkbtn small" data-clear>Clear all</button>' : '') + '</div>' +
+      '<ol class="lu-slots" aria-label="Your five">' + li.join("") + '</ol>' +
+      '<p class="lu-msg small" role="status">' + esc(LU_MSG) + '</p></div>';
+  }
+  function distHTML(v, se){
+    var span = HX.hi - HX.lo, X = function(x){ return 100 * (Math.min(Math.max(x, HX.lo), HX.hi) - HX.lo) / span; }, f = function(x){ return x.toFixed(2); };
+    var mx = Math.max.apply(null, LHIST), H = 60, bw = 100 * HX.bw / span, s = '';
+    s += '<rect class="band" x="' + f(X(v - 1.96 * se)) + '" y="0" width="' + f(X(v + 1.96 * se) - X(v - 1.96 * se)) + '" height="' + H + '"/>';
+    LHIST.forEach(function(c, i){ var h = (H - 3) * c / mx; if (c) s += '<rect class="bin" x="' + f(i * bw + 0.15) + '" width="' + f(bw - 0.3) + '" y="' + f(H - h) + '" height="' + f(h) + '"/>'; });
+    s += '<line class="zero" x1="' + f(X(0)) + '" x2="' + f(X(0)) + '" y1="0" y2="' + H + '" vector-effect="non-scaling-stroke"/>';
+    s += '<line class="mk" x1="' + f(X(v)) + '" x2="' + f(X(v)) + '" y1="0" y2="' + H + '" vector-effect="non-scaling-stroke"/>';
+    var off = v < HX.lo ? "◂ " : "", off2 = v > HX.hi ? " ▸" : "", at = X(v), al = at < 12 ? "start" : at > 88 ? "end" : "mid";
+    var ticks = []; for (var t = Math.ceil(HX.lo); t <= HX.hi; t++) ticks.push(t);
+    return '<figure class="lu-dist"><div class="plot"><span class="lu-mk ' + al + '" style="left:' + f(at) + '%">' + off + 'this five ' + pts(v) + off2 + '</span>' +
+      '<svg viewBox="0 0 100 ' + H + '" preserveAspectRatio="none" aria-hidden="true">' + s + '</svg></div>' +
+      '<div class="lu-axis" aria-hidden="true">' + ticks.map(function(t){ return '<span style="left:' + f(X(t)) + '%">' + (t > 0 ? "+" : t < 0 ? MINUS : "") + Math.abs(t) + '</span>'; }).join("") + '</div>' +
+      '<figcaption class="muted small">Gold bars: the ' + LROWS.length.toLocaleString() + ' real fives that played ' + core.fit.lineups.min_possessions + '+ possessions together, ' + core.meta.seasons[0] + ' to ' + core.meta.seasons[core.meta.seasons.length - 1] + '. Shaded: this five’s range.</figcaption></figure>';
+  }
+  function ledgerHTML(res){
+    // the synergy score appears as its own row, then the average real five's fit comes off; every row is shown at two
+    // decimals with defense = total − offense after rounding, so the rows and the columns add up exactly as printed
+    var FM = core.fit.fit_mean, FMo = core.fit.fit_mean_off, r2 = function(v){ return +v.toFixed(2); };
+    var row = function(off, net){ var o = r2(off), n = r2(net); return { off: o, def: r2(n - o), net: n }; };
+    var own = row(ownSum(LU, "off"), ownSum(LU, "net")), fit = row(res.off, res.tot), avg = row(-FMo, -FM);
+    var ex = { off: r2(own.off + fit.off + avg.off), def: r2(own.def + fit.def + avg.def), net: r2(own.net + fit.net + avg.net) };
+    var cell = function(v){ return '<td class="num">' + sv(v, 2) + '</td>'; };
+    return '<div class="tablewrap"><table class="ledger"><thead><tr><th><span class="hide-sm">Per 100 possessions</span></th><th class="num c-off">Offense</th><th class="num c-def">Defense</th><th class="num c-net">Total impact</th></tr></thead><tbody>' +
+      '<tr><td>Their own ratings</td>' + cell(own.off) + cell(own.def) + cell(own.net) + '</tr>' +
+      '<tr><td>Fit of their skills<span class="sub hide-sm">the synergy score above</span></td>' + cell(fit.off) + cell(fit.def) + cell(fit.net) + '</tr>' +
+      '<tr><td>Minus an average real five’s fit<span class="sub hide-sm">what a typical real five already has</span></td>' + cell(avg.off) + cell(avg.def) + cell(avg.net) + '</tr>' +
+      '<tr class="sum"><td>Expected</td><td class="num"><span id="lu-exp" data-exp="' + ex.off.toFixed(4) + '">' + sv(ex.off, 2) + '</span></td>' + cell(ex.def) + cell(ex.net) + '</tr></tbody></table></div>';
+  }
+  function verdictHTML(res){
+    var n = LU.length;
+    if (n < 2) return '<div class="lu-verdict"><h3>How they fit</h3><p class="muted" style="margin:0">Add at least two players to see how their skills fit.</p></div>';
+    var v = res.tot, who = "these " + ["two", "three", "four", "five"][n - 2] + " players’";
+    var g5 = n === 5 ? gradeOf(v) : null;
+    var s = '<div class="lu-verdict"><h3>How they fit</h3><div class="lu-total"><span class="big num ' + (v > 0.005 ? "pos" : v < -0.005 ? "neg" : "") + '" id="lu-total" data-total="' + v.toFixed(4) + '">' + pts(v) + '</span>' + (g5 ? '<span class="g g' + g5 + '">' + g5 + '</span>' : '') +
+      '<span class="unit">Synergy score, points per 100 possessions: what ' + who + ' skills add or cost by sharing the floor, on top of their own ratings. Zero means no crowding and no help' + (n === 5 ? '; an average real five scores ' + svp(core.fit.fit_mean) + ', so anything under that is a below-average fit' : '') + '. Fit only, not talent.</span></div>';
+    var longUnit = '<p>Offense plus defense, on top of what each player brings on his own. Likely range <span class="num">' + rng(v, res.se) + '</span>.</p><p>The score’s zero is a five whose skills neither crowd nor help each other. Real fives average ' + svp(core.fit.fit_mean) + ', because coaches already pick players who fit, so the rank, the grade and the All together table below all measure against that average.</p>';
+    if (n < 5) return s + '<p class="lu-rank muted">A real lineup has five players and ten pairs, so a partial lineup’s total is not comparable yet. Add ' + ["one", "two", "three"][4 - n] + ' more to see where it ranks.</p><details class="more"><summary>What the score means</summary><div>' + longUnit + '</div></details></div>';
+    var pc = fitPct(v), SM = core.meta.sample;
+    var head = pc.edge === "high" ? "Better fit than 95%" : pc.edge === "low" ? "Worse fit than 95%" : pc.p >= 50 ? "Better fit than " + Math.round(pc.p) + "%" : "Worse fit than " + Math.round(100 - pc.p) + "%";
+    var real = LKEY[fiveKey(LU)];
+    var ex = expectedOf(LU, v), FM = core.fit.fit_mean, nb = 0; LROWS.forEach(function(l){ if (l !== real && l.exp < ex) nb++; });
+    var NO = LROWS.length - (real ? 1 : 0), pe = 100 * nb / NO, NL = NO.toLocaleString(), of = ' of the ' + NL + (real ? ' other' : '') + ' real fives.';
+    var cmp = 'Expected total impact is ' + (nb === NO ? (real ? 'the highest of all ' + LROWS.length.toLocaleString() + ' real fives.' : 'higher than every one of the ' + NL + ' real fives. The best, ' + esc(teamName(LBEST.team)) + ' ' + LBEST.season + ' (' + esc(shortNames(roleOrder(LBEST.ids)).join(', ')) + '), is ' + svp(LBEST.exp) + '.') :
+      nb === 0 ? 'lower than every one' + of : Math.round(pe) === 100 ? 'higher than all but ' + (NO - nb) + of : Math.round(pe) === 0 ? 'lower than all but ' + nb + of : (pe >= 50 ? 'higher than ' + Math.round(pe) + '%' : 'lower than ' + Math.round(100 - pe) + '%') + of);
+    var g = gradeOf(v), gi = GRADES.indexOf(g), glo = gi === 0 ? LG.lo : LG.cuts[gi - 1], ghi = gi === 5 ? LG.hi : LG.cuts[gi];
+    var gtxt = '<p><b>Grade ' + g + '.</b> Six tiers cut on a bell curve over the ' + LROWS.length.toLocaleString() + ' real fives: S is the top 2%, A the next 14%, B and C the middle 34% each, D the next 14%, F the bottom 2%. This five’s <span class="num">' + pts(v) + '</span> falls in ' + g + ' (<span class="num">' + pts(glo) + '</span> to <span class="num">' + pts(ghi) + '</span>), with <span class="num">' + LG.n[gi].toLocaleString() + '</span> real fives.</p>';
+    return s + '<p class="lu-rank"><b>' + head + '</b> of real possessions since <span class="nw num">' + core.meta.seasons[0] + '</span>.</p>' + distHTML(v, res.se) +
+      (real ? '<p class="small lu-real">These five played <span class="num">' + real.poss.toLocaleString() + '</span> possessions together for ' + esc(teamName(real.team)) + ' in <span class="num">' + real.season + '</span>.</p>' : '<p class="small lu-real">A what-if five: these players did not play <span class="num">' + core.fit.lineups.min_possessions + '</span>+ possessions together as a five in any season here' + whatIfNote() + '. The rank and grade compare it with fives that did.</p>') +
+      '<details class="more"><summary>What the score and grade mean</summary><div>' + longUnit + gtxt + '</div></details>' +
+      '<div class="lu-exp"><h3>All together</h3>' + ledgerHTML(res) +
+      '<p class="small">' + cmp + '</p>' +
+      '<details class="more"><summary>How this adds up</summary><p class="small muted" style="margin:4px 0 0">Own ratings: each player’s ' + core.fit.rating_window_seasons + '-season rating, older games weighted down. Fit: the synergy score above, ' + svp(v) + '. Then the ' + svp(FM) + ' an average real five gets comes off, so Expected is measured against a typical real five, and a five with no crowding and no help lands a little below one. The fit’s defense part is near zero for every five. Rows are rounded so they add up as printed.</p></details></div></div>';
+  }
+  function whatIfNote(){   // how far the five is from a real one: several seasons, or several teams in one season
+    var se = {}, te = {}; LU.forEach(function(r){ se[players[r].season] = 1; te[players[r].team + "|" + players[r].season] = 1; });
+    var ns = Object.keys(se).length, nt = Object.keys(te).length;
+    return ns > 1 ? ', and they come from ' + ns + ' different seasons' : nt > 1 ? ', and they come from ' + nt + ' different teams' : '';
+  }
+  // who to add: with one to four players in, every style as the next player, ranked by what it adds on net
+  function recommendHTML(){
+    var n = LU.length;
+    if (n === 0) return '<details class="more lu-rec"><summary>Who to add</summary><div><p class="muted small" style="margin:0">Add one to four players and this ranks the ' + groups.length + ' styles by how well the next player would fit them. With five in, it explores replacements by fit.</p></div></details>';
+    if (n === 5) return tradeHTML();
+    var F = core.fit, bo = F.beta.slice(0, 6), bd = F.beta.slice(6, 12), V = F.cov, bn = bo.map(function(b, q){ return b - bd[q]; });
+    var dot = function(x, v){ var s = 0; for (var i = 0; i < x.length; i++) s += x[i] * v[i]; return s; };
+    var names = shortNames(LU);
+    var recs = groups.map(function(g, gi){
+      var xt = [0, 0, 0, 0, 0, 0], parts = [];
+      LU.forEach(function(r, k){ var x = pairX(players[r].traits, g.traits); for (var q = 0; q < 6; q++) xt[q] += x[q]; parts.push({ k: k, v: dot(x, bn), c: x.map(function(xv, t){ return xv * bn[t]; }), A: players[r].traits }); });
+      var vv = 0; for (var i = 0; i < 6; i++) for (var j = 0; j < 6; j++) vv += xt[i] * (V[i][j] + V[i + 6][j + 6] - V[i][j + 6] - V[i + 6][j]) * xt[j];
+      return { g: gi, tot: dot(xt, bn), se: Math.sqrt(Math.max(vv, 0)), parts: parts };
+    }).sort(function(a, b){ return b.tot - a.tot; });
+    var mx = 0.5; recs.forEach(function(r){ mx = Math.max(mx, Math.abs(r.tot)); });
+    var X = function(v){ return 50 + 50 * v / mx; };
+    var row = function(r){
+      var g = groups[r.g], nm = gn(g.group), ps = r.parts.slice().sort(function(a, b){ return b.v - a.v; }), hi = ps[0], lo = ps[ps.length - 1];
+      var eg = g.flagship_players.slice(0, 2).map(function(e){ return e.player; }).join(", "), why;
+      why = '<details class="lu-why"><summary>Why</summary><table class="mini"><tr><th>With</th><th>Fit</th><th></th></tr>' + ps.map(function(p){ return '<tr><td>' + esc(names[p.k]) + '</td>' + '<td class="num">' + sv(p.v, 2) + '</td><td class="r">' + esc(pairWhy(p, p.A, g.traits, names[p.k], nm)) + '</td></tr>'; }).join('') + '</table></details>';
+      var cls = r.tot >= 0 ? "up" : "down", x0 = X(Math.min(0, r.tot)), w = Math.abs(X(r.tot) - 50);
+      return '<li><span class="nm"><b>' + esc(nm) + '</b><span class="sub">Think ' + esc(eg) + '</span></span>' +
+        '<svg viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true"><rect class="' + cls + '" x="' + x0.toFixed(2) + '" y="4" width="' + w.toFixed(2) + '" height="12"/>' +
+        '<line class="zero" x1="50" x2="50" y1="0" y2="20" vector-effect="non-scaling-stroke"/></svg>' + sv(r.tot, 2, "v") + '<span class="act">' + why + '</span></li>';
+    };
+    var who = n === 1 ? esc(names[0]) : 'the ' + ["two", "three", "four"][n - 2] + ' here';
+    return '<details class="more lu-rec" open><summary>Who to add</summary><div class="lu-pairs-wrap">' +
+      '<p class="lede2">Each style as the next player, scored by how it fits ' + who + ', per 100 possessions. Fit only, not talent.</p>' +
+      '<ol class="lu-pairs lu-opts">' + recs.slice(0, 5).map(row).join("") + '</ol>' +
+      '<h4 class="lu-rec-h">Avoid</h4><ol class="lu-pairs lu-opts">' + recs.slice(-3).reverse().map(row).join("") + '</ol>' +
+      '<div class="lu-key" aria-hidden="true"><span><i class="down"></i>crowds the players here</span><span><i class="up"></i>fits them</span></div></div></details>';
+  }
+  function recBar(v, mx){
+    var X = function(t){ return 50 + 50 * t / mx; }, x0 = X(Math.min(0, v)), w = Math.abs(X(v) - 50);
+    return '<svg viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true"><rect class="' + (v >= 0 ? "up" : "down") + '" x="' + x0.toFixed(2) + '" y="4" width="' + w.toFixed(2) + '" height="12"/>' +
+      '<line class="zero" x1="50" x2="50" y1="0" y2="20" vector-effect="non-scaling-stroke"/></svg>';
+  }
+  function modalSeason(atLeast){    // the season most of the five are from, the latest on a tie; null when fewer than atLeast share it
+    var c = {}; LU.forEach(function(r){ var s = players[r].season; c[s] = (c[s] || 0) + 1; });
+    var top = Object.keys(c).sort(function(a, b){ return c[b] - c[a] || (a > b ? -1 : 1); })[0];
+    return atLeast && c[top] < atLeast ? null : top;
+  }
+  function tradeHTML(){             // five in: for each player, the real player who fits the other four best; fit only
+    var F = core.fit, bo = F.beta.slice(0, 6), bd = F.beta.slice(6, 12), bn = bo.map(function(b, q){ return b - bd[q]; });
+    var dot = function(x, v){ var s = 0; for (var i = 0; i < x.length; i++) s += x[i] * v[i]; return s; };
+    var pv = function(a, b){ return dot(pairX(a, b), bn); };
+    var names = shortNames(LU), cur = lineupFit(LU), curR = Math.round(cur.tot * 100);
+    if (LU_SEA && core.meta.seasons.indexOf(LU_SEA) < 0) LU_SEA = "";             // a stored season the data no longer has
+    var season = LU_SEA, their = modalSeason(3), ids = {}; LU.forEach(function(r){ ids[players[r].PLAYER_ID] = 1; });   // season = "" means any season
+    var pool = players.filter(function(c){ return (!season || c.season === season) && c.MIN >= TRADE_MIN && !ids[c.PLAYER_ID]; });
+    var slots = LU.map(function(r, k){           // swapping one player changes only his four pairings, so the new score is cur - his pairings + the candidate's
+      var A = players[r].traits, others = LU.filter(function(x){ return x !== r; }), ot = others.map(function(r2){ return players[r2].traits; }), have = 0;
+      ot.forEach(function(B){ have += pv(A, B); });
+      var cands = pool.map(function(c){ var t = 0; ot.forEach(function(B){ t += pv(c.traits, B); }); return { c: c, d: (Math.round((cur.tot - have + t) * 100) - curR) / 100 }; })
+        .sort(function(a, b){ return b.d - a.d || b.c.MIN - a.c.MIN; });
+      return { k: k, r: r, A: A, others: others, cands: cands };
+    });
+    var taken = {}, rows = [], more = [], left = slots.slice(), ptr = {};
+    slots.forEach(function(sl){ ptr[sl.k] = 0; });
+    while (left.length){                      // the biggest gain anywhere goes first, each person once, so the rows read top down in the order of the number shown
+      var top = null;
+      left.forEach(function(sl){
+        while (ptr[sl.k] < sl.cands.length && taken[sl.cands[ptr[sl.k]].c.PLAYER_ID]) ptr[sl.k]++;
+        var d = ptr[sl.k] < sl.cands.length ? sl.cands[ptr[sl.k]].d : -99;
+        if (!top || d > top.d) top = { sl: sl, d: d };
+      });
+      var pick = ptr[top.sl.k] < top.sl.cands.length ? top.sl.cands[ptr[top.sl.k]] : null;
+      if (pick) taken[pick.c.PLAYER_ID] = 1;
+      rows.push({ sl: top.sl, pick: pick, best: top.sl.cands.length ? top.sl.cands[0] : null });
+      left = left.filter(function(sl){ return sl !== top.sl; });
+    }
+    slots.forEach(function(sl){ sl.cands.forEach(function(cd){ if (cd.d > 0 && !taken[cd.c.PLAYER_ID]) more.push({ sl: sl, pick: cd }); }); });
+    more.sort(function(a, b){ return b.pick.d - a.pick.d; });
+    var seen = {}, perSlot = {}; more = more.filter(function(m){ if (seen[m.pick.c.PLAYER_ID] || (perSlot[m.sl.k] || 0) >= 2) return false; seen[m.pick.c.PLAYER_ID] = 1; perSlot[m.sl.k] = (perSlot[m.sl.k] || 0) + 1; return true; }).slice(0, 4);   // at most two per slot
+    var mx = 0.5; rows.forEach(function(w){ if (w.pick) mx = Math.max(mx, Math.abs(w.pick.d)); }); more.forEach(function(m){ mx = Math.max(mx, Math.abs(m.pick.d)); });
+    var whyTable = function(sl, c, d){   // every pairing before and after the swap, biggest change first, then the total = the number shown
+      var tgt = names.indexOf(lastName(c)) >= 0 ? c.player : lastName(c), sOld = 0, sNew = 0;
+      var rows = sl.others.map(function(r2){ var B = players[r2].traits, x = pairX(c.traits, B), nw = dot(x, bn), old = pv(sl.A, B), j = LU.indexOf(r2);
+        sOld += old; sNew += nw;
+        return { j: j, nw: nw, old: old, df: nw - old, pr: { v: nw, c: x.map(function(xv, t){ return xv * bn[t]; }) } }; }).sort(function(a, b){ return Math.abs(b.df) - Math.abs(a.df); });
+      return '<details class="lu-why"><summary>Why</summary><table class="mini"><tr><th>With</th><th>Now</th><th>After</th><th></th></tr>' + rows.map(function(o){
+        return '<tr><td>' + esc(names[o.j]) + '</td><td class="num">' + sv(o.old, 2) + '</td><td class="num">' + sv(o.nw, 2) + '</td><td class="r">' + esc(pairWhy(o.pr, c.traits, players[LU[o.j]].traits, tgt, names[o.j])) + '</td></tr>'; }).join('') +
+        '<tr class="tot"><td>All four</td><td class="num">' + sv(sOld, 2) + '</td><td class="num">' + sv(sNew, 2) + '</td><td class="r">' + sv(d, 2) + ' on the score</td></tr></table></details>';
+    };
+    var who = function(c){ return '<a href="#players" data-row="' + c.row_id + '" title="Open his page">' + esc(c.player) + '</a>'; };
+    var tm = function(c){ return '<span class="nw">' + esc(c.team) + ' <span class="num">' + c.season + '</span></span>'; };
+    var btn = function(sl, c, keep){ return '<button type="button" class="lu-swap" data-swapin="' + c.row_id + '" data-out="' + sl.k + '">' + (keep ? 'Try him anyway' : 'Swap him in') + '</button>'; };
+    var row = function(sl, pick, best){
+      var nm = names[sl.k], dx = pick ? pick.c.rating.net - players[sl.r].rating.net + pick.d : 0;   // the swap's change in expected total impact: his rating minus the outgoing player's, plus the fit change
+      var imp = '<span class="sub imp">Expected total impact ' + sv(dx, 2) + '</span>';
+      if (!pick) return '<li class="keep"><span class="nm"><b>Keep ' + esc(nm) + '</b><span class="sub">nobody with ' + TRADE_MIN.toLocaleString() + '+ minutes' + (season ? ' in ' + season : '') + ' is left to try</span></span></li>';
+      var c = pick.c, st = '<span class="pill">' + esc(gn(c.main_group)) + '</span>';
+      if (pick.d <= 0){                        // his best fit may already be named in a row above: say so instead of "none fits better"
+        var used = best && best.d > 0 && best.c.PLAYER_ID !== c.PLAYER_ID ? who(best.c) + ' ' + sv(best.d, 2) + ' is already named above; next closest ' : 'none fits better; closest ';
+        return '<li class="keep"><span class="nm"><b>Keep ' + esc(nm) + '</b><span class="sub">' + used + who(c) + ' ' + st + ' ' + tm(c) + '</span>' + imp + '</span>' + recBar(pick.d, mx) + sv(pick.d, 2, "v") + '<span class="act">' + btn(sl, c, true) + whyTable(sl, c, pick.d) + '</span></li>';
+      }
+      return '<li><span class="nm"><b>' + who(c) + '<small>in for ' + esc(nm) + '</small></b><span class="sub">' + st + ' ' + tm(c) + '</span>' + imp + '</span>' + recBar(pick.d, mx) + sv(pick.d, 2, "v") + '<span class="act">' + btn(sl, c) + whyTable(sl, c, pick.d) + '</span></li>';
+    };
+    var anyGain = rows.some(function(w){ return !!w.pick && w.pick.d > 0; }) || more.length > 0;
+    return '<details class="more lu-rec" open><summary>Explore replacements by fit</summary><div class="lu-pairs-wrap">' +
+      '<p class="lede2">For each player: the real player' + (season ? ' from <span class="num">' + season + '</span>' : ', from any season,') + ' who fits the other four best. The list is ranked by fit alone; each row also shows what the swap would do to the five’s expected total impact once his own rating replaces the old player’s, and the two often point opposite ways.</p>' +
+      '<label class="lu-sea">Targets from <select id="lu-tsea" aria-label="Season the trade targets come from"><option value=""' + (season ? '' : ' selected') + '>any season</option>' + core.meta.seasons.map(function(x){ return '<option value="' + x + '"' + (x === season ? ' selected' : '') + '>' + x + (x === their ? ' (their season)' : '') + '</option>'; }).join("") + '</select></label>' +
+      '<ol class="lu-pairs lu-opts">' + rows.map(function(w){ return row(w.sl, w.pick, w.best); }).join("") + '</ol>' +
+      (more.length ? '<details class="more lu-moret"' + (LU_MORE ? ' open' : '') + '><summary>More targets</summary><ol class="lu-pairs lu-opts">' + more.map(function(m){ return row(m.sl, m.pick); }).join("") + '</ol></details>' : '') +
+      (!anyGain ? '<p class="lede2" style="margin:8px 0 0">No swap improves the fit: every qualifying target pairs worse with the other four than the man there now.</p>' : '') +
+      '<div class="lu-key" aria-hidden="true"><span><i class="down"></i>the swap loses fit</span><span><i class="up"></i>the swap gains fit</span></div>' +
+      '<details class="more"><summary>How targets are picked</summary><p class="small muted" style="margin:4px 0 0">Every real player with ' + TRADE_MIN.toLocaleString() + '+ minutes' + (season ? ' from <span class="num">' + season + '</span>' : ' from any season') + ' is tried in each slot, and the one who fits the other four best is named, each person once, biggest gain first. The bar and the first number are the change in the synergy score, so Swap him in moves it by exactly that. The expected total impact beside each name adds the change in the five’s own ratings (his rating minus the outgoing player’s) to that fit change; a swap can gain fit and lose impact, and the best fits often do. A Keep row means nobody left fits better than the man there. The worst fit here can still be the best player on the floor.</p></details></div></details>';
+  }
+  function pairsHTML(res){
+    if (LU.length < 2) return '';
+    var names = shortNames(LU), mx = 3;
+    res.prs.forEach(function(p){ mx = Math.max(mx, Math.ceil(Math.abs(p.v))); });
+    var X = function(v){ return 50 + 50 * v / mx; };
+    var rows = res.prs.slice().sort(function(a, b){ return a.v - b.v; }), cnt = rows.length;
+    return '<div class="lu-pairs-wrap"><h3>Which pairs crowd each other, and which help</h3>' +
+      '<p class="lede2">' + (cnt === 1 ? 'The one pair, ' : 'All ' + cnt + ' pairs, ') + 'per 100 possessions, with the main reason under each. ' + (cnt === 1 ? 'It is' : 'They add up to') + ' the total.</p>' +
+      '<ol class="lu-pairs">' + rows.map(function(p){
+        var A = players[LU[p.i]].traits, B = players[LU[p.j]].traits, cls = p.v >= 0 ? "up" : "down", x0 = X(Math.min(0, Math.max(-mx, p.v))), w = Math.abs(X(Math.max(-mx, Math.min(mx, p.v))) - 50);
+        return '<li><span class="nm"><b>' + esc(names[p.i]) + ' + ' + esc(names[p.j]) + '</b><span class="why">' + esc(pairWhy(p, A, B, names[p.i], names[p.j])) + '</span></span>' +
+          '<svg viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true"><rect class="' + cls + '" x="' + x0.toFixed(2) + '" y="4" width="' + w.toFixed(2) + '" height="12"/>' +
+          '<line class="zero" x1="50" x2="50" y1="0" y2="20" vector-effect="non-scaling-stroke"/></svg>' + sv(p.v, 2, "v") + '</li>';
+      }).join("") + '</ol>' +
+      '<div class="lu-key" aria-hidden="true"><span><i class="down"></i>crowd each other</span><span><i class="up"></i>help each other</span></div></div>';
+  }
+  function loaderHTML(){
+    var ts = LU_TS || { season: "2015-16", team: "GSW" }, list = LBYTS[ts.season + "|" + ts.team] || [], cur = fiveKey(LU);
+    var seasons = Object.keys(LBYTS).map(function(t){ return t.split("|")[0]; }).filter(function(s, i, a){ return a.indexOf(s) === i; }).sort().reverse();
+    var teams = Object.keys(LBYTS).filter(function(t){ return t.split("|")[0] === ts.season; }).map(function(t){ return t.split("|")[1]; }).sort(function(a, b){ return teamName(a) < teamName(b) ? -1 : 1; });
+    var shown = LU_ALL ? list : list.slice(0, 5);
+    return '<div class="lu-load"><h3 id="lu-load-h" tabindex="-1">Start from a real five</h3>' +
+      '<p class="muted small" style="margin:0 0 6px">Any team’s most-used fives, by season, with each five’s synergy score (how its skills fit, not how good the players are) and grade. Pick one, then change any player.</p>' +
+      '<div class="lu-pick"><label for="lu-season">Season<select id="lu-season">' + seasons.map(function(s){ return '<option' + (s === ts.season ? ' selected' : '') + '>' + s + '</option>'; }).join("") + '</select></label>' +
+      '<label for="lu-team">Team<select id="lu-team">' + teams.map(function(t){ return '<option value="' + t + '"' + (t === ts.team ? ' selected' : '') + '>' + esc(teamName(t)) + '</option>'; }).join("") + '</select></label></div>' +
+      '<ol class="lu-fives" aria-label="' + esc(teamName(ts.team) + " " + ts.season) + ': most-used fives">' + shown.map(function(l){
+        return '<li><button type="button" data-five="' + l.k + '" aria-pressed="' + (fiveKey(l.ids) === cur) + '"><span>' + esc(shortNames(roleOrder(l.ids)).join(", ")) + '</span>' +
+          '<span class="f">' + gradeChip(l.fit) + sv(l.fit, 2) + '</span><span class="m"><span class="num">' + l.poss.toLocaleString() + '</span> possessions together · synergy score, per 100</span></button></li>';
+      }).join("") + '</ol>' +
+      (list.length > 5 ? '<button type="button" class="linkbtn small lu-more" data-allfives aria-expanded="' + LU_ALL + '">' + (LU_ALL ? 'Show the top 5' : 'Show all ' + list.length + ' fives') + '</button>' : '') + '</div>';
+  }
+  function liveText(res){
+    if (LU.length < 2) return "Add at least two players.";
+    var t = "Total " + pts(res.tot) + " points per 100 possessions.";
+    if (LU.length < 5) return t + " Add " + (5 - LU.length) + " more to rank it.";
+    var pc = fitPct(res.tot);
+    return t + (pc.edge === "high" ? " Better fit than 95%" : pc.edge === "low" ? " Worse fit than 95%" : pc.p >= 50 ? " Better fit than " + Math.round(pc.p) + "%" : " Worse fit than " + Math.round(100 - pc.p) + "%") + " of real possessions.";
+  }
+  function saveLineup(){ store("lab-lineup", LU); }
+  function renderLineup(focusSel){
+    var body = $("#lineup-body"), res = LU.length >= 2 ? lineupFit(LU) : null;
+    if (!$("#lineup").hidden) setHash(hashFor("lineup"));
+    body.innerHTML = '<div class="lu-col">' + rosterHTML() + loaderHTML() + '</div><div class="lu-col">' + recommendHTML() + verdictHTML(res) + (res ? pairsHTML(res) : '') + '</div>';
+    $("#lu-live").textContent = LU_MSG || liveText(res);
+    var add = $("#lu-add"), sw = $("#lu-swap");
+    var pick = function(r, slot){
+      var at = LU.indexOf(r);
+      if (at >= 0 && at !== slot){ LU_MSG = players[r].player + " " + players[r].season + " is already in slot " + (at + 1) + "."; renderLineup(slot == null ? "#lu-add-q" : "#lu-swap-q"); return; }
+      LU_MSG = "";
+      if (slot == null){ LU.push(r); saveLineup(); renderLineup(LU.length < 5 ? "#lu-add-q" : '[data-swap="4"]'); }
+      else { LU[slot] = r; LU_EDIT = null; saveLineup(); renderLineup('[data-swap="' + slot + '"]'); }
+    };
+    if (add) makeSearch(add, { id: "lu-add-q", placeholder: LU.length ? "Add a player, e.g. Jokić 2023-24" : "Add a player, e.g. Harden 2019-20", includeLow: function(){ return true; }, onPick: function(r){ pick(r, null); } });
+    if (sw){
+      var slot = LU_EDIT, was = players[LU[slot]];
+      makeSearch(sw, { id: "lu-swap-q", placeholder: "Swap " + lastName(was) + " for…", includeLow: function(){ return true; }, onPick: function(r){ pick(r, slot); } });
+      $("#lu-swap-q").addEventListener("keydown", function(e){
+        if (e.key !== "Escape") return;
+        if (this.value){ this.value = ""; return; }
+        LU_EDIT = null; renderLineup('[data-swap="' + slot + '"]');
+      });
+    }
+    // on a phone, focusing a search box pops the keyboard and zooms the page, so only buttons get focus there
+    var touch = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+    if (focusSel){ var el = body.querySelector(focusSel) || $("#lu-add-q"); if (el && !(touch && el.tagName === "INPUT")) el.focus(); else if (touch && document.activeElement) document.activeElement.blur(); }
+  }
+  function loadFive(l, focusSel){
+    LU = roleOrder(l.ids); LU_EDIT = null; LU_MSG = ""; LU_TS = { season: l.season, team: l.team };
+    saveLineup(); store("lab-lineup-ts", LU_TS); renderLineup(focusSel);
+  }
+  function setupLineup(){
+    lineupIndex();
+    var cc = termOf("on_ball_creation", "on_ball_creation"), ii = termOf("interior", "interior");
+    $("#lineup-panel").innerHTML = '<div><h2>Lineup check</h2><p class="lede">Any five players, from any seasons: their own ratings, how their styles fit, and the total impact to expect.</p>' +
+      '<details class="more"><summary>What to expect</summary><div><p>Overlapping skills crowd each other: two strong on-ball creators score about <span class="num">' + Math.abs(cc.off).toFixed(1) +
+      '</span> fewer points per 100 possessions than their own effects add up to, and two bigs about <span class="num">' + Math.abs(ii.off).toFixed(1) + '</span> fewer. Spacing works the other way: an off-ball shooter next to a big helps. The total is the model’s estimate from its twelve skill-pairing terms, six on offense and six on defense, added together as net. The offense terms carry the evidence: no defensive effect on points was detected, and the defense half of every five’s score is close to zero.</p></div></details></div>' +
+      '<div class="lu-grid" id="lineup-body"></div><p class="lu-sr" id="lu-live" aria-live="polite"></p>';
+    var panel = $("#lineup-panel");
+    panel.addEventListener("click", function(e){
+      var b = e.target.closest("button"); if (!b || !panel.contains(b) || b.closest(".results")) return;
+      var d = b.dataset;
+      if (d.swap != null){ LU_EDIT = +d.swap; LU_MSG = ""; renderLineup("#lu-swap-q"); }
+      else if (d.best != null){ var kb = +d.best, rb = bestSeasonRow(LU[kb]); if (LU.indexOf(rb) < 0){ LU[kb] = rb; LU_EDIT = null; LU_MSG = ""; saveLineup(); } else { LU_MSG = players[rb].player + " " + players[rb].season + " is already in slot " + (LU.indexOf(rb) + 1) + "."; } renderLineup('[data-drop="' + kb + '"]'); }
+      else if (d.drop != null){ LU.splice(+d.drop, 1); LU_EDIT = null; LU_MSG = ""; saveLineup(); renderLineup("#lu-add-q"); }
+      else if (b.hasAttribute("data-cancel")){ var k = LU_EDIT; LU_EDIT = null; renderLineup('[data-swap="' + k + '"]'); }
+      else if (b.hasAttribute("data-clear")){ LU = []; LU_EDIT = null; LU_MSG = ""; saveLineup(); renderLineup("#lu-add-q"); }
+      else if (d.five != null){ loadFive(LROWS[+d.five], '[data-five="' + d.five + '"]'); }
+      else if (b.hasAttribute("data-allfives")){ LU_ALL = !LU_ALL; renderLineup("[data-allfives]"); }
+      else if (d.swapin != null){ LU[+d.out] = +d.swapin; LU_EDIT = null; LU_MSG = ""; saveLineup(); renderLineup(".lu-rec > summary"); }
+    });
+    panel.addEventListener("toggle", function(e){ var d = e.target; if (d.matches && d.matches("details.lu-moret")){ LU_MORE = d.open; return; }
+      if (d.matches && d.matches("details.lu-more")){ LU_OPEN[+d.dataset.row] = d.open; } }, true);
+    panel.addEventListener("click", function(e){ var a = e.target.closest("a[data-row]"); if (a && panel.contains(a)){ e.preventDefault(); renderPlayer(+a.dataset.row); showTab("players"); } });
+    panel.addEventListener("change", function(e){
+      if (e.target.id === "lu-tsea"){ LU_SEA = e.target.value; store("lab-trade-season", LU_SEA); renderLineup("#lu-tsea"); return; }
+      if (e.target.id !== "lu-season" && e.target.id !== "lu-team") return;
+      var season = $("#lu-season").value, team = $("#lu-team").value;
+      if (!LBYTS[season + "|" + team]) team = Object.keys(LBYTS).filter(function(t){ return t.split("|")[0] === season; }).map(function(t){ return t.split("|")[1]; }).sort()[0];
+      LU_TS = { season: season, team: team }; LU_ALL = false; store("lab-lineup-ts", LU_TS); renderLineup("#" + e.target.id);
+    });
+    var saved = LU_FROM_LINK || load("lab-lineup"), ts = load("lab-lineup-ts");
+    if (ts && typeof ts.season === "string" && typeof ts.team === "string" && LBYTS[ts.season + "|" + ts.team]) LU_TS = { season: ts.season, team: ts.team };
+    if (Array.isArray(saved) && saved.every(function(r){ return typeof r === "number" && players[r]; })) LU = saved.filter(function(r, i){ return saved.indexOf(r) === i; }).slice(0, 5);
+    else { var gsw = (LBYTS["2015-16|GSW"] || [])[0]; if (gsw) LU = roleOrder(gsw.ids); }
+    if (!LU_TS){ var real = LKEY[fiveKey(LU)]; if (real) LU_TS = { season: real.season, team: real.team }; }
+    renderLineup();
+  }
+
+  // ---------- methodology ----------
+  function renderTrust(){
+    var M = core.meta, SM = M.sample, F = core.fit, FA = F.factors;
+    var T = function(name){ return F.tests.filter(function(x){ return x.test === name; })[0]; };
+    var offOne = T("offense given defense, one strong"), offMany = T("offense given defense, many small");
+    var defT = F.tests.filter(function(x){ return x.test.indexOf("defense given") === 0; });
+    var minH = function(a){ return Math.min.apply(null, a.map(function(x){ return x.p_holm; })); };
+    var cc = termOf("on_ball_creation", "on_ball_creation"), ii = termOf("interior", "interior"), si = termOf("spacing", "interior");
+    var N = function(v){ return '<span class="num">' + v + '</span>'; };
+    var words = ["zero", "one", "two", "three", "four", "five"];
+    var sec = function(n, title, body){ return '<section><h3><span class="n">' + n + '</span>' + title + '</h3>' + body + '</section>'; };
+    var rows = F.tests.map(function(t){ return '<tr><td>' + esc(t.test.split(", ")[0].replace(/^./, function(c){ return c.toUpperCase(); })) + '</td><td class="hide-sm">' + esc(t.test.split(", ")[1]) + '</td><td class="num">' + (t.p_calibrated < 1 / (F.draws + 1) ? "≤ " + fmtP(1 / (F.draws + 1)) : fmtP(t.p_calibrated)) + '</td><td class="num">' + fmtP(t.p_holm) + '</td><td class="num hide-sm">' + fmtP(t.p_raw_bootstrap) + '</td><td class="hide-sm">' + esc(termName(t.strongest_term)) + ' <span class="muted">(' + Math.abs(t.strongest_score_z).toFixed(1) + ' SE ' + (t.strongest_score_z < 0 ? 'below' : 'above') + ' zero)</span></td></tr>'; }).join("");
+    var tests = '<details class="all" style="margin-top:4px"><summary>The four points tests</summary><div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Block tested</th><th class="hide-sm">Statistic</th><th class="num">p</th><th class="num">Holm</th><th class="num hide-sm">Raw bootstrap</th><th class="hide-sm">Largest single term</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+      '<p class="muted small" style="margin:8px 0 0">p is calibrated: the bootstrap rank of the statistic, adjusted by how the same test behaved on synthetic seasons with no effect (the most cautious of four kinds of noise). Holm corrects for the four tests. “Many small” sums all six terms’ evidence; “one strong” takes the single largest. ≤ ' + fmtP(1 / (F.draws + 1)) + ' means beyond every bootstrap draw.</p></details>';
+    $("#trust-main").innerHTML = '<h2>Methodology</h2><div class="meth">' +
+      sec(1, "Data", '<p><b>' + N((SM.possessions / 1e6).toFixed(2)) + ' million possessions.</b> Every regular-season possession from ' + M.seasons[0] + ' to ' + M.seasons[M.seasons.length - 1] + ': ' + N(SM.games.toLocaleString()) + ' games, ' + N(SM.team_seasons) + ' team-seasons, ' + N(SM.rows.toLocaleString()) + ' lineup-game rows. Each possession is rebuilt from the play-by-play with both fives on the floor, taken from substitution stints and checked against the box scores; where a plus-minus disagreed with the box score, points were re-assigned from the play-by-play and possessions were never changed. Technical free throws (' + N(SM.technical_points_credited.toLocaleString()) + ' of ' + N(SM.technical_points.toLocaleString()) + ' points) are credited to the five on the floor. The sample holds ' + N(SM.player_seasons.toLocaleString()) + ' player-seasons, and every number on the site uses all of them; a style’s purest-seasons list is drawn from the ' + N(SM.player_seasons_purest_eligible.toLocaleString()) + ' with ' + N(M.purest_minutes.toLocaleString()) + '+ minutes.</p>') +
+      sec(2, "Styles and skills", '<p>Every player-season is described by ' + N(M.style_columns) + ' style statistics (where he shoots, how often he has the ball, passing, rebounding, defense), standardized within season. Minutes-weighted k-means on those columns gives ' + N(G) + ' styles. Membership is by distance: each player-season holds a share of every style, so a player who plays two ways is recorded as both. Styles sort players by how they play, not how well. Three skills were fixed in October 2026, before any test. <b>Off-ball shooting</b> (the spacing term): three-point volume, corner threes, catch-and-shoot, spot-ups, open threes. <b>On-ball creation</b>: drives, usage, time of possession and dribbles, passes and potential assists, pick-and-roll handling, pull-ups, unassisted makes. <b>Paint presence</b>: rim attempts, paint touches, rebounding chances, box-outs, putbacks, rim defense. Each style has a level of each skill; a player-season’s levels are the mix of his styles, in standard-deviation units.</p>') +
+      sec(3, "The fit model", '<p>Possessions are grouped by game, offense five and defense five. Points per 100 possessions = the five offense players’ season effects + the five defense players’ + home + six trait terms. A trait term is a pair of skills (off-ball shooting × off-ball shooting, off-ball shooting × on-ball creation, and so on through paint presence × paint presence) summed over the lineup’s ten player pairs, so it measures what two skills do together beyond what each player brings alone. Every player effect is free in every season; a trait term is therefore identified only from the same players doing better or worse next to different teammates. Six offense and six defense terms are fitted by ridge with penalty ' + N(Math.round(F.trait_penalty).toLocaleString()) + ' (10<sup>5.5</sup>), chosen by five-fold cross-validation over games. A term’s size is per pairing, each player one standard deviation above average on the named skill.</p>') +
+      sec(4, "Results", '<p>On offense, overlapping skills crowd each other. The six offense terms, tested as a block with the six defense terms fitted (so the result is not the defense’s in disguise), give Holm p = ' + N(fmtP(offOne.p_holm)) + ' with the single largest term as the statistic and ' + N(fmtP(offMany.p_holm)) + ' with all six terms’ evidence summed; family p for the four points tests is ' + N(fmtP(F.family_p_points)) + '. The largest term is two creators, ' + N(pts(cc.off)) + ' points per 100 per pairing, ' + N(Math.abs(offOne.strongest_score_z).toFixed(1)) + ' SE below zero; two bigs, ' + N(pts(ii.off)) + '; an off-ball shooter beside a big, ' + N(pts(si.off)) + '. Defense given offense gives Holm p = ' + N(fmtP(minH(defT))) + ': there is no defensive style effect on points. The tests are a sign-flip bootstrap by team-season, ' + N(F.draws.toLocaleString()) + ' draws (smallest attainable p ' + N(fmtP(1 / (F.draws + 1))) + '), calibrated on the null location and scale of synthetic seasons, Holm-corrected over the four.</p>' + tests) +
+      sec(5, "Robustness", '<p>Skill levels by style read a star nearer his role (Curry’s off-ball shooting: ' + N(REVIEW.curry_style) + ' by style, ' + N(REVIEW.curry_own) + ' by his own stats). Refitting with each player’s own stats as his skills: offense Holm p = ' + N(fmtP(REVIEW.own_offense_holm)) + '; two creators ' + N(pts(REVIEW.own_cc)) + ' per pairing against ' + N(pts(cc.off)) + ' by style, two bigs ' + N(pts(REVIEW.own_ii)) + ' against ' + N(pts(ii.off)) + ', off-ball shooter + big ' + N(pts(REVIEW.own_si)) + ' against ' + N(pts(si.off)) + '; defense Holm p = ' + N(fmtP(REVIEW.own_defense_holm)) + '.</p>' +
+        '<p>Holding lineup exposure fixed (for each season, ten bands of how much a five played, for the offense five and the defense five, absorbed with the player effects): offense Holm p = ' + N(fmtP(REVIEW.exp_off_one)) + ' with the single largest term and ' + N(fmtP(REVIEW.exp_off_many)) + ' with all six summed, family p ' + N(fmtP(REVIEW.exp_family)) + '; two creators ' + N(pts(REVIEW.exp_cc)) + ' per pairing against ' + N(pts(cc.off)) + ', off-ball shooter + big ' + N(pts(REVIEW.exp_si)) + ', two bigs ' + N(pts(REVIEW.exp_ii)) + '; defense Holm p = ' + N(fmtP(REVIEW.exp_def)) + '. Fresh null seasons on that design (two kinds of noise) kept every false-alarm rate under 5%.</p>') +
+      sec(6, "Calibration, power and prediction", '<p><b>False alarms.</b> Each test rule was checked on ' + N(REVIEW.sims_per_check) + ' fresh synthetic seasons per kind of noise (four kinds), built on the real possessions with no style effect and new random seeds: single tests fired ' + N(REVIEW.fa_low + "%") + ' to ' + N(REVIEW.fa_high + "%") + ' of the time at a 5% bar, and any of the four after Holm ' + N(REVIEW.holm_low + "%") + ' to ' + N(REVIEW.holm_high + "%") + '.</p>' +
+        '<p><b>Power.</b> With crowding of the fitted size planted (two +1 SD creators cost 0.5 per 100), the offense tests caught it in ' + N(REVIEW.pow_full + "%") + ' of synthetic seasons; at half that size, ' + N(REVIEW.pow_half + "%") + '. The tests are built for skill-shaped effects: one style pair worth 2 or 4 points per 100 on its own was caught ' + N(REVIEW.pow_pair2 + "%") + ' and ' + N(REVIEW.pow_pair4 + "%") + ' of the time, and a scatter of pair effects (sd 0.5) ' + N(REVIEW.pow_dense + "%") + '.</p>' +
+        '<p><b>Prediction.</b> Nested cross-validation over games (five outer folds; penalties chosen inside each): adding the trait terms to the player effects lowered held-out error in ' + N(REVIEW.ho_folds + " of 5") + ' folds, a gain about ' + N(REVIEW.ho_share + "%") + ' the size of what the player effects add. With each five’s style mix also free, ' + N(REVIEW.ho_folds_anchored + " of 5") + ' folds and about ' + N(REVIEW.ho_share_anchored + "%") + '. A single possession is near a coin flip; the effect’s size reads in points per 100.</p>') +
+      sec(7, "Player ratings and the six factors", '<p>A rating is a player’s effect on points per 100 possessions with the other nine players held fixed: ridge on these possessions, fitted on points net of the six trait terms. A season’s rating uses that season and the ' + words[F.rating_window_seasons - 1] + ' before it, older games weighted by 0.5<sup>days/' + F.rating_half_life_days + '</sup>. Half-life was chosen by out-of-sample prediction of the next season’s possessions; 450 to 700 days is a plateau. Each season is centered on the league-average possession; defense is points prevented.</p>' +
+        '<p><b>Box-score prior.</b> The ridge pulls each player toward what his box score predicts instead of toward zero, so a short or noisy run lands near a sensible value rather than near average. The six factors below get the same treatment, each with a prior fitted to its own outcome, so they still add up to the rating. The box score covers the same window with the same decay, per 100 possessions: points, true shot attempts, threes, free throws, assists, turnovers, offensive and defensive rebounds, steals, blocks, fouls, fouls drawn, possessions used, shots defended at the rim and FG% allowed there, and height. Each stat is padded with league average by its own stabilization point, the sample at which half its spread between players is skill, measured from odd versus even games over the 13 seasons. The prior’s weights come from a possession-weighted regression of the plain ratings on those stats, fitted only on seasons outside the five centered on the one being rated, so a season never trains its own prior. The penalty with the prior, ' + N(Number(F.rating_prior_penalty).toLocaleString()) + ' (' + N(Number(F.rating_penalty).toLocaleString()) + ' without it), was picked by predicting each next season’s possessions in date order, with every input ending before the season predicted; 7,500 to 13,000 is flat. Over six such seasons the prior cut prediction error by 0.57% against 0.45% for the plain rating, better in all six.</p>' +
+        '<p><b>The six factors</b> are the same ridge on true shooting, turnovers per 100 and offensive rebounds per 100 chances, for offense and for defense (sign-flipped so + is good), each shrunk toward its own box-score prior (same inputs, same penalty), converted to points by a possession-weighted regression of net rating on the six (R² = ' + N(FA.r2_net_rating.toFixed(3)) + '). The regression leaves a small remainder (within ' + N(FA.leftover_95.toFixed(1)) + ' points for 95% of player-seasons), spread over the six in proportion to their size so they add up to the rating exactly. Their priors pass the same date-ordered test as the rating’s: next-season prediction of true shooting went from ' + N('0.37%') + ' to ' + N('0.50%') + ' (better in 7 of 7 seasons), turnovers ' + N('0.59%') + ' to ' + N('0.73%') + ' (7 of 7), offensive rebounds ' + N('0.82%') + ' to ' + N('0.88%') + ' (5 of 7).</p>') +
+      sec(8, "Scope", '<p>The finding is three skills tested as a block of six offense terms; the grid applies them to each of ' + N(core.pairs.rows.length) + ' style pairs as two full-time players; none was fitted alone. On points the effect is offensive; defense shows trait effects in shot quality, free throws, offensive rebounds and turnovers. Net moves more with model details. With own stats, both crowding terms hold, the off-ball shooter + big complement does not; null simulations were not rerun there. Player seasons are held fixed, coaches choose who shares the floor: the terms are associations. The exposure control removes either noise from barely-played lineups or fit that earned their minutes. Ratings carry what comes with a role; short runs pull toward what the box score predicts. The data starts in 2013-14, so 2013-14 ratings rest on one season and 2014-15 on two; every season from 2015-16 on uses the full three, and the first two lean harder on the box-score prior. Regular season only.</p>') +
+      '</div>';
+  }
+
+
+  // ---------- boot ----------
+  fetch("data/core.json").then(function(r){ if (!r.ok) throw new Error("core.json " + r.status); return r.json(); }).then(function(c){
+    core = c; players = c.players; groups = c.groups; codes = c.meta.groups; G = codes.length;
+    codes.forEach(function(code, i){ NAMES[code] = c.meta.names[i]; });
+    c.pairs.columns.forEach(function(col, i){ PCOL[col] = i; });
+    setRatingText(c.fit);
+    players.forEach(function(p){ p._name = norm(p.player); p._key = p._name + " " + p.season + " " + p.season.replace("-", " ") + " " + p.team.toLowerCase(); });
+    $("#arch-title").textContent = "The " + G + " styles";
+    $("#boot").hidden = true;
+    makeSearch($("#player-search"), { id: "player-q", placeholder: "Find a player, e.g. Haliburton", includeLow: function(){ return true; }, onPick: renderPlayer });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ drawStar(); });   // label widths are measured
+    var starW = 0; window.addEventListener("resize", function(){ var b = $("#player-star"), w = b ? b.clientWidth : 0; if (w && w !== starW){ starW = w; drawStar(); } });
+    var H = (location.hash || "").slice(1).split("/"), h = H[0], harg = H[1] || "";
+    if (h === "lineup" && /^\d+(,\d+){0,4}$/.test(harg)){ var hl = harg.split(",").map(Number).filter(function(r, i, a){ return !!players[r] && a.indexOf(r) === i; }); if (hl.length) LU_FROM_LINK = hl; }
+    var sp = h === "players" && /^\d+$/.test(harg) && players[+harg] ? +harg : load("lab-player"); if (!(typeof sp === "number" && players[sp])){ sp = 0; var best = ""; players.forEach(function(p, i){ if (p._name === "tyrese haliburton" && p.season > best){ best = p.season; sp = i; } }); }
+    renderPlayer(sp);
+    var sg = load("lab-group"); if (typeof sg === "number" && sg >= 0 && sg < G) state.group = sg;
+    var so = load("lab-rating-out"); if (OUTS.indexOf(so) >= 0) state.ratingOut = so;
+    renderGroups(); renderPairs(); setupLineup(); renderTrust();
+    showTab(tabs.indexOf(h) >= 0 || h === "about" || h === "combos" ? h : (load("lab-tab") || "archetypes"), true);
+  }).catch(function(e){ $("#boot").hidden = false; $("#boot").textContent = "Could not load the player data (" + e.message + "). Reload the page to try again."; });
+})();
+</script>
+</body></html>
