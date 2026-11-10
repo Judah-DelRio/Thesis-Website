@@ -1833,7 +1833,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
   }
 
   // ---- lineup fit, peers ----
-  var FIT_NOTE = "Points per 100 that a typical player of each style adds next to him, from his three tendencies against theirs. Fit only: the teammate’s own rating is not counted.";
+  var FIT_NOTE = "Points per 100 that a typical player of each style adds next to him, from his three tendencies against theirs. Synergy only: the teammate’s own rating is not counted.";
   function fitHTML(p, n){
     var F = fitList(p), li = function(r){ var g = BYCODE[r.code]; return '<li><span class="sn"><i class="dot d-' + SKC[g.sk] + '"></i>' + esc(g.name) + '</span>' + sv(r.v, 2) + '</li>'; };
     return '<div class="fit"><div><div class="ft">Best next to him</div><ol>' + F.slice(0, n).map(li).join("") + '</ol></div><div><div class="ft">Worst next to him</div><ol>' + F.slice(-n).reverse().map(li).join("") + '</ol></div></div>';
@@ -2564,9 +2564,9 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     return '<section class="hand"><div class="hhead"><h2 class="h">Your five</h2>' + (LU.length ? '<button type="button" class="linkbtn small" data-clear>Clear all</button>' : '') + '</div>' +
       '<ol class="hgrid" aria-label="Your five">' + li.join("") + '</ol><p class="lu-msg small" role="status">' + esc(LU_MSG) + '</p></section>';
   }
-  function leanChips(t){      // how he plays: a solid chip for a lean of 1+ SD, a light one for 0.5 to 1; exact values on hover
+  function leanChips(t){      // how he plays: a solid chip for a lean of 1+ SD, a light one under that (any lean of 0.5+, or his strongest); exact values on hover
     var tip = SKILL_K.map(function(k, i){ return k + ' ' + sign(t[i], 1); }).join(' · ');
-    var c = t.map(function(v, i){ return { v: v, i: i }; }).filter(function(o){ return o.v >= 0.5; }).sort(function(a, b){ return b.v - a.v; })
+    var c = t.map(function(v, i){ return { v: v, i: i }; }).filter(function(o){ return o.v > 0; }).sort(function(a, b){ return b.v - a.v; }).filter(function(o, k){ return o.v >= 0.5 || k === 0; })
       .map(function(o){ return '<span class="sk s' + o.i + (o.v >= 1 ? ' full' : '') + '">' + esc(SK_ROLE[o.i]) + '</span>'; }).join('');
     return '<span class="lchips" title="' + esc(tip) + '">' + (c || '<span class="bal">Balanced</span>') + '</span>';
   }
@@ -2593,9 +2593,9 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var trT = LU.length === 5 ? 'one player at a time' : LU.length ? 'the best styles to add' : '';
     body.innerHTML = '<div class="lu-split"><div class="lu-left">' + rosterHTML() + '</div><div class="lu-right">' +
         acc("load", "Start from a real five", esc(ts), loaderHTML()) +
-        acc("impact", "Your lineup’s impact", LU.length === 5 ? '<span class="num ' + cls(+totImp) + '">' + sign(+totImp) + '</span> <small>total impact</small>' : LU.length ? '<span class="num">' + sign(+own.toFixed(1)) + '</span> <small>sum of ratings</small>' : '', impactHTML()) +
-        acc("fit", "How they fit", fitT, '<div class="lu-fitwrap">' + verdictHTML(res) + (res ? pairsHTML(res) : '') + '</div>') +
-        acc("trade", LU.length === 5 ? "Better-fitting swaps" : "Who to add", trT, recommendHTML()) +
+        acc("fit", "Lineup fit", fitT, '<div class="lu-fitwrap">' + verdictHTML(res) + (res ? pairsHTML(res) : '') + '</div>') +
+        acc("impact", "Lineup impact", LU.length === 5 ? '<span class="num ' + cls(+totImp) + '">' + sign(+totImp) + '</span> <small>total impact</small>' : LU.length ? '<span class="num">' + sign(+own.toFixed(1)) + '</span> <small>sum of ratings</small>' : '', impactHTML()) +
+        acc("trade", LU.length === 5 ? "Player swaps" : "Who to add", trT, recommendHTML()) +
       '</div></div>';
     body.querySelectorAll("details.lacc").forEach(function(d){ d.addEventListener("toggle", function(){ LU_ACC[d.dataset.acc] = d.open; }); });
     var wp = $("#tc-why");
@@ -2658,26 +2658,26 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var tot = { net: r1(own.net + fit.net), off: r1(own.off + fit.off) }; tot.def = r1(tot.net - tot.off);
     var tile = function(k, o, cl, id){ return '<div class="lt-tile' + cl + '"><span class="k">' + k + '</span><span class="v num ' + cls(o.net) + '"' + (id || '') + '>' + sign(o.net) + '</span><span class="od">Off <span class="num">' + sign(o.off) + '</span> · Def <span class="num">' + sign(o.def) + '</span></span></div>'; };
     return '<div class="lu-tiles" role="group" aria-label="Total impact, points per 100 possessions">' + tile("Ratings", own, "") + '<span class="op" aria-hidden="true">+</span>' +
-      tile("Fit vs average", fit, "") + '<span class="op" aria-hidden="true">=</span>' + tile("Total impact", tot, " tot", ' id="lu-exp" data-exp="' + tot.net.toFixed(1) + '"') + '</div>' +
-      '<p class="cap">Points per 100 possessions. Fit vs average is this five’s fit minus the ' + svp(FM) + ' a typical real five already gets.</p>' + luNote();
+      tile("Synergy vs average", fit, "") + '<span class="op" aria-hidden="true">=</span>' + tile("Total impact", tot, " tot", ' id="lu-exp" data-exp="' + tot.net.toFixed(1) + '"') + '</div>' +
+      '<p class="cap">Points per 100 possessions. Synergy vs average is this five’s synergy score minus the ' + svp(FM) + ' a typical real five already gets.</p>' + luNote();
   }
   function fivesPct(v){       // share of the real fives (not this one) with a lower fit
     var real = LKEY[fiveKey(LU)], nb = 0, N = LROWS.length - (real ? 1 : 0);
     LROWS.forEach(function(l){ if (l !== real && l.fit < v) nb++; });
     var p = 100 * nb / N;
-    return nb === N ? "Fits better than every real five" : nb === 0 ? "Fits worse than every real five" :
-      Math.round(p) === 100 ? "Fits better than all but " + (N - nb) + " real fives" : Math.round(p) === 0 ? "Fits worse than all but " + nb + " real fives" :
-      p >= 50 ? "Fits better than " + Math.round(p) + "% of real fives" : "Fits worse than " + Math.round(100 - p) + "% of real fives";
+    return nb === N ? "Better synergy than every real five" : nb === 0 ? "Worse synergy than every real five" :
+      Math.round(p) === 100 ? "Better synergy than all but " + (N - nb) + " real fives" : Math.round(p) === 0 ? "Worse synergy than all but " + nb + " real fives" :
+      p >= 50 ? "Better synergy than " + Math.round(p) + "% of real fives" : "Worse synergy than " + Math.round(100 - p) + "% of real fives";
   }
   function verdictHTML(res){
     var n = LU.length;
-    if (n < 2) return '<p class="muted" style="margin:0">Add at least two players to see how they fit.</p>';
+    if (n < 2) return '<p class="muted" style="margin:0">Add at least two players to see their synergy score.</p>';
     var v = res.tot, FM = core.fit.fit_mean;
     var score = '<span class="num ' + cls(v, 2) + '" id="lu-total" data-total="' + v.toFixed(4) + '">' + sign(v, 2) + '</span>';
-    if (n < 5) return '<div class="lu-hero part"><div><p class="lh">Fit ' + score + '</p><p class="ls">Add ' + ["one", "two", "three"][4 - n] + ' more to grade it.</p></div></div>';
+    if (n < 5) return '<div class="lu-hero part"><div><p class="lh">Synergy score ' + score + '</p><p class="ls">Add ' + ["one", "two", "three"][4 - n] + ' more to grade it.</p></div></div>';
     var g = gradeOf(v), real = LKEY[fiveKey(LU)];
     return '<div class="lu-verdict"><div class="lu-hero"><span class="g g' + g + '" aria-label="Grade ' + g + '">' + g + '</span><div><p class="lh">' + fivesPct(v) + '</p>' +
-        '<p class="ls">Fit ' + score + ' · average five <span class="num">' + svp(FM) + '</span></p></div></div>' + distHTML(v, g) +
+        '<p class="ls">Synergy score ' + score + ' · average five <span class="num">' + svp(FM) + '</span></p></div></div>' + distHTML(v, g) +
       '<p class="lu-real">' + (real ? '<b>Played together:</b> <span class="num">' + real.poss.toLocaleString() + '</span> possessions, ' + esc(teamName(real.team)) + ' <span class="num">' + real.season + '</span>' :
         '<b>Never played together</b> for ' + core.fit.lineups.min_possessions + '+ possessions.') + '</p></div>';
   }
@@ -2724,7 +2724,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     };
     var who = n === 1 ? esc(names[0]) : 'the ' + ["two", "three", "four"][n - 2] + ' here';
     return '<div class="lu-rec"><div class="lu-pairs-wrap">' +
-      '<p class="lede2">Each style as the next player, by how it fits ' + who + '.</p>' +
+      '<p class="lede2">Each style as the next player, by its synergy with ' + who + '.</p>' +
       '<ol class="lu-pairs lu-opts">' + recs.slice(0, 5).map(row).join("") + '</ol>' +
       '<h4 class="lu-rec-h">Avoid</h4><ol class="lu-pairs lu-opts">' + recs.slice(-3).reverse().map(row).join("") + '</ol>' +
       '<div class="lu-key" aria-hidden="true"><span><i class="down"></i>crowds them</span><span><i class="up"></i>fits them</span></div></div></div>';
@@ -2791,18 +2791,18 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
       return '<li class="tc k-' + sk(c) + '"><div class="tc-for">Swap out <b>' + esc(nm) + '</b></div>' +
         '<div class="tc-body"><a class="tc-name" href="#players" data-row="' + c.row_id + '" title="Open his page">' + esc(c.player) + '</a>' +
           '<div class="tc-meta"><span class="num">' + c.season + '</span> · ' + esc(c.team) + '</div><div class="tc-style"><span class="sk s' + (g ? g.sk : 0) + '">' + esc(g ? g.name : gn(c.main_group)) + '</span></div></div>' +
-        '<div class="tc-nums"><div><span class="k">Fit</span><span class="v">' + arrow(pick.d) + '</span></div><div><span class="k">Total</span><span class="v">' + arrow(dx) + '</span></div></div>' +
+        '<div class="tc-nums"><div><span class="k">Synergy</span><span class="v">' + arrow(pick.d) + '</span></div><div><span class="k">Impact</span><span class="v">' + arrow(dx) + '</span></div></div>' +
         '<div class="tc-act"><button type="button" class="tc-go" data-swapin="' + c.row_id + '" data-out="' + sl.k + '">Swap in</button><button type="button" class="tc-why" data-why="' + id + '" aria-expanded="false">See pairs</button></div></li>';
     };
     var gains = rows.filter(function(w){ return w.pick && w.pick.d > 0; }), keeps = rows.filter(function(w){ return !(w.pick && w.pick.d > 0); }).sort(function(a, b){ return a.sl.k - b.sl.k; });
     var anyGain = gains.length > 0;
     return '<section class="tsec"><div class="thead"><div>' +
-        '<p class="lede2">The real player' + (season ? ' from <span class="num">' + season + '</span>' : '') + ' who fits each spot best, best swap first. <b>Fit</b> is the change in the synergy score; <b>Total</b> adds the change in rating.</p></div>' +
+        '<p class="lede2">The real player' + (season ? ' from <span class="num">' + season + '</span>' : '') + ' who fits each spot best, best swap first. <b>Synergy</b> is the change in the synergy score; <b>Impact</b> is the change in total impact.</p></div>' +
         '<label class="tsea">Targets from<select id="lu-tsea" aria-label="Season the trade targets come from"><option value=""' + (season ? '' : ' selected') + '>Any season</option>' + core.meta.seasons.map(function(x){ return '<option value="' + x + '"' + (x === season ? ' selected' : '') + '>' + x + (x === their ? ' (their season)' : '') + '</option>'; }).join("") + '</select></label></div>' +
       (anyGain ? '<ol class="tboard">' + gains.map(function(w){ return card(w.sl, w.pick); }).join("") + '</ol><div class="twhy" id="tc-why" hidden></div>' :
         '<p class="lede2" style="margin:4px 0 0">No swap improves the fit.</p>') +
-      (keeps.length ? '<ul class="tkeep">' + keeps.map(function(w){ return '<li><b>' + esc(names[w.sl.k]) + '</b>: no better fit <span class="ok" aria-hidden="true">✓</span></li>'; }).join("") + '</ul>' : '') +
-      '<details class="more tmore"><summary>How targets are picked</summary><p class="small muted" style="margin:6px 0 0;max-width:72ch">Every real player with ' + TRADE_MIN.toLocaleString() + '+ minutes' + (season ? ' from <span class="num">' + season + '</span>' : ' from any season') + ' is tried in each slot, and the one who fits the other four best is named, each person once, biggest gain first. Fit is the change in the synergy score, so Swap in moves it by exactly that. Total impact adds the change in the five’s own ratings (his rating minus the outgoing player’s) to the fit change; a swap can gain fit and lose impact, and the best fits often do. A check mark means nobody left fits better than the man there.</p></details></section>';
+      (keeps.length ? '<ul class="tkeep">' + keeps.map(function(w){ return '<li><b>' + esc(names[w.sl.k]) + '</b>: no better synergy <span class="ok" aria-hidden="true">✓</span></li>'; }).join("") + '</ul>' : '') +
+      '<details class="more tmore"><summary>How targets are picked</summary><p class="small muted" style="margin:6px 0 0;max-width:72ch">Every real player with ' + TRADE_MIN.toLocaleString() + '+ minutes' + (season ? ' from <span class="num">' + season + '</span>' : ' from any season') + ' is tried in each slot, and the one who fits the other four best is named, each person once, biggest gain first. Synergy is the change in the synergy score, so Swap in moves it by exactly that. Impact adds the change in the five’s own ratings (his rating minus the outgoing player’s) to the synergy change; a swap can gain synergy and lose impact, and the best fits often do. A check mark means nobody left fits better than the man there.</p></details></section>';
   }
   var TC_WHY = {};
   function pairsHTML(res){
@@ -2811,7 +2811,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     res.prs.forEach(function(p){ mx = Math.max(mx, Math.ceil(Math.abs(p.v))); });
     var rows = res.prs.slice().sort(function(a, b){ return a.v - b.v; }), cnt = rows.length;
     return '<div class="lu-pairs-wrap"><h3>Pair by pair</h3>' +
-      '<p class="lede2">' + (cnt === 1 ? 'The one pair is the fit.' : 'The ' + cnt + ' pairs add up to the fit.') + '</p>' +
+      '<p class="lede2">' + (cnt === 1 ? 'The one pair is the synergy score.' : 'The ' + cnt + ' pairs add up to the synergy score.') + '</p>' +
       '<ol class="lu-pairs">' + rows.map(function(p){
         var A = players[LU[p.i]].traits, B = players[LU[p.j]].traits;
         return '<li><span class="nm"><b>' + esc(names[p.i]) + ' + ' + esc(names[p.j]) + '</b><span class="why">' + esc(pairWhy(p, A, B, names[p.i], names[p.j])) + '</span></span>' +
@@ -2840,7 +2840,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
   }
   function liveText(res){
     if (LU.length < 2) return "Add at least two players.";
-    var t = "Fit " + pts(res.tot) + " points per 100 possessions.";
+    var t = "Synergy score " + pts(res.tot) + " points per 100 possessions.";
     if (LU.length < 5) return t + " Add " + (5 - LU.length) + " more to grade it.";
     return t + " Grade " + gradeOf(res.tot) + ". " + fivesPct(res.tot) + ".";
   }
@@ -2859,8 +2859,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     lineupIndex();
     var cc = termOf("on_ball_creation", "on_ball_creation"), ii = termOf("interior", "interior");
     $("#lineup-panel").innerHTML = '<div class="pghead"><div class="eyebrow">' + LROWS.length.toLocaleString() + ' real fives to measure against · ' + core.meta.seasons[0] + ' to ' + core.meta.seasons[core.meta.seasons.length - 1] + '</div><h1>Lineup check</h1><p class="dek">Take any five players since 2013. You get their individual impact ratings, style fits, a letter grade, and the swaps that’ll fit your team better.</p>' +
-      '<details class="more"><summary>What to expect</summary><div><p>Overlapping tendencies crowd each other: two ball-dominant creators score about <span class="num">' + Math.abs(cc.off).toFixed(1) +
-      '</span> fewer points per 100 possessions than their own effects add up to, and two bigs about <span class="num">' + Math.abs(ii.off).toFixed(1) + '</span> fewer. Spacing works the other way: an off-ball shooter next to a big helps. The total is the model’s estimate from its twelve tendency-pairing terms, six on offense and six on defense, added together as net. The offense terms carry the evidence: no defensive effect on points was detected, and the defense half of every five’s score is close to zero.</p></div></details></div>' +
+      '</div>' +
       '<div id="lineup-body"></div><p class="lu-sr" id="lu-live" aria-live="polite"></p>';
     var panel = $("#lineup-panel");
     panel.addEventListener("click", function(e){
