@@ -1113,7 +1113,7 @@ header.top .brand span{font:500 13px var(--sans);letter-spacing:0;margin-left:10
 @media (max-width:760px){header.top .brand{font-size:19px}}
 /* the landing five: five cards in a shallow arc, then what they are */
 #home .fan5{display:flex;justify-content:center;align-items:flex-start;max-width:600px;margin:0 auto;padding:18px 0 8px}
-#home .fan5 .mcard{position:relative!important;top:auto!important;left:auto!important;right:auto!important;width:120px;flex:none;margin:0 -3px;padding:7px}
+#home .fan5 .mcard{position:relative!important;top:auto!important;left:auto!important;right:auto!important;width:126px;flex:none;margin:0 -8px;padding:7px}
 #home .fan5 .mcard .ma{height:92px}
 #home .fan5 .mcard .ma b{font-size:28px}
 #home .fan5 .mcard .ma b.pos{color:var(--good)} #home .fan5 .mcard .ma b.neg{color:var(--bad)}
@@ -1159,6 +1159,7 @@ header.top .brand span{font:500 13px var(--sans);letter-spacing:0;margin-left:10
 /* the five's strips: three lines for the style, tighter capitals (beats the Hardwood rule) */
 html[data-card] #home .fan5 .mcard .mt{letter-spacing:.05em;overflow:hidden}
 html[data-card] #home .fan5 .mcard .mb span{overflow:hidden;text-overflow:clip;white-space:nowrap;display:block;max-width:100%}
+#home .cover .fancap{margin-top:14px}
 
 </style>
 </head>
@@ -1861,12 +1862,11 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var q = players[r], g = BYCODE[q.main_group];
     return '<button type="button" class="mcard k-' + SKC[g.sk] + '" data-row="' + r + '" aria-label="Open ' + esc(q.player) + ', ' + q.season + '"><div class="mb"><span>' + esc(shortName(q.player)) + '</span></div><div class="ma"><b class="' + cls(q.rating.net) + '">' + sign(q.rating.net) + '</b><small>total impact</small></div><div class="mt">' + esc(g.name) + '</div></button>';
   }
-  // long surnames and style names shrink until they fit their strip, so nothing on a card is cut off
+  // long surnames shrink until they fit the nameplate; the card itself never changes size
   function fitFiveText(host){
     host.querySelectorAll("#fan .mcard").forEach(function(c){
       var n = c.querySelector(".mb span"), m = c.querySelector(".mt"), f;
       if (n){ n.style.fontSize = ""; f = parseFloat(getComputedStyle(n).fontSize); while (n.scrollWidth > n.clientWidth + 1 && f > 7){ f -= 0.5; n.style.fontSize = f + "px"; } }
-      if (m){ m.style.fontSize = ""; f = parseFloat(getComputedStyle(m).fontSize); while ((m.scrollHeight > m.clientHeight + 1 || m.scrollWidth > m.clientWidth + 1) && f > 7){ f -= 0.5; m.style.fontSize = f + "px"; } }
     });
   }
   var FIT5_W = 0; window.addEventListener("resize", function(){ var h = $("#hview"); if (h && !$("#home").hidden && Math.abs(innerWidth - FIT5_W) > 20){ FIT5_W = innerWidth; fitFiveText(h); } });
