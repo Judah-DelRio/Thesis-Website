@@ -2038,7 +2038,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     return '<p class="small" style="margin:6px 0 0"><b>' + esc(LIVE.meta.season) + ' so far:</b> ' + esc(gn(codes[o[0]])) + ', some ' + esc(gn(codes[o[1]])) +
       ' <span class="muted">(<span class="num">' + q.GP + '</span> games)</span> · <button type="button" class="linkbtn" data-live="' + q.row_id + '">Open ' + esc(LIVE.meta.season) + '</button></p>';
   }
-  var SN = { q: "", style: "", floor: 100, sort: "min" };
+  var SN = { q: "", style: "", floor: 100, sort: "net" };
   var EARLY = 300;   // under this many minutes a style is marked as an early read
   function latestRow(id){ var best = null; players.forEach(function(p){ if (p.PLAYER_ID === id && (!best || p.season > best.season)) best = p; }); return best; }
   function renderSeason(){
@@ -2046,20 +2046,15 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var floors = [0, 50, 100, 200, 500, 1000];
     var through = M.through ? ' Games through <span class="num">' + esc(M.through) + '</span>' + (M.games ? ' (<span class="num">' + M.games.toLocaleString() + '</span> games)' : "") + '.' : "";
     host.innerHTML = '<div><h2>' + esc(M.season) + ' so far</h2>' +
-      '<p class="lede">Every player this season, placed in the ' + G + ' styles every morning. The styles stay fixed: they were fitted on ' + core.meta.seasons[0] + ' to ' + core.meta.seasons[core.meta.seasons.length - 1] +
-      ' and are not refitted. Each player gets the same stats, built the same way within this season, and is matched to the closest styles. Ratings are refitted every morning too, on every possession played so far.</p>' +
+      '<p class="lede">Every morning, each player is placed in the closest of the ' + G + ' styles and re-rated on every possession so far. Early on, last season still counts.</p>' +
       '<p class="muted small" style="margin:4px 0 0">Updated ' + esc(M.updated_label) + '.' + through + ' Early in the season a player with few minutes sits near the league middle, so his style can still move; under ' + EARLY + ' minutes it is marked early read.</p></div>' +
       '<div class="sn-ctl"><label class="grow">Player or team<input type="search" id="sn-q" placeholder="e.g. Wembanyama or SAS" autocomplete="off" value="' + esc(SN.q) + '"></label>' +
       '<label>Minutes<select id="sn-floor">' + floors.map(function(f){ return '<option value="' + f + '"' + (f === SN.floor ? " selected" : "") + '>' + (f ? f + "+" : "All") + '</option>'; }).join("") + '</select></label>' +
-      '<label>Sort<select id="sn-sort"><option value="min">Minutes</option><option value="share">Share of style</option><option value="net">Total impact</option><option value="name">Name</option></select></label></div>' +
-      '<details class="sn-top" id="sn-top"><summary>Top 100 players right now <span>by ' + esc(LIVE.meta.season) + ' total impact, 100+ minutes</span></summary><div id="sn-top-body"></div></details>' +
+      '</div>' +
       '<div><h3 style="margin:0 0 8px">Players by main style</h3><div class="sn-counts" id="sn-counts"></div></div>' +
       '<div id="sn-table"></div>';
-    $("#sn-sort").value = SN.sort;
     $("#sn-q").addEventListener("input", function(){ SN.q = this.value; drawSeason(); });
     $("#sn-floor").addEventListener("change", function(){ SN.floor = +this.value; drawSeason(); });
-    $("#sn-sort").addEventListener("change", function(){ SN.sort = this.value; drawSeason(); });
-    drawTop();
     drawSeason();
   }
   var TOP_MIN = 100;     // minutes this season to make the top 100
