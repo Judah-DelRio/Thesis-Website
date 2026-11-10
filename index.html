@@ -2669,14 +2669,14 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var ns = Object.keys(se).length, nt = Object.keys(te).length;
     return ns > 1 ? ', and they come from ' + ns + ' different seasons' : nt > 1 ? ', and they come from ' + nt + ' different teams' : '';
   }
-  // the style's example for Who to add: its first flagship player not already in the five, at his best season in the style (purest 1,000+ minute one if that is missing)
-  function exampleSeason(g, gi){
+  // the style's example for Who to add: its first flagship player not already in the five, at his season in the style (1,000+ minutes) that fits the players here best
+  function exampleSeason(g, gi, fit){
     var ci = codes.indexOf(g.group), inLU = {}; LU.forEach(function(r){ inLU[players[r].PLAYER_ID] = 1; });
     for (var f = 0; f < g.flagship_players.length; f++){
       var fp = g.flagship_players[f], id = players[fp.row_id].PLAYER_ID; if (inLU[id]) continue;
       var best = null;
-      players.forEach(function(p, row){ if (p.PLAYER_ID === id && p.season === fp.peak_season && p.main_group === g.group) best = row; });
-      if (best == null) players.forEach(function(p, row){ if (p.PLAYER_ID === id && p.main_group === g.group && p.MIN >= 1000 && (best == null || p.shares[ci] > players[best].shares[ci])) best = row; });
+      var bf = -1e9;
+      players.forEach(function(p, row){ if (p.PLAYER_ID === id && p.main_group === g.group && p.MIN >= 1000){ var v = fit(p.traits); if (v > bf){ bf = v; best = row; } } });
       if (best == null) best = g.flagship_players[f].row_id;
       return { row: best, player: players[best].player, season: players[best].season };
     }
@@ -2700,7 +2700,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var X = function(v){ return 50 + 50 * v / mx; };
     var row = function(r){
       var g = groups[r.g], nm = gn(g.group), ps = r.parts.slice().sort(function(a, b){ return b.v - a.v; }), hi = ps[0], lo = ps[ps.length - 1];
-      var ex = exampleSeason(g, r.g), why;
+      var ex = exampleSeason(g, r.g, function(t){ var v = 0; LU.forEach(function(q){ v += dot(pairX(players[q].traits, t), bn); }); return v; }), why;
       why = '<details class="lu-why"><summary>Why</summary><table class="mini"><tr><th>With</th><th>Fit</th><th></th></tr>' + ps.map(function(p){ return '<tr><td>' + esc(names[p.k]) + '</td>' + '<td class="num">' + sv(p.v, 2) + '</td><td class="r">' + esc(pairWhy(p, p.A, g.traits, names[p.k], nm)) + '</td></tr>'; }).join('') + '</table></details>';
       var cls = r.tot >= 0 ? "up" : "down", x0 = X(Math.min(0, r.tot)), w = Math.abs(X(r.tot) - 50);
       return '<li><span class="nm"><b>' + esc(nm) + '</b>' + (ex ? '<span class="sub">Think ' + esc(ex.player) + ' <span style="white-space:nowrap">(' + ex.season + ')</span></span>' : '') + '</span>' +
