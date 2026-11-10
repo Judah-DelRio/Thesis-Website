@@ -746,41 +746,6 @@ footer{border-top:2px solid var(--rule)}
 @media (max-width:560px){:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fan{height:250px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard{width:128px;padding:6px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .mb{font-size:12px;padding:5px 7px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .ma{height:92px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .ma b{font-size:23px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .ma small{font-size:9.5px;letter-spacing:.1em}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .mt,:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .mf{font-size:11px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard:nth-child(1){left:2px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard:nth-child(2){left:calc(50% - 64px)}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard:nth-child(3){right:2px}}
 @media (prefers-reduced-motion:reduce){:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard{transition:none}}
 /* ---------- three card finishes, html[data-card=...]; each is a physical card, identical in light and dark ---------- */
-/* PRIZM: a modern chrome refractor. Dark card, rainbow refraction under fine diagonal etching, tinted by the skill hue; the name on a
-   slanted plate at the foot; a chrome OFF / DEF plate. The refraction drifts on hover. */
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) :is(.pcard,.mcard){
-  --ink:#F3F5F8; --ink-2:#D3D8E0; --muted:#A9B1BE; --line:rgba(255,255,255,.16); --disc:rgba(9,11,15,.78); --bg:#0B0D11; --face:rgba(9,11,15,.72); --foot:#C9D0DA;
-  --good:#FF5245; --bad:#6B8CFF; --sp:#3DCBFF; --cr:#B08CFF; --pt:#FF5C86; --acc:#FFB628;
-  color:var(--ink);border:0;border-radius:16px;overflow:hidden;
-  background:repeating-linear-gradient(118deg,rgba(255,255,255,.075) 0 1px,transparent 1px 5px),
-    conic-gradient(from 210deg at 28% 18%,#ff5d73,#ffc857,#5ef2b2,#4cc9f0,#9b8cff,#ff7ad9,#ff5d73),#0B0D11;
-  background-size:100% 100%,180% 180%,100% 100%;background-position:0 0,0% 0%,0 0;background-blend-mode:normal,normal,normal;
-  box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--id) 70%,#fff),inset 0 0 0 5px #0B0D11,inset 0 0 0 6px rgba(255,255,255,.28),0 26px 46px -22px rgba(0,0,0,.7);
-  transition:background-position 1.4s ease}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) :is(.pcard,.mcard):hover{background-position:0 0,100% 100%,0 0}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) :is(.pcard,.mcard)::before{content:"";position:absolute;inset:0;border:0;border-radius:inherit;opacity:1;pointer-events:none;
-  background:radial-gradient(120% 70% at 50% 0%,color-mix(in srgb,var(--id) 55%,transparent),transparent 60%),linear-gradient(180deg,rgba(11,13,17,.5),rgba(11,13,17,.72) 45%,rgba(11,13,17,.9) 80%)}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard{display:flex;flex-direction:column;padding:16px 16px 14px}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard > *{position:relative;z-index:1}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .type{order:-1;background:none;border:0;padding:0 2px 8px;font:700 11px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#fff}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .type .set{color:var(--muted)}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .art{background:none;border:0;margin:0;padding:0}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .bar{margin:6px -16px 0;border:0;border-radius:0;padding:10px 16px 10px 18px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%);
-  background:linear-gradient(100deg,color-mix(in srgb,var(--id) 92%,#fff) 0%,var(--id) 45%,color-mix(in srgb,var(--id) 45%,#000) 100%)}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .cn{font:800 italic 22px/1.05 var(--sans);letter-spacing:-.01em;text-transform:uppercase;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.25)}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .cost{background:#fff;border:0;color:#111;box-shadow:0 2px 6px rgba(0,0,0,.35)}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .cost.pos{color:#C8102E} html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .cost.neg{color:#1A4AD6}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .rules{background:var(--face);border:1px solid var(--line);border-radius:6px;margin:12px 0 0;backdrop-filter:blur(2px)}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .rules .flav{border-top-color:var(--line);color:var(--muted)}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .pt{background:linear-gradient(180deg,#FAFBFD,#B7BFCB);border:0;border-radius:6px;color:#111;box-shadow:0 3px 8px rgba(0,0,0,.5)}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .pt small{color:#4A505A} html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .pt i{background:#7D8591}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .pt .pos{color:#C8102E} html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .pt .neg{color:#1A4AD6}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard{padding:9px}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard > *{position:relative;z-index:1}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) :is(.mcard .mb,.mcard .mt){background:linear-gradient(100deg,var(--id),color-mix(in srgb,var(--id) 45%,#000));border:0;border-radius:3px;color:#fff;font-style:italic;text-transform:uppercase;letter-spacing:.01em}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .mb .num{background:#fff;border-radius:999px;padding:0 6px;font-style:normal}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .ma{background:none;border:0}
-html[data-card="prizm"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .ma b{color:#fff;text-shadow:0 0 18px color-mix(in srgb,var(--id) 80%,transparent)}
 
 /* COURT: natural maple boards for the frame and a black nameplate up top; the chart on a toned mat (so the cream disc stands off it);
    below, the '90s lower half: the style on the frame, a parchment text box with an inner keyline, and a black OFF / DEF plate. */
@@ -1022,10 +987,6 @@ table.at{width:100%;border-collapse:collapse;font-size:13.5px}
 #season .sn-ctl label{font:600 11px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 @media (min-width:641px){#season .sn-ctl input,#season .sn-ctl select{font-size:14px;padding:8px 10px}}
 /* Prizm mini cards: the name and type bars sit 4px inside the bezel ring (6px in) and their outer corners follow its curve (16 - 10 = 6px) */
-html[data-card="prizm"] :is(#home,#archetypes,#pairs,#lineup) .mcard{padding:10px}
-html[data-card="prizm"] :is(#home,#archetypes,#pairs,#lineup) .mcard .mb{border-radius:6px 6px 2px 2px}
-html[data-card="prizm"] :is(#home,#archetypes,#pairs,#lineup) .mcard .mt:last-child{border-radius:2px 2px 6px 6px}
-@media (max-width:560px){html[data-card="prizm"] #home .mcard{padding:8px}html[data-card="prizm"] #home .mcard .mb{border-radius:8px 8px 2px 2px}html[data-card="prizm"] #home .mcard .mt:last-child{border-radius:2px 2px 8px 8px}}
 /* ---------- Lineup check: start from a real five (top), the trade board ---------- */
 #lineup .lu-loadwrap{border-top:0;margin:0 0 18px;padding:0}
 #lineup .lu-loadwrap>summary{display:flex;align-items:baseline;gap:10px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font:600 13px/1.3 var(--sans);letter-spacing:0;text-transform:none;color:var(--ink);background:var(--bg)}
@@ -1106,8 +1067,6 @@ nav.pager button:hover b{color:var(--acc)}
 #lineup .hcard.wide .mt{white-space:normal;line-height:1.2}
 #lineup .hcard.wide .mf{padding:0 2px;font-size:12px}
 #lineup .hcard.wide .mf .num{font-size:12px}
-html[data-card="prizm"] #lineup .hcard.wide .mt:last-child{border-radius:2px}
-html[data-card="prizm"] #lineup .hcard.wide .mt{border-radius:3px}
 .lu-left .hbar{margin:0 40px}
 .lu-left .hn{top:-9px;left:-7px}
 /* the closed sections */
@@ -1145,17 +1104,65 @@ html[data-card="prizm"] #lineup .hcard.wide .mt{border-radius:3px}
 .pchip:hover span:first-child{color:var(--acc)}
 /* each set's cards share the full row width, so no row stops short of the right edge */
 @media (min-width:900px){.setgrid{display:flex;gap:18px}.setgrid>*{flex:1 1 0;min-width:0}}
-html[data-card="prizm"] :is(#home,#archetypes,#pairs,#lineup) .mcard .mb .num:not(.pos):not(.neg){color:#14161A}
 /* Lineup check: what the numbers mean */
 #lineup .pghead .lu-note{max-width:none;margin:12px 0 0;padding:10px 14px;border-left:3px solid var(--acc);background:var(--acc-soft);color:var(--ink-2);font-size:14px;line-height:1.55;border-radius:0 6px 6px 0}
 #lineup .pghead .lu-note b{color:var(--ink)}
+/* header: the name bigger, the byline beside it (rule of 11/10) */
+header.top .brand{font:800 21px/1.15 var(--sans);letter-spacing:-.02em}
+header.top .brand span{font:500 13px var(--sans);letter-spacing:0;margin-left:10px}
+@media (max-width:760px){header.top .brand{font-size:19px}}
+/* the landing five: five cards in a shallow arc, then what they are */
+#home .fan5{display:flex;justify-content:center;align-items:flex-start;max-width:600px;margin:0 auto;padding:18px 0 8px}
+#home .fan5 .mcard{position:relative!important;top:auto!important;left:auto!important;right:auto!important;width:126px;flex:none;margin:0 -8px;padding:7px}
+#home .fan5 .mcard .ma{height:92px}
+#home .fan5 .mcard .ma b{font-size:28px}
+#home .fan5 .mcard .ma b.pos{color:var(--good)} #home .fan5 .mcard .ma b.neg{color:var(--bad)}
+#home .fan5 .mcard .ma small{font-size:9.5px;letter-spacing:.12em}
+#home .fan5 .mcard .mb{font-size:13px;justify-content:center}
+#home .fan5 .mcard .mt{font-size:10.5px;line-height:1.2;text-align:center;white-space:normal;height:calc(2.4em + 10px);display:flex;align-items:center;justify-content:center;padding:4px 5px}
+#home .fan5 .mcard:nth-child(1){transform:translateY(22px) rotate(-10deg);z-index:1}
+#home .fan5 .mcard:nth-child(2){transform:translateY(7px) rotate(-5deg);z-index:2}
+#home .fan5 .mcard:nth-child(3){transform:rotate(0);z-index:3}
+#home .fan5 .mcard:nth-child(4){transform:translateY(7px) rotate(5deg);z-index:2}
+#home .fan5 .mcard:nth-child(5){transform:translateY(22px) rotate(10deg);z-index:1}
+#home .fan5 .mcard:hover,#home .fan5 .mcard:focus-visible{transform:translateY(-8px) rotate(0)!important;z-index:5}
+#home .f5cap{display:flex;flex-direction:column;align-items:center;gap:2px;margin:26px 0 6px;text-align:center}
+#home .f5cap .f5t{font:700 16px var(--sans);color:var(--ink)}
+#home .f5cap .f5m{font-size:13px;color:var(--muted);display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center}
+#home .fancap{gap:8px}
+@media (max-width:640px){
+  #home .fan5{flex-wrap:wrap;gap:12px 8px;padding-top:10px}
+  #home .fan5 .mcard{width:104px;margin:0;padding:6px}
+  #home .fan5 .mcard .ma{height:64px} #home .fan5 .mcard .ma b{font-size:21px}
+  #home .fan5 .mcard .mb{font-size:11.5px;padding:4px 6px} #home .fan5 .mcard .mt{font-size:9.5px;padding:3px 4px}
+  #home .fan5 .mcard .ma small{font-size:7.5px;letter-spacing:.06em;white-space:nowrap}
+  #home .fan5 .mcard:nth-child(n){transform:none}
+}
+/* at a glance: one heading over the two short paragraphs */
+#home .glance{padding-top:22px}
+#home .glance .twoc{padding:6px 0 18px}
+#home .glance .twoc p b{color:var(--ink)}
+/* pages: the whole row is the link */
+#home .idx tr[data-tab]{cursor:pointer}
+#home .idx tr[data-tab]:hover td:first-child,#home .idx tr[data-tab]:focus-visible td:first-child{color:var(--acc)}
+#home .idx tr[data-tab]:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+#home .idx td:last-child{text-align:left;white-space:normal}
+#home .idx td:first-child{width:150px}
+@media (max-width:760px){header.top .brand span{display:block!important;margin:2px 0 0;font-size:12px}}
+@media (max-width:600px){#home .idx tr[data-tab]{display:block;padding:9px 0;border-bottom:1px solid var(--line)}#home .idx tr[data-tab] td{display:block;border:0;padding:1px 0;width:auto}#home .idx td:last-child{color:var(--ink-2)}}
+@media (max-width:640px){#home .fan5 .mcard .mt{letter-spacing:.02em;font-size:9px;height:calc(3.6em + 8px)}}
+#home .f5cap .f5s{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+/* pages list: bigger, one size (rule of 11/10) */
+#home .idx td{font-size:17px;padding:13px 18px 13px 0}
+#home .idx td:first-child{font-size:18px;width:170px}
+@media (max-width:600px){#home .idx tr[data-tab] td{font-size:16px}#home .idx tr[data-tab] td:first-child{font-size:17px}}
 
 </style>
 </head>
 <body>
 <div class="wrap">
 <header class="top">
-  <button class="brand" type="button" id="brand">Archetype Lineup Lab<span>NBA, 2013-14 to 2025-26</span></button>
+  <button class="brand" type="button" id="brand">Archetype Lineup Lab<span>Capstone project · Judah Del Rio</span></button>
   <nav class="tabs" role="tablist">
     <button role="tab" id="tab-home" aria-selected="true" data-tab="home">Home</button>
     <button role="tab" id="tab-archetypes" aria-selected="false" data-tab="archetypes">Styles</button>
@@ -1165,7 +1172,6 @@ html[data-card="prizm"] :is(#home,#archetypes,#pairs,#lineup) .mcard .mb .num:no
     <button role="tab" id="tab-lineup" aria-selected="false" data-tab="lineup">Lineup check</button>
     <button role="tab" id="tab-trust" aria-selected="false" data-tab="trust">Methodology</button>
   </nav>
-  <span class="finish" role="group" aria-label="Card finish">Card <button type="button" data-f="hardwood" aria-pressed="true">Hardwood</button><button type="button" data-f="prizm" aria-pressed="false">Prizm</button></span>
 </header>
 
 <div id="boot" class="loading">Loading almost 7,000 player-seasons…</div>
@@ -1205,7 +1211,6 @@ html[data-card="prizm"] :is(#home,#archetypes,#pairs,#lineup) .mcard .mb .num:no
   <div class="panel stack" id="trust-main"></div>
 </section>
 
-<footer>Data: NBA box-score, player-tracking and Synergy play-type stats for the styles; box-score and rim-defense stats for the ratings’ prior; NBA play-by-play and substitution stints for the possessions, 2013-14 to 2025-26. Regular season only.</footer>
 </div>
 
 <script>
@@ -1260,11 +1265,7 @@ html[data-card="prizm"] :is(#home,#archetypes,#pairs,#lineup) .mcard .mb .num:no
   function store(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
   function load(k){ try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch(e){ return null; } }
 
-  var FINISH = load("lab-card"); if (FINISH !== "prizm") FINISH = "hardwood";
-  function setFinish(f){ FINISH = f; document.documentElement.setAttribute("data-card", f); store("lab-card", f);
-    document.querySelectorAll(".finish button").forEach(function(b){ b.setAttribute("aria-pressed", b.dataset.f === f); }); }
-  setFinish(FINISH);
-  document.querySelectorAll(".finish button").forEach(function(b){ b.addEventListener("click", function(){ setFinish(b.dataset.f); if (!$("#players").hidden) drawPlayer(); }); });
+  document.documentElement.setAttribute("data-card", "hardwood");   // one card finish everywhere (rule of 11/10)
   document.getElementById("brand").addEventListener("click", function(){ showTab("home"); });
   var tabs = ["home","archetypes","pairs","players","season","lineup","trust"];
   var LIVE = null, LIVE_BY = {};
@@ -1568,7 +1569,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
   }
 
 
-  // ---------- players: every player-season as a card (Hardwood or Prizm finish), with the league, six factors, fit, peers and career beside it ----------
+  // ---------- players: every player-season as a card, with the league, six factors, fit, peers and career beside it ----------
   function rankShort(p, o){
     var r = p.rating_rank[o];
     return r >= 0.5 ? "better than " + Math.min(99, Math.round(100 * r)) + "%" : "behind " + Math.min(99, Math.round(100 * (1 - r))) + "%";
@@ -1823,29 +1824,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
   }
   var PW = 0;
 
-  // ---- the landing page: one of the stars, dealt as three cards: his first season, his first change of main style, and his peak (or latest) ----
-  var ROOKIE_1314 = { 203507: 1, 203497: 1 };   // Giannis and Gobert were rookies in 2013-14
-  var HAND = null;
-  function handFor(i){
-    var S = STARS[i].seasons, n = S.length, out = [], used = {};
-    var add = function(k, tag){ if (k == null || k < 0 || used[k] || out.length >= 3) return; used[k] = 1; out.push({ k: k, tag: tag }); };
-    add(0, S[0].season !== core.meta.seasons[0] || ROOKIE_1314[STARS[i].id] ? "Rookie" : "First year measured");
-    var sw = null; for (var k = 1; k < n; k++) if (S[k].main_group !== S[k - 1].main_group){ sw = k; break; }
-    var el = []; S.forEach(function(q, k){ if (q.MIN >= 1000) el.push(k); }); if (!el.length) el = S.map(function(q, k){ return k; });
-    var pk = el.reduce(function(a, b){ return S[b].rating.net > S[a].rating.net ? b : a; });
-    add(sw, "Style switch");
-    add(pk, "Peak"); var lt = n - 1; while (lt > 0 && S[lt].MIN < 500) lt--; add(lt, "Most recent");
-    if (out.length < 3){ var fl = []; S.forEach(function(q, k){ if (!used[k]) fl.push(k); }); fl.slice(-(3 - out.length)).forEach(function(k){ add(k, "Season"); }); }
-    out.sort(function(a, b){ return a.k - b.k; });
-    return { i: i, cards: out };
-  }
-  function starIdx(id){ for (var i = 0; i < STARS.length; i++) if (STARS[i].id === id) return i; return 0; }
-  function deal(){ var i; do { i = Math.floor(Math.random() * STARS.length); } while (HAND && i === HAND.i && STARS.length > 1); HAND = handFor(i); }
   function yy(s){ return s.slice(0, 4) + "–" + s.slice(5, 7); }
-  function miniHTML(i, c){
-    var q = STARS[i].seasons[c.k], g = BYCODE[q.main_group];
-    return '<button type="button" class="mcard k-' + SKC[g.sk] + '" data-row="' + q.row_id + '" aria-label="Open ' + esc(STARS[i].name) + ', ' + q.season + '"><div class="mb"><span>' + esc(shortName(STARS[i].name)) + '</span><span class="num ' + cls(q.rating.net) + '">' + sign(q.rating.net) + '</span></div><div class="ma"><b>' + yy(q.season) + '</b><small>' + c.tag + '</small></div><div class="mt">' + esc(g.name) + '</div><div class="mf">' + esc(city(q.team)) + ' · ' + q.season + '</div></button>';
-  }
   var HTERMS = ["Two off-ball shooters", "Off-ball shooter + creator", "Off-ball shooter + big", "Two on-ball creators", "Creator + big", "Two bigs"];
   function termsHTML(){ // the six offense pairings with 95% ranges
     var mx = 0.8, X = function(v){ return 50 + 50 * v / mx; };
@@ -1854,49 +1833,67 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
       return '<div class="tr"><span class="tn">' + HTERMS[termIndex(t)] + '</span><svg viewBox="0 0 100 18" preserveAspectRatio="none" aria-hidden="true" class="' + (fd ? "faded" : "") + '"><rect class="' + cls(t.off, 2) + '" x="' + Math.min(50, X(t.off)).toFixed(2) + '" y="4" width="' + Math.abs(X(t.off) - 50).toFixed(2) + '" height="10" rx="1"/><line class="ci" x1="' + X(lo).toFixed(2) + '" x2="' + X(hi).toFixed(2) + '" y1="9" y2="9" vector-effect="non-scaling-stroke"/><line class="z" x1="50" x2="50" y1="0" y2="18" vector-effect="non-scaling-stroke"/></svg><span class="num ' + cls(t.off, 2) + '">' + sign(t.off, 2) + '</span></div>'; }).join("") +
       '<div class="tax"><span></span><span class="num">' + MINUS + '0.8</span><span class="num">0</span><span class="num">+0.8</span><span></span></div></div>';
   }
-  var TERMS_NOTE = "Points per 100 possessions on offense for one pairing of two players who are each a standard deviation above average at the named tendencies, after both players’ own ratings. Thin line: 95% range; faded when it crosses zero.";
+  var TERMS_NOTE = "How many points per 100 possessions a pairing adds or costs on offense, beyond the two players’ own ratings.";
   // my own words from the capstone update, trimmed for the site
   var COPY = {
     q1: "Assuming players have archetypes, do their archetypes make each other better?",
     q2: "Do they crowd when one is over-represented?",
-    a1: "After adjusting for player input (talent) and opponent quality, the results make basketball sense: shooters complement everybody, but somebody’s got to rebound and somebody’s got to run the offense. On defense the signal is too weak for a conclusion, probably because the best defenses are helmed by one elite defender.",
-    a2: "Only insofar as question 1 shows the opportunity cost of not having a rebounder or playmaker. There simply were not enough lineups in the data with an outsized share of one archetype to answer it with certainty.",
-    data: "Every regular season from 2013-14 through 2025-26 (no playoffs, that’s a whole other project). From nba_api: box score, advanced, tracking, hustle and Synergy play-type stats. From the NBA’s play-by-play feed: every event of all 15,669 games, plus stints (stretches with no substitution, both five-man lineups on the floor), corrected against the official box score. From those, a possession table: 3.09 million possessions in 810,540 rows of offense fives against defense fives.",
-    method: "Every player-season gets 168 style columns (where he shoots from and off how many dribbles, touches, passes, drives, play types, rebounding, hustle), all shares and rates, never makes or percentages, so the archetypes say what a player does, not how well. Minutes-weighted k-means gives 16 archetypes, and each player-season gets a percentage of each; most are a mix of two or three. Players are rated from the possessions they were on the floor for, with the other nine held fixed, and then the lineup’s tendency pairings are tested on top of that.",
+    a1: "After accounting for how good each player is and the quality of the opponent, the results make basketball sense: shooters help next to other shooters and next to bigs, but somebody’s got to rebound and somebody’s got to run the offense. On defense the signal is too weak for a conclusion, probably because the best defenses are helmed by one elite defender: over 60% of the best tenth of real fives on defense have one.",
+    a2: "The more players lean the same way, the more each new one costs, because he crowds everyone already there. Two on-ball creators cost about half a point per 100 possessions; add a third and the total is about 1.6. Off-ball shooters are the exception: each one helps the others.",
+    data: "Every regular season from 2013-14 through 2025-26. Style stats from the NBA’s box score, tracking, hustle and Synergy play-type data. Every possession from the NBA’s play-by-play feed, all 15,669 games, checked against the official box scores.",
+    method: "Each player-season is described by 168 style stats: what he does and where, never how well. Clustering those gives 16 styles, and each player is a mix of them. Players are rated from the possessions they played, then the model tests whether certain style pairings score more or less than the players’ ratings add up to.",
     byline: "Judah Del Rio"
   };
+  // the landing page deals a real five: five cards, their synergy score, and a link to check them
+  var HOME5 = null, HOME5_POOL = null;
+  function dealFive(){
+    lineupIndex();
+    if (!HOME5_POOL) HOME5_POOL = LROWS.filter(function(l){ return l.poss >= 400; });
+    if (!HOME5){   // first deal: the best-fitting five that played 800+ possessions together
+      HOME5 = LROWS.filter(function(l){ return l.poss >= 800; }).sort(function(a, b){ return b.fit - a.fit; })[0] || LBEST; return; }
+    var l; do { l = HOME5_POOL[Math.floor(Math.random() * HOME5_POOL.length)]; } while (l === HOME5 && HOME5_POOL.length > 1);
+    HOME5 = l;
+  }
+  function fiveCardHTML(r){
+    var q = players[r], g = BYCODE[q.main_group];
+    return '<button type="button" class="mcard k-' + SKC[g.sk] + '" data-row="' + r + '" aria-label="Open ' + esc(q.player) + ', ' + q.season + '"><div class="mb"><span>' + esc(shortName(q.player)) + '</span></div><div class="ma"><b class="' + cls(q.rating.net) + '">' + sign(q.rating.net) + '</b><small>total impact</small></div><div class="mt">' + esc(g.name) + '</div></button>';
+  }
   function renderHome(){
     var host = $("#hview"); if (!host || !STARS.length) return;
-    if (!HAND) HAND = handFor(starIdx(203507));     // Giannis first: he has a style from every skill
-    var S = core.meta.sample, last = STARS[HAND.i].seasons[HAND.cards[HAND.cards.length - 1].k], M = core.meta.seasons;
-    var pg = function(t, what){ return '<tr><td>' + esc(t[1]) + '</td><td>' + what + '</td><td><button type="button" data-tab="' + t[0] + '">Open →</button></td></tr>'; };
+    if (!HOME5) dealFive();
+    var S = core.meta.sample, M = core.meta.seasons, F5 = HOME5, ids = roleOrder(F5.ids);
+    var pg = function(t, what){ return '<tr data-tab="' + t[0] + '" tabindex="0" role="link"><td>' + esc(t[1]) + '</td><td>' + what + '</td></tr>'; };
     host.innerHTML =
-      '<section class="cover"><div><div class="meta">Capstone project · ' + COPY.byline + ' · regular seasons ' + M[0] + ' to ' + M[M.length - 1] + '</div><h1>Do NBA archetypes make each other better?</h1>' +
+      '<section class="cover"><div><h1>Do NBA archetypes make each other better?</h1>' +
         '<p>I sorted every player-season since ' + M[0] + ' into ' + G + ' playing styles, rated every player from the possessions he was on the floor for, and tested whether the styles add up to more, or less, than the sum of their parts.</p></div>' +
-        '<div><div class="fan" id="fan">' + HAND.cards.map(function(c){ return miniHTML(HAND.i, c); }).join("") + '</div>' +
-          '<p class="fancap"><button type="button" class="deal" id="deal">Deal another</button></p></div></section>' +
-      '<div class="kv"><div><div class="v">' + S.games.toLocaleString() + '</div><div class="k">games</div></div><div><div class="v">' + Math.round(S.possessions).toLocaleString() + '</div><div class="k">possessions</div></div><div><div class="v">' + S.rows.toLocaleString() + '</div><div class="k">five-vs-five rows</div></div><div><div class="v">' + S.player_seasons.toLocaleString() + '</div><div class="k">player-seasons, ' + G + ' archetypes</div></div></div>' +
+        '<div><div class="fan5" id="fan">' + ids.map(fiveCardHTML).join("") + '</div>' +
+          '<p class="f5cap"><span class="f5t">' + esc(teamName(F5.team)) + ' · ' + F5.season + '</span><span class="f5m"><span class="num">' + F5.poss.toLocaleString() + '</span> possessions together · synergy score <span class="f5s">' + gradeChip(F5.fit) + sv(F5.fit, 2) + '</span></span></p>' +
+          '<p class="fancap"><button type="button" class="deal" id="deal">Deal another</button><button type="button" class="deal" id="check5">Check this five →</button></p></div></section>' +
+      '<div class="kv"><div><div class="v">' + S.games.toLocaleString() + '</div><div class="k">games</div></div><div><div class="v">' + Math.round(S.possessions).toLocaleString() + '</div><div class="k">possessions</div></div><div><div class="v">' + S.player_seasons.toLocaleString() + '</div><div class="k">player-seasons</div></div><div><div class="v">' + G + '</div><div class="k">styles</div></div></div>' +
       '<table class="ft"><thead><tr><th></th><th>Question</th><th>Answer</th></tr></thead><tbody>' +
-        '<tr><td>Q1</td><td><div class="q">' + COPY.q1 + '</div></td><td><div class="a pos">Yes, on offense for sure.</div><p>' + COPY.a1 + '</p><div style="max-width:560px;margin-top:14px">' + termsHTML() + '</div><p class="cap">' + TERMS_NOTE + '</p></td></tr>' +
-        '<tr><td>Q2</td><td><div class="q">' + COPY.q2 + '</div></td><td><div class="a" style="color:var(--muted)">Not enough lineups to say.</div><p>' + COPY.a2 + '</p></td></tr>' +
+        '<tr><td>Q1</td><td><div class="q">' + COPY.q1 + '</div></td><td><div class="a pos">Yes, on offense.</div><p>' + COPY.a1 + '</p><div style="max-width:560px;margin-top:14px">' + termsHTML() + '</div><p class="cap">' + TERMS_NOTE + '</p></td></tr>' +
+        '<tr><td>Q2</td><td><div class="q">' + COPY.q2 + '</div></td><td><div class="a pos">Yes, and each extra one costs more.</div><p>' + COPY.a2 + '</p></td></tr>' +
       '</tbody></table>' +
-      '<section class="twoc"><div><h2 class="h">The data</h2><p>' + COPY.data + '</p></div><div><h2 class="h">The method</h2><p>' + COPY.method + '</p></div></section>' +
+      '<section class="glance"><h2 class="h">At a glance</h2><div class="twoc"><p><b>Data.</b> ' + COPY.data + '</p><p><b>Method.</b> ' + COPY.method + '</p></div></section>' +
       '<section><h2 class="h">Pages</h2><table class="idx"><tbody>' +
-        pg(["archetypes", "Styles"], 'The ' + G + ' archetypes, what each does more and less of, who defines it.') +
-        pg(["pairs", "Style fit"], 'The six tendency pairings and every style pairing they imply.') +
-        '<tr><td>Players</td><td>Any player-season as a card: style mix, impact against the league, the six factors, lineup fit, career.</td><td><button type="button" id="toP">' + esc(shortName(STARS[HAND.i].name)) + ', ' + last.season + ' →</button></td></tr>' +
-        (LIVE ? pg(["season", LIVE.meta.season], 'Every player this season, placed in the ' + G + ' styles every morning.') : '') +
-        pg(["lineup", "Lineup check"], 'Grade any five against every real five since ' + M[0] + '.') +
         pg(["trust", "Methodology"], 'Every step from raw data to the tests.') +
+        pg(["archetypes", "Styles"], 'The ' + G + ' styles and who defines each one.') +
+        pg(["pairs", "Style fit"], 'What each pair of styles adds or costs.') +
+        pg(["players", "Players"], 'Any player-season: style, impact, career.') +
+        (LIVE ? pg(["season", LIVE.meta.season], 'This season’s players, updated every day.') : '') +
+        pg(["lineup", "Lineup check"], 'Grade any five against every real five.') +
       '</tbody></table></section>';
     host.querySelectorAll(".mcard").forEach(function(b){ b.addEventListener("click", function(){ renderPlayer(+b.dataset.row); showTab("players"); }); });
-    host.querySelector("#toP").addEventListener("click", function(){ renderPlayer(last.row_id); showTab("players"); });
-    host.querySelector("#deal").addEventListener("click", function(){ deal(); renderHome(); });
-    host.querySelectorAll(".idx button[data-tab]").forEach(function(b){ b.addEventListener("click", function(){ showTab(b.dataset.tab); }); });
+    host.querySelector("#deal").addEventListener("click", function(){ dealFive(); renderHome(); });
+    host.querySelector("#check5").addEventListener("click", function(){ loadFive(HOME5); showTab("lineup"); });
+    host.querySelectorAll(".idx tr[data-tab]").forEach(function(r){
+      r.addEventListener("click", function(){ showTab(r.dataset.tab); });
+      r.addEventListener("keydown", function(e){ if (e.key === "Enter" || e.key === " "){ e.preventDefault(); showTab(r.dataset.tab); } });
+    });
   }
 
   // ---------- pager: every page ends with the page before and the page after, in the header's order ----------
-  var PAGE_LINE = { home: "Start here: the two questions and the answers.", archetypes: "The " + "16 archetypes, what each does more and less of, who defines it.", pairs: "What two styles add or cost by sharing the floor.", players: "Any player-season as a card: style mix, impact, fit, career.", season: "Every player this season, placed in the styles every morning.", lineup: "Grade any five against every real five.", trust: "Every step from raw data to the tests." };
+  var PAGE_LINE = { home: "Start here: the two questions and the answers.", archetypes: "The " + "16 styles and who defines each.", pairs: "What two styles add or cost by sharing the floor.", players: "Any player-season as a card: style composition, impact, fit, career.", season: "Every player this season, placed in the styles every morning.", lineup: "Grade any five against every real five.", trust: "Every step from raw data to the tests." };
   function pageName(t){ return t === "season" ? (LIVE ? LIVE.meta.season : "This season") : ($("#tab-" + t) ? $("#tab-" + t).textContent : t); }
   function setupPager(){
     var order = tabs.filter(function(t){ return t !== "season" || LIVE; });
