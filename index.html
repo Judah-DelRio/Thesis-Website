@@ -1203,6 +1203,10 @@ html[data-card] #home .fan5 .mcard .mb span{overflow:hidden;text-overflow:clip;w
 }
 #home .ft td:nth-child(3) > p.cap{margin-top:10px}
 
+/* style cards in the set: name only, centered (share of minutes lives on the opened card) */
+:is(#archetypes,#pairs) .scard .mb{justify-content:center;text-align:center}
+#archetypes .stylecard .rules .flav .thk{display:block;padding-left:1.4em}
+
 </style>
 </head>
 <body>
@@ -2104,7 +2108,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
   function styleCardMini(i){
     var g = groups[i], c = BYCODE[g.group], names = g.flagship_players.slice(0, 2).map(function(e){ return shortName(e.player); }).join(", ");
     return '<button type="button" class="mcard scard k-' + SKC[c.sk] + '" data-g="' + i + '" aria-pressed="' + (i === state.group) + '" aria-label="' + esc(gn(g.group)) + '">' +
-      '<div class="mb"><span>' + esc(gn(g.group)) + '</span><span class="num">' + (100 * g.minutes_share).toFixed(1) + '%</span></div>' +
+      '<div class="mb"><span>' + esc(gn(g.group)) + '</span></div>' +
       '<div class="ma">' + meterSVG(g.traits, false) + '</div><div class="mt">' + SK_NAME[c.sk] + '</div><div class="mf">' + esc(names) + '</div></button>';
   }
   function styleCardBig(g){
@@ -2113,7 +2117,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
       '<div class="bar"><span class="cn">' + esc(gn(g.group)) + '</span><span class="cost num" title="Share of all minutes">' + (100 * g.minutes_share).toFixed(1) + '%</span></div>' +
       '<div class="art">' + meterSVG(g.traits, true) + '</div>' +
       '<div class="type"><span class="tm">Leans ' + SK_NAME[c.sk].toLowerCase() + '</span><span class="set">' + core.meta.seasons[0].slice(0, 4) + '–' + core.meta.seasons[core.meta.seasons.length - 1].slice(5) + '</span></div>' +
-      '<div class="rules"><p>' + esc(g.note) + '</p><p class="flav">' + g.player_seasons_main_group.toLocaleString() + ' player-seasons have it as their main style. Think ' + esc(g.flagship_players.slice(0, 3).map(function(e){ return e.player; }).join(", ")) + '.</p></div>' +
+      '<div class="rules"><p>' + esc(g.note) + '</p><p class="flav">' + g.player_seasons_main_group.toLocaleString() + ' player-seasons have it as their main style.<span class="thk">Think ' + esc(g.flagship_players.slice(0, 3).map(function(e){ return e.player; }).join(", ")) + '.</span></p></div>' +
       '<div class="foot"><span>Its players, average total impact ' + sign(net) + '</span><span class="pt" title="Average offense and defense of the players who mainly play it, points per 100"><span><small>OFF</small><b class="num ' + cls(off) + '">' + sign(off) + '</b></span><i></i><span><small>DEF</small><b class="num ' + cls(def) + '">' + sign(def) + '</b></span></span></div>' +
     '</article>';
   }
@@ -2149,9 +2153,6 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
         '<p class="cap" style="margin-top:-8px">Where the typical player of this style ranks among all NBA player-seasons on each stat (minutes-weighted percentile).</p>' +
         '<section class="c"><h2 class="h">Flagship players</h2><div class="tablewrap"><table class="at"><thead><tr><th></th><th>Player</th><th class="num">Seasons</th><th class="num hide-sm">In style</th><th class="num hide-sm">Pts / reb / ast</th><th class="num hide-sm">Best</th><th class="num">Avg</th></tr></thead><tbody>' + flag + '</tbody></table></div>' +
           '<p class="cap">The players who carried this style longest: ' + (core.meta.purest_minutes || 1000).toLocaleString() + '+ minute seasons with it as their main style, at least ' + Math.round(100 * (core.meta.flagship_share || 0.5)) + '% of their game in it across those seasons. Per-game stats over those seasons; Best and Avg are total impact.</p></section>' +
-        '<section class="c"><h2 class="h">Ratings of its players <b>' + OUT_NAME[o] + '</b></h2><p class="rank">Average ' + sv(d.mean) + ' per 100 over <span class="num">' + RG.player_seasons.toLocaleString() + '</span> player-seasons (<span class="num">' + RG.players.toLocaleString() + '</span> players), weighted by possessions; middle half ' + sv(d.p25) + ' to ' + sv(d.p75) + '.</p>' +
-          '<div class="strip">' + strip(d) + ratingAxis(true) + '</div>' +
-          '<p class="cap"><span class="num">' + pct(RG.top_five_share_of_possessions) + '</span> of their possessions belong to five players: ' + RG.top_five_players.map(function(e){ return esc(e.player); }).join(", ") + '. This says how good the players who play the style have been, not what the style is worth.</p></section>' +
         '<section class="c"><details class="more"><summary>Purest seasons</summary><div><p class="cap" style="margin:0 0 6px">The ' + (core.meta.purest_minutes || 1000).toLocaleString() + '+ minute player-seasons closest to this style alone.</p><div class="tablewrap"><table class="at"><thead><tr><th>Player</th><th class="num">Season</th><th class="num">Share</th></tr></thead><tbody>' + pure + '</tbody></table></div></div></details></section>' +
       '</div></div>';
     var step = function(dd){ var at = sorted.indexOf(state.group); state.group = sorted[(at + dd + sorted.length) % sorted.length]; store("lab-group", state.group); renderGroups(); };
