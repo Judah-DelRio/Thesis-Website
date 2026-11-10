@@ -2789,8 +2789,9 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var sk = function(c){ var g = BYCODE[c.main_group]; return g ? SKC[g.sk] : "sp"; };
     var arrow = function(v){ return '<span class="num ' + cls(v, 2) + '">' + (v > 0.005 ? '▲' : v < -0.005 ? '▼' : '') + ' ' + sign(v, 2) + '</span>'; };
     TC_WHY = {};
+    var totShown = function(ids){ var o = 0; ids.forEach(function(r){ o += ratingShown(players[r].rating).net; }); return +(+o.toFixed(1) + +(lineupFit(ids).tot - core.fit.fit_mean).toFixed(1)).toFixed(1); };   // the Total impact tile, so a card's Impact is exactly the tile's change
     var card = function(sl, pick){
-      var p = players[sl.r], nm = names[sl.k], c = pick.c, g = BYCODE[c.main_group], dx = c.rating.net - p.rating.net + pick.d, id = "w" + sl.k + "_" + c.row_id;
+      var p = players[sl.r], nm = names[sl.k], c = pick.c, g = BYCODE[c.main_group], dx = totShown(LU.map(function(r, k){ return k === sl.k ? c.row_id : r; })) - totShown(LU), id = "w" + sl.k + "_" + c.row_id;
       TC_WHY[id] = { t: c.player + ' in for ' + nm, h: whyTable(sl, c, pick.d).replace('<details class="lu-why"><summary>Why</summary>', '').replace(/<\/details>$/, '') };
       return '<li class="tc k-' + sk(c) + '"><div class="tc-for">Swap out <b>' + esc(nm) + '</b></div>' +
         '<div class="tc-body"><a class="tc-name" href="#players" data-row="' + c.row_id + '" title="Open his page">' + esc(c.player) + '</a>' +
