@@ -1166,6 +1166,14 @@ html[data-card] #home .fan5 .mcard .mb span{overflow:hidden;text-overflow:clip;w
 /* the card frame never moves: the nameplate has a fixed height, only its text shrinks */
 #home .fan5 .mcard .mb{height:29px;box-sizing:border-box;padding-top:0;padding-bottom:0}
 @media (max-width:640px){#home .fan5 .mcard .mb{height:24px}}
+/* every grade chip is the same box: C's size and shape, a 1px edge in its own color (C and F keep their visible edge) */
+.gchip{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;width:34px;min-width:34px;height:22px;padding:0;line-height:1;border:1px solid var(--gc);vertical-align:middle}
+.gchip.gC{border-color:#BBB} .gchip.gF{border-color:#555}
+/* under the five: card bottom, team line, grade line and buttons all 14px apart */
+#home .fan5{padding-bottom:0}
+#home .cover .f5cap{margin:14px 0 0;gap:14px}
+#home .cover .f5cap .f5t,#home .cover .f5cap .f5m{line-height:22px}
+#home .cover .fancap{margin:14px auto 0}
 
 </style>
 </head>
