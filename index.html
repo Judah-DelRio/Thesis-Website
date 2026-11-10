@@ -1192,13 +1192,14 @@ html[data-card] #home .fan5 .mcard .mb span{overflow:hidden;text-overflow:clip;w
 .qchart .qaxis .qt span{position:absolute;top:0;transform:translateX(-50%);font:500 11px var(--mono);color:var(--muted)}
 .qchart .qcue{margin-top:0}
 .qchart .qcue em{position:absolute;top:0;font:italic 500 11.5px var(--sans);color:var(--muted)}
-.qchart .qcue em.l{left:0} .qchart .qcue em.r{right:0}
+.qchart .qcue em{transform:translateX(-50%);white-space:nowrap}   /* centered under the -0.5 and +0.5 ticks */
 @media (max-width:600px){
   .qchart .qrow{grid-template-columns:minmax(0,1fr);gap:2px;height:auto;padding-top:6px}
   .qchart .qrow .ql{font-size:13.5px;line-height:1.3}
   .qchart .qrow .qt{height:24px}
   .qchart .qaxis{grid-template-columns:minmax(0,1fr);gap:0}
   .qchart .qaxis .ql{display:none}
+  .qchart .qcue em.r{left:auto!important;right:0;transform:none}   /* no room to center past +0.5 on a phone */
 }
 #home .ft td:nth-child(3) > p.cap{margin-top:10px}
 
@@ -1895,7 +1896,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var axis = ticks.filter(function(g){ return Math.abs(g * 2 - Math.round(g * 2)) < 1e-9 && X(g) > 4 && X(g) < 96; }).map(function(g){ return '<span style="left:' + X(g) + '%">' + (g === 0 ? "0" : sign(g, 1)) + '</span>'; }).join("");
     return '<div class="qchart ' + TERMS_STYLE + '"><div class="qbody">' + rows + '</div>' +
       '<div class="qaxis"><span class="ql"></span><span class="qt">' + axis + '</span></div>' +
-      '<div class="qaxis qcue"><span class="ql"></span><span class="qt"><em class="l">← worse performance</em><em class="r">better performance →</em></span></div></div>';
+      '<div class="qaxis qcue"><span class="ql"></span><span class="qt"><em class="l" style="left:' + X(-0.5) + '%">← worse performance</em><em class="r" style="left:' + X(0.5) + '%">better performance →</em></span></div></div>';
   }
   var TERMS_NOTE = "How many points per 100 possessions a pairing adds or costs on offense, beyond the two players’ own ratings.";
   // my own words from the capstone update, trimmed for the site
@@ -1936,7 +1937,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var S = core.meta.sample, M = core.meta.seasons, F5 = HOME5, ids = roleOrder(F5.ids);
     var pg = function(t, what){ return '<tr data-tab="' + t[0] + '" tabindex="0" role="link"><td>' + esc(t[1]) + '</td><td>' + what + '</td></tr>'; };
     host.innerHTML =
-      '<section class="cover"><div><h1>Do NBA archetypes make each other better?</h1>' +
+      '<section class="cover"><div><h1>How do NBA teams synergize?</h1>' +
         '<p>I sorted every player-season since ' + M[0] + ' into ' + G + ' playing styles, rated every player from the possessions he was on the floor for, and tested whether the styles add up to more, or less, than the sum of their parts.</p></div>' +
         '<div><div class="fan5" id="fan">' + ids.map(fiveCardHTML).join("") + '</div>' +
           '<p class="f5cap"><span class="f5t">' + esc(teamName(F5.team)) + ' · ' + F5.season + '</span><span class="f5m"><span class="num">' + F5.poss.toLocaleString() + '</span> possessions together · synergy score <span class="f5s">' + gradeChip(F5.fit) + sv(F5.fit, 2) + '</span></span></p>' +
