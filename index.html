@@ -1229,6 +1229,18 @@ html[data-card] #home .fan5 .mcard .mb span{overflow:hidden;text-overflow:clip;w
 .qchart .qplus{color:var(--muted);font-weight:600}
 @media (max-width:600px){.qchart.chips .qrow{height:auto;padding-top:8px}}
 
+#pairs .pghead{border-bottom:0;padding-bottom:4px}
+
+/* 2026-27 table: every header sorts */
+table.sn th{vertical-align:bottom}
+table.sn th .sortbtn{all:unset;cursor:pointer;display:inline-block;font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit;white-space:nowrap}
+table.sn th .sortbtn:hover,table.sn th .sortbtn.on{color:var(--ink)}
+table.sn th .sortbtn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+table.sn th .sortbtn i{font-style:normal;font-size:9px;display:inline-block;width:12px;text-align:right;visibility:hidden}
+table.sn th .sortbtn.on i{visibility:visible}
+
+.pair2 .scard{min-width:0}
+
 </style>
 </head>
 <body>
@@ -1290,7 +1302,7 @@ html[data-card] #home .fan5 .mcard .mb span{overflow:hidden;text-overflow:clip;w
   var core = null;
   var players = [], groups = [], G = 0, codes = [], NAMES = {}, PCOL = {};
   var gn = function(c){ return NAMES[c] || c; };
-  var state = { player: null, group: null, pairOut: "net", ratingOut: "net" };
+  var state = { player: null, group: null, pairOut: "off", ratingOut: "net" };
   var $ = function(s){ return document.querySelector(s); };
   var esc = function(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]; }); };
   var DIACRITICS = new RegExp("[" + String.fromCharCode(0x300) + "-" + String.fromCharCode(0x36f) + "]", "g");
@@ -2062,8 +2074,12 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     $("#sn-counts").querySelectorAll("button").forEach(function(b){ b.addEventListener("click", function(){ SN.style = SN.style === b.dataset.c ? "" : b.dataset.c; drawSeason(); }); });
     var terms = norm(SN.q).split(/\s+/).filter(Boolean);
     rows = rows.filter(function(p){ return (!SN.style || p.main === SN.style) && terms.every(function(t){ return p._key.indexOf(t) >= 0; }); });
-    var mi = function(p){ return codes.indexOf(p.main); };
-    rows.sort(SN.sort === "name" ? function(a, b){ return a._name < b._name ? -1 : 1; } : SN.sort === "share" ? function(a, b){ return b.shares[mi(b)] - a.shares[mi(a)]; } : SN.sort === "net" ? function(a, b){ return b.rating.net - a.rating.net; } : function(a, b){ return b.MIN - a.MIN; });
+    // sort by any column header: text A-Z first, numbers highest first; a second click flips it; ties go to minutes
+    var KEY = { name: function(p){ return p._name; }, main: function(p){ return gn(codes[order(p)[0]]); }, next: function(p){ return gn(codes[order(p)[1]]); },
+      net: function(p){ return p.rating_from === p.season ? p.rating.net : -1e9; }, gp: function(p){ return p.GP; }, min: function(p){ return p.MIN; } };
+    if (!KEY[SN.sort]) SN.sort = "min";
+    var k = KEY[SN.sort], txt = SN.sort === "name" || SN.sort === "main" || SN.sort === "next", dir = (SN.flip ? -1 : 1) * (txt ? 1 : -1);
+    rows.sort(function(a, b){ var x = k(a), y = k(b); if (x !== y) return (x < y ? -1 : 1) * dir; return b.MIN - a.MIN; });
     var shown = rows.slice(0, 400);
     var tr = shown.map(function(p){
       var o = order(p);
@@ -2074,10 +2090,13 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
         '<td class="hide-sm">' + esc(gn(codes[o[1]])) + ' <span class="num muted small">' + pct(p.shares[o[1]]) + '</span></td>' +
         '<td class="num">' + (p.rating_from === p.season ? sv(p.rating.net) : '<span class="muted">\u2013</span>') + '</td><td class="num">' + p.GP + '</td><td class="num hide-sm">' + Math.round(p.MIN).toLocaleString() + '</td></tr>';
     }).join("");
-    $("#sn-table").innerHTML = rows.length ? '<div class="tablewrap"><table class="sn"><thead><tr><th>Player</th><th>Main style</th><th class="hide-sm">Next style</th><th class="num">Total</th><th class="num">GP</th><th class="num hide-sm">Min</th></tr></thead><tbody>' + tr + '</tbody></table></div>' +
+    var th = function(key, label, cls){ var on = SN.sort === key, t = key === "name" || key === "main" || key === "next", up = on && ((t ? 1 : -1) * (SN.flip ? -1 : 1) > 0);
+      return '<th class="' + (cls || '') + '" aria-sort="' + (on ? (up ? 'ascending' : 'descending') : 'none') + '"><button type="button" class="sortbtn' + (on ? ' on' : '') + '" data-sort="' + key + '">' + label + '<i aria-hidden="true">' + (on ? (up ? '▲' : '▼') : '▼') + '</i></button></th>'; };
+    $("#sn-table").innerHTML = rows.length ? '<div class="tablewrap"><table class="sn"><thead><tr>' + th("name", "Player") + th("main", "Main style") + th("next", "Next style", "hide-sm") + th("net", "Total", "num") + th("gp", "GP", "num") + th("min", "Min", "num hide-sm") + '</tr></thead><tbody>' + tr + '</tbody></table></div>' +
       '<p class="muted small" style="margin:6px 0 0"><span class="num">' + rows.length + '</span> players' + (rows.length > shown.length ? ', first ' + shown.length + ' shown' : '') + '. The percentage is how much of the style mix that style takes.</p>'
       : '<p class="muted">No player matches.</p>';
     $("#sn-table").querySelectorAll("button[data-past]").forEach(function(b){ b.addEventListener("click", function(){ renderPlayer(+b.dataset.past); showTab("players"); }); });
+    $("#sn-table").querySelectorAll("button[data-sort]").forEach(function(b){ b.addEventListener("click", function(){ var key = b.dataset.sort; SN.flip = SN.sort === key ? !SN.flip : false; SN.sort = key; drawSeason(); }); });
   }
 
   // ---------- archetypes ----------
@@ -2344,8 +2363,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     return '<div class="paircard"><div class="pair2">' + mini(r[0]) + '<span class="plus">+</span>' + mini(r[1]) + '</div>' +
       '<div class="pv"><span class="big num ' + cls(v, 2) + '">' + sign(v, 2) + '</span><span class="u">points per 100 possessions</span></div>' +
       '<p class="rank"><b>' + esc(pairName(r)) + '</b>: ' + (rk === 1 ? 'the best fit of all ' + N + ' pairings.' : rk === N ? 'the worst fit of all ' + N + ' pairings.' : 'ranks <b class="num">' + rk + '</b> of ' + N + ' (' + ordinal(q) + ' percentile). ' + verdict(q)) + '</p>' +
-      '<p class="why">The main reason: ' + esc(pairWhyWords(r, o)) + '.</p>' +
-      '<p class="cap">Two players purely of these styles, 95% range ' + rng(v, pse(r, o)) + '; about ' + sign(seasonPts(v), 0) + ' points over ' + PAIR_POSS.toLocaleString() + ' possessions together. Projected from the six tendency terms, not tested on its own.</p></div>';
+      '<p class="why">The main reason: ' + esc(pairWhyWords(r, o)) + '.</p></div>';
   }
   function renderPairs(){
     var P = core.pairs, rows = P.rows, o = state.pairOut;
@@ -2367,7 +2385,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
         '<div class="legend" style="margin-top:6px"><span>worst fit<span class="ramp"></span>best fit</span><span>percentile among the ' + rows.length + ' pairings; similar styles sit next to each other</span></div></div>' +
         '<div class="readcol"><div id="pair-read" aria-live="polite"></div>' +
         '</div></div>' +
-      '<section class="c"><h2 class="h">Three tendencies, six pairings</h2><p class="lede2">Every style mixes three tendencies: the ' + skChip(0) + ' spots up off the catch, the ' + skChip(1) + ' runs the offense, the ' + skChip(2) + ' lives in the paint. On offense, each pairing:</p>' + termsHTML(true) + '</section>' +
+      '<section class="c"><p class="lede2">Every style mixes three tendencies: the ' + skChip(0) + ' spots up off the catch, the ' + skChip(1) + ' runs the offense, the ' + skChip(2) + ' lives in the paint. On offense, each pairing:</p>' + termsHTML(true) + '</section>' +
       '<section class="c"><h2 class="h">In a real five</h2><p class="lede2">Five players make ten pairings, and they add up. <button type="button" class="linkbtn" data-tab="lineup">Lineup check</button> does the sum for any five you pick and ranks it against every real five since ' + core.meta.seasons[0] + '.</p>' + testsBlock() + '</section>';
     $("#pairs-panel").querySelectorAll("[data-tab]").forEach(function(b){ b.addEventListener("click", function(){ showTab(b.dataset.tab); }); });
     var svg = $("#pairs-panel .heat"), read = $("#pair-read");
