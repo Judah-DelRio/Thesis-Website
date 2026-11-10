@@ -1965,7 +1965,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
   var COPY = {
     q1: "Do player archetypes affect each other’s performance?",
     q2: "Do archetypes have diminishing returns?",
-    a1: "After accounting for how good each player is and the quality of the opponent, the results make basketball sense: shooters help next to other shooters and next to bigs, but somebody’s got to rebound and somebody’s got to run the offense. On defense the signal is too weak for a conclusion, probably because over 60% of the best defenses in our data are helmed by one elite defender. His teammates fall in place.",
+    a1: "After accounting for how good each player is and the quality of the opponent, the results make basketball sense: in the modern NBA, lots of shooting helps, but somebody’s still got to rebound and somebody’s got to run the offense. On defense the signal is too weak for a conclusion, probably because over 60% of the best defenses in our data are helmed by one elite defender. His teammates fall in place.",
     a2: "A player who does the same job as his teammates doesn’t just add his skill, he costs the niches he doesn’t fill. Two ball-dominant creators contribute about half a point (per 100) less than their summed talent predicts, and three of them 1.6 points less. Off-ball shooters compound the other way: each one makes every other shooter better, so two add about 0.2 and three about 0.7.",
     data: "Every regular season from 2013-14 through 2025-26. Style stats from the NBA’s box score, tracking, hustle and Synergy play-type data. Every possession from the NBA’s play-by-play feed, all 15,669 games, checked against the official box scores.",
     method: "Each player-season is described by 168 style stats: what he does and where, never how well. Clustering those gives 16 styles, and each player is a mix of them. Players are rated from the possessions they played, then the model tests whether certain style pairings score more or less than the players’ ratings add up to.",
@@ -2224,12 +2224,16 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     $("#group-detail").querySelectorAll("button[data-row]").forEach(function(a){ a.addEventListener("click", function(){ renderPlayer(+a.dataset.row); showTab("players"); }); });
     renderGroupRatings();
   }
+  function shownMean(g, o){   // one decimal, with defense = total − offense after rounding, so the three views add up as shown
+    var R = g.ratings_of_main_group_players, n = +R.net.mean.toFixed(1), f = +R.off.mean.toFixed(1);
+    return o === "net" ? n : o === "off" ? f : +(n - f).toFixed(1);
+  }
   function renderGroupRatings(){
     var o = state.ratingOut; ratingScale(o);
     var sorted = groups.map(function(g, i){ return i; }).sort(function(a, b){ return groups[b].ratings_of_main_group_players[o].mean - groups[a].ratings_of_main_group_players[o].mean; });
     $("#group-ratings").innerHTML = '<h2 class="h">Who plays each style: their ratings</h2><div class="rhead"><p class="cap" style="margin:0">Each strip is the spread of ratings among the players whose main style it is, weighted by possessions, sorted by the average. It ranks the players, not the styles: a style whose players happen to be stars sits high even if the style adds nothing.</p>' +
       '<span class="seg" role="group" aria-label="Rating">' + OUTS.map(function(x){ return '<button type="button" data-out="' + x + '" aria-pressed="' + (x === o) + '">' + OUT_NAME[x] + '</button>'; }).join("") + '</span></div>' +
-      '<div class="rrows">' + sorted.map(function(i){ var g = groups[i], d = g.ratings_of_main_group_players[o]; return '<button type="button" class="rrow" aria-pressed="' + (i === state.group) + '" data-g="' + i + '"><span class="nm"><i class="dot d-' + SKC[leanOf(g)] + '"></i>' + esc(gn(g.group)) + '</span>' + strip(d) + sv(d.mean, 1, "v") + '</button>'; }).join("") + ratingAxis() + '</div>' +
+      '<div class="rrows">' + sorted.map(function(i){ var g = groups[i], d = g.ratings_of_main_group_players[o]; return '<button type="button" class="rrow" aria-pressed="' + (i === state.group) + '" data-g="' + i + '"><span class="nm"><i class="dot d-' + SKC[leanOf(g)] + '"></i>' + esc(gn(g.group)) + '</span>' + strip(d) + sv(shownMean(g, o), 1, "v") + '</button>'; }).join("") + ratingAxis() + '</div>' +
       '<div class="legend"><span><i class="tick"></i>average, weighted by possessions</span><span><i class="thick"></i>middle half</span><span><i class="thin"></i>10th to 90th percentile</span><span>per 100 possessions, 0 = league average</span></div>';
     $("#group-ratings").querySelectorAll(".seg button").forEach(function(b){ b.addEventListener("click", function(){ state.ratingOut = b.dataset.out; store("lab-rating-out", state.ratingOut); renderGroups(); }); });
     $("#group-ratings").querySelectorAll(".rrow").forEach(function(b){ b.addEventListener("click", function(){ state.group = +b.dataset.g; store("lab-group", state.group); renderGroups(); $("#group-detail").scrollIntoView({behavior:"smooth", block:"start"}); }); });
