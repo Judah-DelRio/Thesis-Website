@@ -1205,7 +1205,22 @@ html[data-card] #home .fan5 .mcard .mb span{overflow:hidden;text-overflow:clip;w
 
 /* style cards in the set: name only, centered (share of minutes lives on the opened card) */
 :is(#archetypes,#pairs) .scard .mb{justify-content:center;text-align:center}
-#archetypes .stylecard .rules .flav .thk{display:block;padding-left:1.4em}
+#archetypes .stylecard .rules .flav .thk{display:block}
+#archetypes .stylecard .bar{justify-content:center;text-align:center}
+
+/* flagship players: one line per player */
+#archetypes table.flt td{vertical-align:middle;white-space:nowrap;padding-top:10px;padding-bottom:10px}
+#archetypes table.flt td.fln{white-space:normal;width:40%}
+#archetypes table.flt td.fln .pl{font-weight:600;text-align:left}
+#archetypes table.flt td.fly{color:var(--ink-2)}
+#archetypes table.flt td.fls{width:110px}
+#archetypes table.flt td.fls > span:last-child{display:inline-block;min-width:34px}
+#archetypes .fbar{display:inline-block;vertical-align:middle;width:52px;height:6px;border-radius:3px;background:var(--line);margin-right:8px;overflow:hidden}
+#archetypes .fbar i{display:block;height:100%;border-radius:3px}
+@media (max-width:600px){#archetypes .fbar{width:34px;margin-right:6px} #archetypes table.flt td.fls{width:auto}}
+
+#pairs .fitlead .heatwrap{overflow-x:visible}
+#pairs .fitlead .heat{min-width:0}
 
 </style>
 </head>
@@ -2114,7 +2129,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
   function styleCardBig(g){
     var c = BYCODE[g.group], RG = g.ratings_of_main_group_players, off = RG.off.mean, def = RG.def.mean, net = RG.net.mean;
     return '<article class="pcard stylecard k-' + SKC[c.sk] + '" aria-label="' + esc(gn(g.group)) + '">' +
-      '<div class="bar"><span class="cn">' + esc(gn(g.group)) + '</span><span class="cost num" title="Share of all minutes">' + (100 * g.minutes_share).toFixed(1) + '%</span></div>' +
+      '<div class="bar"><span class="cn">' + esc(gn(g.group)) + '</span></div>' +
       '<div class="art">' + meterSVG(g.traits, true) + '</div>' +
       '<div class="type"><span class="tm">Leans ' + SK_NAME[c.sk].toLowerCase() + '</span><span class="set">' + core.meta.seasons[0].slice(0, 4) + '–' + core.meta.seasons[core.meta.seasons.length - 1].slice(5) + '</span></div>' +
       '<div class="rules"><p>' + esc(g.note) + '</p><p class="flav">' + g.player_seasons_main_group.toLocaleString() + ' player-seasons have it as their main style.<span class="thk">Think ' + esc(g.flagship_players.slice(0, 3).map(function(e){ return e.player; }).join(", ")) + '.</span></p></div>' +
@@ -2138,11 +2153,14 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var g = groups[state.group], RG = g.ratings_of_main_group_players, o = state.ratingOut, d = RG[o];
     ratingScale(o);
     var hi = g.highest_mean_z_features.slice(0, 5).sort(function(a, b){ return b.percentile - a.percentile; }), lo = g.lowest_mean_z_features.slice(0, 5).sort(function(a, b){ return a.percentile - b.percentile; });
-    var flag = g.flagship_players.map(function(e, k){
-      var span = e.seasons === 1 ? e.first_season : e.first_season.slice(0, 4) + '–' + e.last_season.slice(5);
-      return '<tr><td class="num r">' + (k + 1) + '</td><td><button type="button" class="pl" data-row="' + e.row_id + '">' + esc(e.player) + '</button><span class="tm">' + esc(e.teams.join(", ")) + '</span></td>' +
-        '<td class="num">' + e.seasons + '<span class="sub">' + span + '</span></td><td class="num hide-sm">' + pct(e.share) + '</td>' +
-        '<td class="num hide-sm">' + e.ppg.toFixed(1) + ' / ' + e.rpg.toFixed(1) + ' / ' + e.apg.toFixed(1) + '</td><td class="num hide-sm">' + sv(e.peak_net) + '<span class="sub">' + e.peak_season + '</span></td><td class="num">' + sv(e.net) + '</td></tr>';
+    var flag = g.flagship_players.map(function(e){   // one line per player: tenure, how much of his game is this style, his line, his impact
+      var span = e.seasons === 1 ? e.first_season : e.first_season.slice(0, 4) + '–' + e.last_season.slice(5), q = Math.round(100 * e.share);
+      var tip = e.teams.join(", ") + ' · ' + e.seasons + (e.seasons === 1 ? ' season' : ' seasons') + ' in this style';
+      return '<tr><td class="fln"><button type="button" class="pl" data-row="' + e.row_id + '" title="' + esc(tip) + '">' + esc(e.player) + '</button></td>' +
+        '<td class="num fly">' + span + '</td>' +
+        '<td class="num fls"><span class="fbar"><i style="width:' + q + '%;background:' + SKVAR[leanOf(g)] + '"></i></span><span>' + q + '%</span></td>' +
+        '<td class="num hide-sm">' + e.ppg.toFixed(1) + '</td><td class="num hide-sm">' + e.rpg.toFixed(1) + '</td><td class="num hide-sm">' + e.apg.toFixed(1) + '</td>' +
+        '<td class="num">' + sv(e.net) + '</td></tr>';
     }).join("");
     var pure = g.purest_seasons.map(function(e){ return '<tr><td><button type="button" class="pl" data-row="' + e.row_id + '">' + esc(e.player) + '</button><span class="tm">' + esc(e.team) + '</span></td><td class="num">' + e.season + '</td><td class="num">' + pct(e.share) + '</td></tr>'; }).join("");
     $("#group-detail").innerHTML =
@@ -2151,8 +2169,8 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
       '<div class="play"><div class="cardcol">' + styleCardBig(g) + '</div><div>' +
         '<section class="c duo"><div><h2 class="h">Does more of</h2>' + pctBars(hi, false) + '</div><div><h2 class="h">Does less of</h2>' + pctBars(lo, true) + '</div></section>' +
         '<p class="cap" style="margin-top:-8px">Where the typical player of this style ranks among all NBA player-seasons on each stat (minutes-weighted percentile).</p>' +
-        '<section class="c"><h2 class="h">Flagship players</h2><div class="tablewrap"><table class="at"><thead><tr><th></th><th>Player</th><th class="num">Seasons</th><th class="num hide-sm">In style</th><th class="num hide-sm">Pts / reb / ast</th><th class="num hide-sm">Best</th><th class="num">Avg</th></tr></thead><tbody>' + flag + '</tbody></table></div>' +
-          '<p class="cap">The players who carried this style longest: ' + (core.meta.purest_minutes || 1000).toLocaleString() + '+ minute seasons with it as their main style, at least ' + Math.round(100 * (core.meta.flagship_share || 0.5)) + '% of their game in it across those seasons. Per-game stats over those seasons; Best and Avg are total impact.</p></section>' +
+        '<section class="c"><h2 class="h">Flagship players</h2><div class="tablewrap"><table class="at flt"><thead><tr><th>Player</th><th class="num">Years</th><th class="num">In style</th><th class="num hide-sm">Pts</th><th class="num hide-sm">Reb</th><th class="num hide-sm">Ast</th><th class="num">Impact</th></tr></thead><tbody>' + flag + '</tbody></table></div>' +
+          '<p class="cap">The players with the most ' + (core.meta.purest_minutes || 1000).toLocaleString() + '+ minute seasons mainly in this style. Stats are per game; impact is the player’s own, not the style’s.</p></section>' +
         '<section class="c"><details class="more"><summary>Purest seasons</summary><div><p class="cap" style="margin:0 0 6px">The ' + (core.meta.purest_minutes || 1000).toLocaleString() + '+ minute player-seasons closest to this style alone.</p><div class="tablewrap"><table class="at"><thead><tr><th>Player</th><th class="num">Season</th><th class="num">Share</th></tr></thead><tbody>' + pure + '</tbody></table></div></div></details></section>' +
       '</div></div>';
     var step = function(dd){ var at = sorted.indexOf(state.group); state.group = sorted[(at + dd + sorted.length) % sorted.length]; store("lab-group", state.group); renderGroups(); };
@@ -2334,18 +2352,13 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     $("#pairs-panel").innerHTML =
       '<div class="pghead"><div class="eyebrow">' + rows.length + ' style pairings · from six tendency terms · every possession since ' + core.meta.seasons[0] + '</div><h1>Style fit</h1>' +
         '<p class="dek">What two styles add or cost by sharing the floor, on top of what each player brings himself. Pick any cell.</p></div>' +
+      '<section class="c fittop"><h2 class="h">The five best and five worst fits</h2><div class="tablewrap"><table class="at"><thead><tr><th class="num">Rank</th><th>Pairing</th><th class="num">Per 100</th><th class="hide-sm">Why</th></tr></thead><tbody>' + tr + '</tbody></table></div>' +
+        '</section>' +
       '<div class="fitlead"><div><div class="heatwrap">' + pairHeatmap(ord) + '</div>' +
         '<div class="legend" style="margin-top:6px"><span>worst fit<span class="ramp"></span>best fit</span><span>percentile among the ' + rows.length + ' pairings; similar styles sit next to each other</span></div></div>' +
         '<div class="readcol"><div id="pair-read" aria-live="polite"></div>' +
-        '<div class="picks"><div class="h">Best fits</div><div class="pchips">' + byPct.slice(0, 3).map(chip).join("") + '</div><div class="h">Worst fits</div><div class="pchips">' + byPct.slice(-3).reverse().map(chip).join("") + '</div></div></div></div>' +
-      '<div class="kv fkv"><div><div class="v num neg">' + sign(pv(w0, "net"), 1) + '</div><div class="k">' + esc(pairName(w0)) + ', the worst fit</div></div><div><div class="v num neg">' + sign(pv(w1, "net"), 1) + '</div><div class="k">' + esc(pairName(w1)) + '</div></div>' +
-        '<div><div class="v num pos">' + sign(pv(best, "net"), 1) + '</div><div class="k">' + esc(pairName(best)) + ', the best fit</div></div><div><div class="v num">' + fmtP(minH(offT)) + '</div><div class="k">offense test, Holm p</div></div></div>' +
-      '<p class="lede2">On offense, creators crowd creators and bigs crowd bigs; an off-ball shooter fits next to anyone. Neither player is the problem, the pairing is: every player’s own value is already counted, so these numbers are only what a pair gains or loses by sharing the floor.</p>' +
-      '<section class="c"><h2 class="h">Where it comes from: three tendencies</h2><p class="lede2">Every style is a mix of three tendencies, and the model fits one number for each way two tendencies can meet, six in all. What was tested is those six as a block; every cell in the grid is what they imply for two whole styles.</p>' +
-        skillsStrip() + '<p class="cap">A player’s tendency levels come from the styles he mixes, so they describe his role, not how well he does it: Curry’s off-ball shooting reads near average this way because his main style is an on-ball one, and the model never sees his percentages.</p>' +
-        termChart("net", '<p class="note">Net means offense and defense added together. The defense side of every pairing is close to zero, so these bars are almost all offense.</p>') + '</section>' +
-      '<section class="c"><h2 class="h">Best and worst of ' + rows.length + '</h2><div class="tablewrap"><table class="at"><thead><tr><th class="num">Rank</th><th>Pairing</th><th class="num">Per 100</th><th class="hide-sm">Why</th></tr></thead><tbody>' + tr + '</tbody></table></div>' +
-        '<p class="cap">The most extreme cells belong to the most extreme styles, whose tendencies sit furthest from average; two full-time players of those styles rarely share the floor.</p></section>' +
+        '</div></div>' +
+      '<section class="c"><h2 class="h">Three tendencies, six pairings</h2><p class="lede2">Every style mixes three tendencies: the ' + skChip(0) + ' spots up off the catch, the ' + skChip(1) + ' runs the offense, the ' + skChip(2) + ' lives in the paint. On offense, each pairing:</p>' + termsHTML() + '</section>' +
       '<section class="c"><h2 class="h">In a real five</h2><p class="lede2">Five players make ten pairings, and they add up. <button type="button" class="linkbtn" data-tab="lineup">Lineup check</button> does the sum for any five you pick and ranks it against every real five since ' + core.meta.seasons[0] + '.</p>' + testsBlock() + '</section>';
     $("#pairs-panel").querySelectorAll("[data-tab]").forEach(function(b){ b.addEventListener("click", function(){ showTab(b.dataset.tab); }); });
     var svg = $("#pairs-panel .heat"), read = $("#pair-read");
