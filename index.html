@@ -1241,6 +1241,12 @@ table.sn th .sortbtn.on i{visibility:visible}
 
 .pair2 .scard{min-width:0}
 
+/* Who to add: "+ Add him" sits beside "+ Why" */
+#lineup .addhim{all:unset;cursor:pointer;font-size:13px;font-weight:600;color:var(--rim)}
+#lineup .addhim:hover{text-decoration:underline}
+#lineup .addhim:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+#lineup details.lu-why[open] ~ .addhim{order:-1}
+
 </style>
 </head>
 <body>
@@ -2595,6 +2601,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
       if (slot == null){ LU.push(r); saveLineup(); renderLineup(LU.length < 5 ? "#lu-add-q" : '[data-swap="4"]'); }
       else { LU[slot] = r; LU_EDIT = null; saveLineup(); renderLineup('[data-swap="' + slot + '"]'); }
     };
+    body.querySelectorAll("button[data-addrow]").forEach(function(b){ b.addEventListener("click", function(){ pick(+b.dataset.addrow, null); }); });
     if (add) makeSearch(add, { id: "lu-add-q", placeholder: LU.length ? "e.g. Jokić 2023-24" : "e.g. Harden 2019-20", includeLow: function(){ return true; }, onPick: function(r){ pick(r, null); } });
     if (sw){
       var slot = LU_EDIT, was = players[LU[slot]];
@@ -2667,6 +2674,19 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var ns = Object.keys(se).length, nt = Object.keys(te).length;
     return ns > 1 ? ', and they come from ' + ns + ' different seasons' : nt > 1 ? ', and they come from ' + nt + ' different teams' : '';
   }
+  // the style's example for Who to add: its first flagship player not already in the five, at his best season in the style (purest 1,000+ minute one if that is missing)
+  function exampleSeason(g, gi){
+    var ci = codes.indexOf(g.group), inLU = {}; LU.forEach(function(r){ inLU[players[r].PLAYER_ID] = 1; });
+    for (var f = 0; f < g.flagship_players.length; f++){
+      var fp = g.flagship_players[f], id = players[fp.row_id].PLAYER_ID; if (inLU[id]) continue;
+      var best = null;
+      players.forEach(function(p, row){ if (p.PLAYER_ID === id && p.season === fp.peak_season && p.main_group === g.group) best = row; });
+      if (best == null) players.forEach(function(p, row){ if (p.PLAYER_ID === id && p.main_group === g.group && p.MIN >= 1000 && (best == null || p.shares[ci] > players[best].shares[ci])) best = row; });
+      if (best == null) best = g.flagship_players[f].row_id;
+      return { row: best, player: players[best].player, season: players[best].season };
+    }
+    return null;
+  }
   // who to add: with one to four players in, every style as the next player, ranked by what it adds on net
   function recommendHTML(){
     var n = LU.length;
@@ -2685,12 +2705,12 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var X = function(v){ return 50 + 50 * v / mx; };
     var row = function(r){
       var g = groups[r.g], nm = gn(g.group), ps = r.parts.slice().sort(function(a, b){ return b.v - a.v; }), hi = ps[0], lo = ps[ps.length - 1];
-      var eg = g.flagship_players.slice(0, 2).map(function(e){ return e.player; }).join(", "), why;
+      var ex = exampleSeason(g, r.g), why;
       why = '<details class="lu-why"><summary>Why</summary><table class="mini"><tr><th>With</th><th>Fit</th><th></th></tr>' + ps.map(function(p){ return '<tr><td>' + esc(names[p.k]) + '</td>' + '<td class="num">' + sv(p.v, 2) + '</td><td class="r">' + esc(pairWhy(p, p.A, g.traits, names[p.k], nm)) + '</td></tr>'; }).join('') + '</table></details>';
       var cls = r.tot >= 0 ? "up" : "down", x0 = X(Math.min(0, r.tot)), w = Math.abs(X(r.tot) - 50);
-      return '<li><span class="nm"><b>' + esc(nm) + '</b><span class="sub">Think ' + esc(eg) + '</span></span>' +
+      return '<li><span class="nm"><b>' + esc(nm) + '</b>' + (ex ? '<span class="sub">Think ' + esc(ex.player) + ' <span style="white-space:nowrap">(' + ex.season + ')</span></span>' : '') + '</span>' +
         '<svg viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true"><rect class="' + cls + '" x="' + x0.toFixed(2) + '" y="4" width="' + w.toFixed(2) + '" height="12"/>' +
-        '<line class="zero" x1="50" x2="50" y1="0" y2="20" vector-effect="non-scaling-stroke"/></svg>' + sv(r.tot, 2, "v") + '<span class="act">' + why + '</span></li>';
+        '<line class="zero" x1="50" x2="50" y1="0" y2="20" vector-effect="non-scaling-stroke"/></svg>' + sv(r.tot, 2, "v") + '<span class="act">' + why + (ex ? '<button type="button" class="addhim" data-addrow="' + ex.row + '">+ Add him</button>' : '') + '</span></li>';
     };
     var who = n === 1 ? esc(names[0]) : 'the ' + ["two", "three", "four"][n - 2] + ' here';
     return '<details class="more lu-rec" open><summary>Who to add</summary><div class="lu-pairs-wrap">' +
