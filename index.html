@@ -559,9 +559,9 @@ footer{border-top:2px solid var(--rule)}
 .pcrumb .search input{padding:6px 10px;font-size:13.5px}
 @media (max-width:600px){.pcrumb .search{flex:1 1 100%}.pcrumb .search input{font-size:16px}}
 .ph .live{margin:6px 0 0;font-size:13px;color:var(--ink-2)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .h{font:600 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;display:flex;justify-content:space-between;gap:8px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .h b{color:var(--ink);font-weight:600}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .cap{font-size:12px;color:var(--muted);margin:8px 0 0;max-width:70ch}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .h{font:600 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;display:flex;justify-content:space-between;gap:8px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .h b{color:var(--ink);font-weight:600}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .cap{font-size:12px;color:var(--muted);margin:8px 0 0;max-width:70ch}
 #players .ph .facts{flex-direction:row}
 #players .ph{padding-top:6px}
 #players .hlist .nm{background:none;border:0;padding:0;text-align:left;font:inherit;color:var(--ink);cursor:pointer}
@@ -575,161 +575,161 @@ footer{border-top:2px solid var(--rule)}
 
 /* ---------- the cards ---------- */
 /* shared figure styles; every option sets the tokens and may override */
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pos{color:var(--good)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .neg{color:var(--bad)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .zero{color:var(--muted)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) rect.pos{fill:var(--good)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) rect.neg{fill:var(--bad)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) rect.zero{fill:var(--muted)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) line.z{stroke:var(--muted)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .d-sp{background:var(--sp)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .d-cr{background:var(--cr)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .d-pt{background:var(--pt)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) svg.hist,:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .car svg{display:block;width:100%;height:auto;overflow:visible}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hist .ax text,:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .car .ax text,:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .car svg > text{font:11px var(--mono);fill:var(--muted)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .ax line{stroke:var(--line)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hb{fill:var(--bin)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hb.me{fill:var(--acc)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hb.open{stroke:var(--acc);stroke-width:2}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hist .hit{fill:transparent;cursor:pointer} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hist .hit:hover{fill:var(--acc-soft)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mlab{font:600 12px var(--sans);fill:var(--ink)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .zl0{stroke:var(--muted);stroke-dasharray:2 3} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hist .zt{font:11px var(--sans);fill:var(--muted)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hsw{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font:13px var(--sans);margin-bottom:8px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hsw button{background:none;border:1px solid var(--line);border-radius:999px;padding:4px 12px;cursor:pointer;color:var(--muted);font:inherit}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hsw button[aria-pressed="true"]{border-color:var(--acc);color:var(--ink);background:var(--acc-soft)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hsw span{color:var(--muted);margin-left:6px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hlist{font:14px var(--sans);border-top:1px solid var(--line);margin-top:8px;padding-top:10px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hlist .hh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hlist .hx{background:none;border:0;color:var(--acc);cursor:pointer;font:600 13px var(--sans)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hlist ol{list-style:none;margin:0;padding:0;columns:2 250px;column-gap:28px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hlist li{display:grid;grid-template-columns:minmax(0,1fr) 60px 74px 42px;gap:8px;padding:4px 0;border-bottom:1px solid var(--line);break-inside:avoid}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hlist li .nm,:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hlist li .tm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hlist li .tm,:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hlist li .mn{color:var(--muted)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hlist li .mn{text-align:right;font-size:12.5px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hlist li .num:last-child{text-align:right}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hlist li.me .nm{color:var(--acc);font-weight:600}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .hlist .hn{font-size:12.5px;color:var(--muted);margin:8px 0 0}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .car path.ln{fill:none;stroke:var(--ink);stroke-width:2}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .car circle{fill:var(--bg);stroke:var(--ink);stroke-width:2;cursor:pointer}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .car circle.sel{fill:var(--acc);stroke:var(--acc)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .car .zl{stroke:var(--muted);stroke-dasharray:3 3}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .car .bl{font:500 11px var(--sans);fill:var(--ink-2)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .car .bn{font:700 11px var(--mono);fill:var(--ink)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .runs .rn{font:700 11px var(--mono);color:var(--ink);min-width:12px;text-align:right}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .runs{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:4px 16px;font:13px var(--sans);color:var(--ink-2)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .runs li{display:flex;align-items:center;gap:6px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .runs i{width:12px;height:12px;border-radius:2px;display:inline-block}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .runs .yr{font:500 12px var(--mono);color:var(--muted)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 36px}
-@media (max-width:560px){:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fit{grid-template-columns:minmax(0,1fr)}}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fit ol{list-style:none;margin:0;padding:0}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fit li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 0;border-top:1px solid var(--line);font-size:14px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fit .sn{display:flex;align-items:center;gap:8px;min-width:0}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fit .ft{font:600 13px var(--sans);margin-bottom:6px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .peers{list-style:none;margin:0;padding:0;font-size:14px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .peers li{display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:8px;padding:5px 0;border-top:1px solid var(--line)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .peers .r{font:12px var(--mono);color:var(--muted)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .peers .me .pn{font-weight:700;color:var(--acc)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .tterms{display:grid;gap:2px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .tterms .tr{display:grid;grid-template-columns:minmax(0,170px) minmax(0,1fr) 52px;gap:12px;align-items:center;padding:4px 0;font-size:14px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .tterms .tr .num{text-align:right;font-weight:600}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .tterms svg{width:100%;height:18px;display:block;overflow:visible}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .tterms .tax{display:grid;grid-template-columns:minmax(0,170px) 1fr 1fr 1fr 52px;gap:0 12px;font-size:11px;color:var(--muted)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .tterms .tax span:nth-child(3){text-align:center} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .tterms .tax span:nth-child(4){text-align:right}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .ci{stroke:var(--ink-2);stroke-width:1.2} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .faded{opacity:.4}
-@media (max-width:480px){:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .tterms .tr{grid-template-columns:minmax(0,130px) minmax(0,1fr) 48px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .tterms .tax{grid-template-columns:minmax(0,130px) 1fr 1fr 1fr 48px}}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star{position:relative}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star svg{display:block;width:100%;height:auto;overflow:visible}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .s0{--skc:var(--sp)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .s1{--skc:var(--cr)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .s2{--skc:var(--pt)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .disc{fill:var(--disc)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .ring{fill:none;stroke:var(--line);stroke-width:1}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .spoke{stroke:var(--skc,var(--line));stroke-width:1.25;opacity:.55}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .spoke.hot{stroke:var(--ink);opacity:.7}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .shape{fill:color-mix(in srgb,var(--ink) 14%,transparent);stroke:var(--ink);stroke-width:2;stroke-linejoin:round}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .dot{fill:var(--acc);stroke:var(--disc);stroke-width:2}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .ringv{font-family:var(--mono);font-size:10px;fill:var(--muted);paint-order:stroke;stroke:var(--disc);stroke-width:3px;stroke-linejoin:round}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .lab{fill:var(--muted);font-weight:500;paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round;cursor:default}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .lead{fill:none;stroke:var(--muted);stroke-width:1;opacity:.6}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .lead.hot{stroke:var(--ink);opacity:.8}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .lab.on{fill:var(--ink);font-weight:600}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .lab.hot{fill:var(--ink)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .lab .pv{font-family:var(--mono);font-weight:500;fill:var(--acc)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .hit{fill:transparent}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:13px;line-height:1.3;padding:5px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,calc(-100% - 10px))}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .tip b{font-family:var(--mono);font-weight:500;margin-left:6px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .knum{font-family:var(--mono);font-size:11px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .key{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;margin:4px 0 0;font-size:13px;line-height:1.3}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .key ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .key li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:4px;color:var(--muted)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .key .kn{font-family:var(--mono);font-size:11.5px;text-align:right;padding-top:1px;color:var(--skc);font-weight:600}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .key li.on{color:var(--ink);font-weight:600}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .key li.on b{font-family:var(--mono);font-weight:500;color:var(--acc)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .key li.hot{color:var(--ink)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pos{color:var(--good)} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .neg{color:var(--bad)} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .zero{color:var(--muted)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) rect.pos{fill:var(--good)} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) rect.neg{fill:var(--bad)} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) rect.zero{fill:var(--muted)} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) line.z{stroke:var(--muted)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .d-sp{background:var(--sp)} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .d-cr{background:var(--cr)} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .d-pt{background:var(--pt)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) svg.hist,:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .car svg{display:block;width:100%;height:auto;overflow:visible}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hist .ax text,:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .car .ax text,:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .car svg > text{font:11px var(--mono);fill:var(--muted)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .ax line{stroke:var(--line)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hb{fill:var(--bin)} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hb.me{fill:var(--acc)} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hb.open{stroke:var(--acc);stroke-width:2}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hist .hit{fill:transparent;cursor:pointer} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hist .hit:hover{fill:var(--acc-soft)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mlab{font:600 12px var(--sans);fill:var(--ink)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .zl0{stroke:var(--muted);stroke-dasharray:2 3} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hist .zt{font:11px var(--sans);fill:var(--muted)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hsw{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font:13px var(--sans);margin-bottom:8px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hsw button{background:none;border:1px solid var(--line);border-radius:999px;padding:4px 12px;cursor:pointer;color:var(--muted);font:inherit}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hsw button[aria-pressed="true"]{border-color:var(--acc);color:var(--ink);background:var(--acc-soft)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hsw span{color:var(--muted);margin-left:6px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hlist{font:14px var(--sans);border-top:1px solid var(--line);margin-top:8px;padding-top:10px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hlist .hh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hlist .hx{background:none;border:0;color:var(--acc);cursor:pointer;font:600 13px var(--sans)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hlist ol{list-style:none;margin:0;padding:0;columns:2 250px;column-gap:28px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hlist li{display:grid;grid-template-columns:minmax(0,1fr) 60px 74px 42px;gap:8px;padding:4px 0;border-bottom:1px solid var(--line);break-inside:avoid}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hlist li .nm,:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hlist li .tm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hlist li .tm,:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hlist li .mn{color:var(--muted)} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hlist li .mn{text-align:right;font-size:12.5px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hlist li .num:last-child{text-align:right}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hlist li.me .nm{color:var(--acc);font-weight:600}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .hlist .hn{font-size:12.5px;color:var(--muted);margin:8px 0 0}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .car path.ln{fill:none;stroke:var(--ink);stroke-width:2}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .car circle{fill:var(--bg);stroke:var(--ink);stroke-width:2;cursor:pointer}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .car circle.sel{fill:var(--acc);stroke:var(--acc)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .car .zl{stroke:var(--muted);stroke-dasharray:3 3}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .car .bl{font:500 11px var(--sans);fill:var(--ink-2)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .car .bn{font:700 11px var(--mono);fill:var(--ink)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .runs .rn{font:700 11px var(--mono);color:var(--ink);min-width:12px;text-align:right}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .runs{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:4px 16px;font:13px var(--sans);color:var(--ink-2)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .runs li{display:flex;align-items:center;gap:6px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .runs i{width:12px;height:12px;border-radius:2px;display:inline-block}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .runs .yr{font:500 12px var(--mono);color:var(--muted)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .fit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 36px}
+@media (max-width:560px){:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .fit{grid-template-columns:minmax(0,1fr)}}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .fit ol{list-style:none;margin:0;padding:0}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .fit li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 0;border-top:1px solid var(--line);font-size:14px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .fit .sn{display:flex;align-items:center;gap:8px;min-width:0}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .fit .ft{font:600 13px var(--sans);margin-bottom:6px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .peers{list-style:none;margin:0;padding:0;font-size:14px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .peers li{display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:8px;padding:5px 0;border-top:1px solid var(--line)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .peers .r{font:12px var(--mono);color:var(--muted)} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .peers .me .pn{font-weight:700;color:var(--acc)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .tterms{display:grid;gap:2px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .tterms .tr{display:grid;grid-template-columns:minmax(0,170px) minmax(0,1fr) 52px;gap:12px;align-items:center;padding:4px 0;font-size:14px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .tterms .tr .num{text-align:right;font-weight:600}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .tterms svg{width:100%;height:18px;display:block;overflow:visible}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .tterms .tax{display:grid;grid-template-columns:minmax(0,170px) 1fr 1fr 1fr 52px;gap:0 12px;font-size:11px;color:var(--muted)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .tterms .tax span:nth-child(3){text-align:center} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .tterms .tax span:nth-child(4){text-align:right}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .ci{stroke:var(--ink-2);stroke-width:1.2} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .faded{opacity:.4}
+@media (max-width:480px){:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .tterms .tr{grid-template-columns:minmax(0,130px) minmax(0,1fr) 48px}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .tterms .tax{grid-template-columns:minmax(0,130px) 1fr 1fr 1fr 48px}}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star{position:relative}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star svg{display:block;width:100%;height:auto;overflow:visible}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .s0{--skc:var(--sp)} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .s1{--skc:var(--cr)} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .s2{--skc:var(--pt)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .disc{fill:var(--disc)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .ring{fill:none;stroke:var(--line);stroke-width:1}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .spoke{stroke:var(--skc,var(--line));stroke-width:1.25;opacity:.55}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .spoke.hot{stroke:var(--ink);opacity:.7}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .shape{fill:color-mix(in srgb,var(--ink) 14%,transparent);stroke:var(--ink);stroke-width:2;stroke-linejoin:round}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .dot{fill:var(--acc);stroke:var(--disc);stroke-width:2}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .ringv{font-family:var(--mono);font-size:10px;fill:var(--muted);paint-order:stroke;stroke:var(--disc);stroke-width:3px;stroke-linejoin:round}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .lab{fill:var(--muted);font-weight:500;paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round;cursor:default}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .lead{fill:none;stroke:var(--muted);stroke-width:1;opacity:.6}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .lead.hot{stroke:var(--ink);opacity:.8}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .lab.on{fill:var(--ink);font-weight:600}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .lab.hot{fill:var(--ink)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .lab .pv{font-family:var(--mono);font-weight:500;fill:var(--acc)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .hit{fill:transparent}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:13px;line-height:1.3;padding:5px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,calc(-100% - 10px))}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .tip b{font-family:var(--mono);font-weight:500;margin-left:6px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .knum{font-family:var(--mono);font-size:11px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .key{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;margin:4px 0 0;font-size:13px;line-height:1.3}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .key ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .key li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:4px;color:var(--muted)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .key .kn{font-family:var(--mono);font-size:11.5px;text-align:right;padding-top:1px;color:var(--skc);font-weight:600}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .key li.on{color:var(--ink);font-weight:600}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .key li.on b{font-family:var(--mono);font-weight:500;color:var(--acc)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .star .key li.hot{color:var(--ink)}
 /* ---------- the card ---------- */
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard{--id:var(--cr);background:var(--frame);border-radius:18px;padding:12px;color:var(--ink);box-shadow:0 1px 0 rgba(0,0,0,.06),0 22px 44px -22px rgba(0,0,0,.5);position:relative}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard::before{content:"";position:absolute;inset:5px;border-radius:14px;border:2px solid var(--id);opacity:.85;pointer-events:none}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .k-sp{--id:var(--sp)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .k-cr{--id:var(--cr)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .k-pt{--id:var(--pt)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .bar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--face);border-radius:10px 10px 4px 4px;padding:8px 12px;border:1px solid var(--id)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .cn{font:700 19px/1.15 var(--sans);letter-spacing:-.02em;min-width:0;white-space:nowrap}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .cost{flex:none;font:600 16px var(--mono);padding:3px 10px;border-radius:999px;background:var(--face);border:2px solid var(--id)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .art{background:var(--disc);margin:8px 2px;border-radius:4px;padding:10px 8px 6px;border:1px solid var(--id)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .type{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--face);border-radius:4px;padding:7px 12px;font:600 13.5px var(--sans);border:1px solid var(--id)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .type .set{font:500 12px var(--mono);color:var(--muted);flex:none}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .rules{background:var(--face);margin:8px 2px 0;border-radius:4px;padding:11px 14px 20px;font-size:13.5px;line-height:1.5;border:1px solid var(--id)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .rules p{margin:0 0 8px;min-height:3em} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .rules .flav{min-height:2.95em;font-size:13px;color:var(--ink-2);margin:0;border-top:1px solid var(--line);padding-top:8px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .foot{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding:8px 4px 2px;color:var(--foot);font-size:12px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .pt{display:inline-flex;align-items:stretch;background:var(--face);color:var(--ink);border:1.5px solid var(--id);border-radius:7px;margin-top:-18px;overflow:hidden;flex:none;box-shadow:0 2px 6px -2px rgba(0,0,0,.4)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .pt > span{display:flex;flex-direction:column;align-items:center;padding:3px 9px 4px;line-height:1}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .pt small{font:600 8px var(--sans);letter-spacing:.16em;color:var(--muted);margin-bottom:3px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .pt b{font:600 14px var(--mono);letter-spacing:-.02em}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .pt i{width:1px;background:var(--id);opacity:.55}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .star .lab{stroke:var(--disc)}
-@media (max-width:480px){:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .pt b{font-size:13px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .cn{font-size:17px}}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard{--id:var(--cr);background:var(--frame);border-radius:18px;padding:12px;color:var(--ink);box-shadow:0 1px 0 rgba(0,0,0,.06),0 22px 44px -22px rgba(0,0,0,.5);position:relative}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard::before{content:"";position:absolute;inset:5px;border-radius:14px;border:2px solid var(--id);opacity:.85;pointer-events:none}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .k-sp{--id:var(--sp)} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .k-cr{--id:var(--cr)} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .k-pt{--id:var(--pt)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .bar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--face);border-radius:10px 10px 4px 4px;padding:8px 12px;border:1px solid var(--id)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .cn{font:700 19px/1.15 var(--sans);letter-spacing:-.02em;min-width:0;white-space:nowrap}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .cost{flex:none;font:600 16px var(--mono);padding:3px 10px;border-radius:999px;background:var(--face);border:2px solid var(--id)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .art{background:var(--disc);margin:8px 2px;border-radius:4px;padding:10px 8px 6px;border:1px solid var(--id)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .type{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--face);border-radius:4px;padding:7px 12px;font:600 13.5px var(--sans);border:1px solid var(--id)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .type .set{font:500 12px var(--mono);color:var(--muted);flex:none}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .rules{background:var(--face);margin:8px 2px 0;border-radius:4px;padding:11px 14px 20px;font-size:13.5px;line-height:1.5;border:1px solid var(--id)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .rules p{margin:0 0 8px;min-height:3em} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .rules .flav{min-height:2.95em;font-size:13px;color:var(--ink-2);margin:0;border-top:1px solid var(--line);padding-top:8px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .foot{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding:8px 4px 2px;color:var(--foot);font-size:12px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .pt{display:inline-flex;align-items:stretch;background:var(--face);color:var(--ink);border:1.5px solid var(--id);border-radius:7px;margin-top:-18px;overflow:hidden;flex:none;box-shadow:0 2px 6px -2px rgba(0,0,0,.4)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .pt > span{display:flex;flex-direction:column;align-items:center;padding:3px 9px 4px;line-height:1}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .pt small{font:600 8px var(--sans);letter-spacing:.16em;color:var(--muted);margin-bottom:3px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .pt b{font:600 14px var(--mono);letter-spacing:-.02em}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .pt i{width:1px;background:var(--id);opacity:.55}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .star .lab{stroke:var(--disc)}
+@media (max-width:480px){:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .pt b{font-size:13px}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .cn{font-size:17px}}
 
 /* ---------- player page ---------- */
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .crumb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);padding-top:18px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .crumb select{border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:3px 6px;font-size:12.5px;color:var(--ink);cursor:pointer;max-width:100%}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .ph{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:10px 24px;padding:4px 0 14px;border-bottom:1px solid var(--line)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .ph h1{font:700 clamp(28px,3.4vw,40px)/1.08 var(--sans);letter-spacing:-.03em;margin:0}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .ph .facts{display:flex;flex-wrap:wrap;gap:2px 14px;color:var(--ink-2);font-size:13.5px;margin-top:6px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .ph .facts b{font-weight:600}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .stepper{display:flex;justify-content:center;align-items:center;gap:10px;margin:0 0 12px;font:500 13px var(--mono);color:var(--muted)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .stepper button{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-size:16px;line-height:1;color:var(--ink)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .stepper button:hover:not(:disabled){border-color:var(--ink)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .stepper button:disabled{opacity:.3;cursor:default}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .stepper select{font:600 15px var(--mono);background:var(--bg);color:var(--ink);border:0;padding:4px 2px;cursor:pointer}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .play{display:grid;grid-template-columns:440px minmax(0,1fr);gap:0 56px;align-items:start;margin-top:18px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcardcol{position:sticky;top:14px;padding-bottom:18px}
-@media (max-width:1000px){:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .play{grid-template-columns:minmax(0,1fr)}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcardcol{position:static;max-width:470px;width:100%;margin:0 auto}}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .c{padding:0 0 20px;min-width:0}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .c + .c{border-top:1px solid var(--line);padding-top:16px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pctl{display:flex;flex-wrap:wrap;gap:2px 18px;font-size:13px;color:var(--ink-2);margin:-2px 0 10px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pctl b{font:600 13px var(--mono)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 28px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .duo > div + div{border-left:1px solid var(--line);padding-left:28px}
-@media (max-width:640px){:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .duo{grid-template-columns:minmax(0,1fr)}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .duo > div + div{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:16px;margin-top:16px}}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .crumb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);padding-top:18px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .crumb select{border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:3px 6px;font-size:12.5px;color:var(--ink);cursor:pointer;max-width:100%}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .ph{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:10px 24px;padding:4px 0 14px;border-bottom:1px solid var(--line)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .ph h1{font:700 clamp(28px,3.4vw,40px)/1.08 var(--sans);letter-spacing:-.03em;margin:0}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .ph .facts{display:flex;flex-wrap:wrap;gap:2px 14px;color:var(--ink-2);font-size:13.5px;margin-top:6px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .ph .facts b{font-weight:600}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .stepper{display:flex;justify-content:center;align-items:center;gap:10px;margin:0 0 12px;font:500 13px var(--mono);color:var(--muted)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .stepper button{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-size:16px;line-height:1;color:var(--ink)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .stepper button:hover:not(:disabled){border-color:var(--ink)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .stepper button:disabled{opacity:.3;cursor:default}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .stepper select{font:600 15px var(--mono);background:var(--bg);color:var(--ink);border:0;padding:4px 2px;cursor:pointer}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .play{display:grid;grid-template-columns:440px minmax(0,1fr);gap:0 56px;align-items:start;margin-top:18px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcardcol{position:sticky;top:14px;padding-bottom:18px}
+@media (max-width:1000px){:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .play{grid-template-columns:minmax(0,1fr)}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcardcol{position:static;max-width:470px;width:100%;margin:0 auto}}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .c{padding:0 0 20px;min-width:0}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .c + .c{border-top:1px solid var(--line);padding-top:16px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pctl{display:flex;flex-wrap:wrap;gap:2px 18px;font-size:13px;color:var(--ink-2);margin:-2px 0 10px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pctl b{font:600 13px var(--mono)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 28px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .duo > div + div{border-left:1px solid var(--line);padding-left:28px}
+@media (max-width:640px){:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .duo{grid-template-columns:minmax(0,1fr)}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .duo > div + div{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:16px;margin-top:16px}}
 
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fit{row-gap:14px} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fit li{font-size:13px;padding:5px 0}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .rank{font-size:13px;margin:0 0 8px;color:var(--ink-2)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .rank b{color:var(--ink)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .career{border-top:2px solid var(--rule);padding-top:14px;margin-top:6px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .fit{row-gap:14px} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .fit li{font-size:13px;padding:5px 0}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .rank{font-size:13px;margin:0 0 8px;color:var(--ink-2)} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .rank b{color:var(--ink)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .career{border-top:2px solid var(--rule);padding-top:14px;margin-top:6px}
 
 /* ---------- home ---------- */
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .cover{padding:30px 0 26px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px 48px;align-items:center}
-@media (max-width:900px){:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .cover{grid-template-columns:minmax(0,1fr)}}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .cover .meta{font:500 12px var(--mono);color:var(--muted);margin-bottom:12px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .cover h1{font:700 clamp(32px,4.4vw,54px)/1.04 var(--sans);letter-spacing:-.035em;margin:0 0 14px;text-wrap:balance}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .cover p{font-size:16px;color:var(--ink-2);max-width:56ch;margin:0}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fan{position:relative;height:350px;max-width:560px;margin:0 auto}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard{position:absolute;top:30px;width:200px;background:var(--frame);border-radius:12px;padding:8px;box-shadow:0 18px 30px -16px rgba(0,0,0,.5);transition:transform .2s;cursor:pointer;border:0;text-align:left;color:var(--ink)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard::before{content:"";position:absolute;inset:4px;border-radius:9px;border:1.5px solid var(--id);pointer-events:none}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .mb{background:var(--face);border-radius:7px 7px 3px 3px;padding:6px 9px;display:flex;justify-content:space-between;align-items:center;gap:6px;font:700 13px var(--sans);border:1px solid var(--id)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .mb span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .mb .num{font-size:12px;flex:none}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .ma{background:var(--disc);margin:6px 1px;border-radius:3px;height:146px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid var(--id);color:var(--id)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .ma b{font:800 37px/1 var(--sans);letter-spacing:-.045em;white-space:nowrap}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .ma small{font:600 10.5px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:8px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .mt{background:var(--face);border-radius:3px;padding:6px 9px;font:600 12px var(--sans);border:1px solid var(--id);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .mf{color:var(--foot);font:11px var(--sans);padding:6px 4px 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard:nth-child(1){left:0;transform:rotate(-9deg)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard:nth-child(2){left:calc(50% - 100px);transform:rotate(-1deg);top:10px;z-index:2} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard:nth-child(3){right:0;transform:rotate(8deg);top:34px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard:hover,:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard:focus-visible{transform:translateY(-10px) rotate(0)!important;z-index:3}
-@media (max-width:560px){:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fan{height:250px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard{width:128px;padding:6px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .mb{font-size:12px;padding:5px 7px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .ma{height:92px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .ma b{font-size:23px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .ma small{font-size:9.5px;letter-spacing:.1em}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .mt,:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .mf{font-size:11px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard:nth-child(1){left:2px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard:nth-child(2){left:calc(50% - 64px)}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard:nth-child(3){right:2px}}
-@media (prefers-reduced-motion:reduce){:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard{transition:none}}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .cover{padding:30px 0 26px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px 48px;align-items:center}
+@media (max-width:900px){:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .cover{grid-template-columns:minmax(0,1fr)}}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .cover .meta{font:500 12px var(--mono);color:var(--muted);margin-bottom:12px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .cover h1{font:700 clamp(32px,4.4vw,54px)/1.04 var(--sans);letter-spacing:-.035em;margin:0 0 14px;text-wrap:balance}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .cover p{font-size:16px;color:var(--ink-2);max-width:56ch;margin:0}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .fan{position:relative;height:350px;max-width:560px;margin:0 auto}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard{position:absolute;top:30px;width:200px;background:var(--frame);border-radius:12px;padding:8px;box-shadow:0 18px 30px -16px rgba(0,0,0,.5);transition:transform .2s;cursor:pointer;border:0;text-align:left;color:var(--ink)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard::before{content:"";position:absolute;inset:4px;border-radius:9px;border:1.5px solid var(--id);pointer-events:none}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard .mb{background:var(--face);border-radius:7px 7px 3px 3px;padding:6px 9px;display:flex;justify-content:space-between;align-items:center;gap:6px;font:700 13px var(--sans);border:1px solid var(--id)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard .mb span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard .mb .num{font-size:12px;flex:none}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard .ma{background:var(--disc);margin:6px 1px;border-radius:3px;height:146px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid var(--id);color:var(--id)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard .ma b{font:800 37px/1 var(--sans);letter-spacing:-.045em;white-space:nowrap}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard .ma small{font:600 10.5px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard .mt{background:var(--face);border-radius:3px;padding:6px 9px;font:600 12px var(--sans);border:1px solid var(--id);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard .mf{color:var(--foot);font:11px var(--sans);padding:6px 4px 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard:nth-child(1){left:0;transform:rotate(-9deg)} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard:nth-child(2){left:calc(50% - 100px);transform:rotate(-1deg);top:10px;z-index:2} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard:nth-child(3){right:0;transform:rotate(8deg);top:34px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard:hover,:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard:focus-visible{transform:translateY(-10px) rotate(0)!important;z-index:3}
+@media (max-width:560px){:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .fan{height:250px}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard{width:128px;padding:6px}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard .mb{font-size:12px;padding:5px 7px}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard .ma{height:92px}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard .ma b{font-size:23px}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard .ma small{font-size:9.5px;letter-spacing:.1em}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard .mt,:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard .mf{font-size:11px}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard:nth-child(1){left:2px}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard:nth-child(2){left:calc(50% - 64px)}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard:nth-child(3){right:2px}}
+@media (prefers-reduced-motion:reduce){:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard{transition:none}}
 /* ---------- three card finishes, html[data-card=...]; each is a physical card, identical in light and dark ---------- */
 
 /* COURT: natural maple boards for the frame and a black nameplate up top; the chart on a toned mat (so the cream disc stands off it);
    below, the '90s lower half: the style on the frame, a parchment text box with an inner keyline, and a black OFF / DEF plate. */
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) :is(.pcard,.mcard){
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) :is(.pcard,.mcard){
   --ink:#16130F; --ink-2:#3A332A; --muted:#6D6355; --line:#DCD2BD; --disc:#FBF8F1; --bg:#FBF8F1; --face:#FBF8F1; --foot:#2B1D10;
   --good:#C8102E; --bad:#1A4AD6; --sp:#0A80BF; --cr:#6440D9; --pt:#A01A3C; --acc:#B86E00;
   color:var(--ink);border:6px solid #111;border-radius:18px;
@@ -737,57 +737,57 @@ html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season
     repeating-linear-gradient(90deg,rgba(255,240,215,.0) 0 34px,rgba(255,240,215,.12) 34px 68px),linear-gradient(180deg,#E6BC86,#D49F62 60%,#C98F52);
   background-size:300px 300px,100% 100%,100% 100%,100% 100%;
   box-shadow:inset 0 0 18px rgba(80,40,10,.35),0 26px 46px -22px rgba(0,0,0,.6)}
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) :is(.pcard,.mcard)::before{display:none}
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard{padding:12px}
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) :is(.pcard .bar,.mcard .mb){background:#111;border:0;border-radius:6px;color:#F3E2BF}
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .cn{font:800 18px/1.1 var(--sans);letter-spacing:.08em;text-transform:uppercase}
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .cost{background:#111;border:1.5px solid #F3E2BF;color:#F3E2BF}
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .cost.pos{color:#FF6B5E} html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .cost.neg{color:#8FA8FF}
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) :is(.pcard,.mcard)::before{display:none}
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard{padding:12px}
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) :is(.pcard .bar,.mcard .mb){background:#111;border:0;border-radius:6px;color:#F3E2BF}
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .cn{font:800 18px/1.1 var(--sans);letter-spacing:.08em;text-transform:uppercase}
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .cost{background:#111;border:1.5px solid #F3E2BF;color:#F3E2BF}
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .cost.pos{color:#FF6B5E} html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .cost.neg{color:#8FA8FF}
 
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) :is(.pcard .art,.mcard .ma){border:1px solid rgba(40,22,6,.7);border-radius:3px;
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) :is(.pcard .art,.mcard .ma){border:1px solid rgba(40,22,6,.7);border-radius:3px;
   background:radial-gradient(ellipse at 50% 45%,color-mix(in srgb,var(--id) 3%,#EFE2C4) 0%,color-mix(in srgb,var(--id) 4%,#E3CFA6) 70%,color-mix(in srgb,var(--id) 6%,#D2B989) 100%);
   box-shadow:inset 0 0 0 4px rgba(251,247,238,.75),inset 0 0 0 5px color-mix(in srgb,var(--id) 55%,transparent),inset 0 0 18px rgba(80,50,15,.25),0 2px 6px rgba(50,25,5,.35)}
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .art{margin:10px 0;padding:14px 10px 8px}
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .ma{margin:6px 0}
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .ma b{color:var(--id);text-shadow:0 1px 0 rgba(255,255,255,.7)}
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) :is(.pcard .type,.mcard .mt){background:none;border:0;border-radius:0;box-shadow:none;padding:2px 2px 0;font:700 11.5px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#2C1E0E;text-shadow:0 1px 0 rgba(255,236,205,.45)}
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .type .set{color:#4A3720;font-family:var(--mono);letter-spacing:.08em}
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .mcard .mt{font-size:10.5px;padding:4px 2px 0}
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .rules{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3' seed='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.27 0 0 0 0 0.15 0 0 0 0.12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"),#F6EEDC;border:0;border-radius:2px;margin:8px 0 0;box-shadow:inset 0 0 0 1px rgba(60,35,10,.4),0 1px 3px rgba(50,25,5,.25)}
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .rules .flav{font:italic 500 13.5px "Fraunces",Georgia,serif;border-top-color:rgba(120,88,40,.3)}
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) :is(.pcard .foot,.mcard .mf){color:#2C1E0E;font-weight:600}
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .pt{background:#0F0D0B;border:1.5px solid #D7A86E;border-radius:4px;color:#F3E2BF;box-shadow:0 3px 8px rgba(0,0,0,.45)}
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .pt small{color:#D7A86E} html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .pt i{background:#D7A86E}
-html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .pt .pos{color:#FF6B5E} html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .pcard .pt .neg{color:#8FA8FF}
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .art{margin:10px 0;padding:14px 10px 8px}
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard .ma{margin:6px 0}
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard .ma b{color:var(--id);text-shadow:0 1px 0 rgba(255,255,255,.7)}
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) :is(.pcard .type,.mcard .mt){background:none;border:0;border-radius:0;box-shadow:none;padding:2px 2px 0;font:700 11.5px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#2C1E0E;text-shadow:0 1px 0 rgba(255,236,205,.45)}
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .type .set{color:#4A3720;font-family:var(--mono);letter-spacing:.08em}
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .mcard .mt{font-size:10.5px;padding:4px 2px 0}
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .rules{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3' seed='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.27 0 0 0 0 0.15 0 0 0 0.12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"),#F6EEDC;border:0;border-radius:2px;margin:8px 0 0;box-shadow:inset 0 0 0 1px rgba(60,35,10,.4),0 1px 3px rgba(50,25,5,.25)}
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .rules .flav{font:italic 500 13.5px "Fraunces",Georgia,serif;border-top-color:rgba(120,88,40,.3)}
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) :is(.pcard .foot,.mcard .mf){color:#2C1E0E;font-weight:600}
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .pt{background:#0F0D0B;border:1.5px solid #D7A86E;border-radius:4px;color:#F3E2BF;box-shadow:0 3px 8px rgba(0,0,0,.45)}
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .pt small{color:#D7A86E} html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .pt i{background:#D7A86E}
+html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .pt .pos{color:#FF6B5E} html[data-card="hardwood"] :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .pcard .pt .neg{color:#8FA8FF}
 
 
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .nw{white-space:nowrap}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fancap{display:flex;justify-content:center;align-items:baseline;flex-wrap:wrap;gap:4px 12px;font-size:12.5px;color:var(--muted);text-align:center;max-width:520px;margin:2px auto 0}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .deal{background:none;border:1px solid var(--line);border-radius:999px;padding:3px 12px;cursor:pointer;color:var(--ink);font-size:12.5px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .deal:hover{border-color:var(--acc)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .kv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:2px solid var(--rule);border-bottom:1px solid var(--line)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .kv > div{padding:10px 16px 12px 0}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .kv > div + div{border-left:1px solid var(--line);padding-left:16px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .kv .v{font:600 24px/1.1 var(--mono);letter-spacing:-.03em} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .kv .k{font-size:12px;color:var(--muted)}
-@media (max-width:640px){:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .kv{grid-template-columns:repeat(2,minmax(0,1fr))}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .kv > div:nth-child(3){border-left:0;padding-left:0}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .kv > div:nth-child(n+3){border-top:1px solid var(--line)}}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) table.ft{border-collapse:collapse;width:100%;margin-top:18px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .ft th{font:600 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 18px 8px 0;border-bottom:2px solid var(--rule)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .ft td{vertical-align:top;padding:14px 18px 16px 0;border-bottom:1px solid var(--line)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .ft td:first-child{font:600 12px var(--mono);color:var(--muted);width:44px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .ft .q{font:600 17px/1.3 var(--sans);letter-spacing:-.01em;max-width:28ch}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .ft .a{font:700 15px var(--sans);margin-bottom:6px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .ft p{margin:0;color:var(--ink-2);max-width:62ch}
-@media (max-width:900px){:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .ft thead{display:none}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .ft tr{display:grid;grid-template-columns:minmax(0,1fr);border-bottom:1px solid var(--line);padding:10px 0}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .ft td{border:0;padding:4px 0}}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .twoc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px 48px;padding:26px 0}
-@media (max-width:900px){:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .twoc{grid-template-columns:minmax(0,1fr)}}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .twoc p{color:var(--ink-2);margin:0 0 10px;max-width:66ch}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) table.idx{border-collapse:collapse;width:100%}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .idx td{padding:10px 18px 10px 0;border-bottom:1px solid var(--line);vertical-align:top}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .idx td:first-child{font-weight:600;white-space:nowrap}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .idx td:last-child{text-align:right;white-space:nowrap}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .idx button{background:none;border:0;padding:0;color:var(--acc);font-weight:600;cursor:pointer}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .idx .na{color:var(--muted)}
-@media (max-width:600px){:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .idx tr{display:grid;grid-template-columns:minmax(0,1fr) auto;border-bottom:1px solid var(--line);padding:8px 0}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .idx td{border:0;padding:2px 0}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .idx td:nth-child(2){grid-column:1/-1;grid-row:2;color:var(--ink-2);font-size:14px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .idx td:last-child{grid-row:1;grid-column:2}}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .nw{white-space:nowrap}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .fancap{display:flex;justify-content:center;align-items:baseline;flex-wrap:wrap;gap:4px 12px;font-size:12.5px;color:var(--muted);text-align:center;max-width:520px;margin:2px auto 0}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .deal{background:none;border:1px solid var(--line);border-radius:999px;padding:3px 12px;cursor:pointer;color:var(--ink);font-size:12.5px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .deal:hover{border-color:var(--acc)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .kv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:2px solid var(--rule);border-bottom:1px solid var(--line)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .kv > div{padding:10px 16px 12px 0}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .kv > div + div{border-left:1px solid var(--line);padding-left:16px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .kv .v{font:600 24px/1.1 var(--mono);letter-spacing:-.03em} :is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .kv .k{font-size:12px;color:var(--muted)}
+@media (max-width:640px){:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .kv{grid-template-columns:repeat(2,minmax(0,1fr))}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .kv > div:nth-child(3){border-left:0;padding-left:0}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .kv > div:nth-child(n+3){border-top:1px solid var(--line)}}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) table.ft{border-collapse:collapse;width:100%;margin-top:18px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .ft th{font:600 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 18px 8px 0;border-bottom:2px solid var(--rule)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .ft td{vertical-align:top;padding:14px 18px 16px 0;border-bottom:1px solid var(--line)}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .ft td:first-child{font:600 12px var(--mono);color:var(--muted);width:44px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .ft .q{font:600 17px/1.3 var(--sans);letter-spacing:-.01em;max-width:28ch}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .ft .a{font:700 15px var(--sans);margin-bottom:6px}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .ft p{margin:0;color:var(--ink-2);max-width:62ch}
+@media (max-width:900px){:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .ft thead{display:none}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .ft tr{display:grid;grid-template-columns:minmax(0,1fr);border-bottom:1px solid var(--line);padding:10px 0}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .ft td{border:0;padding:4px 0}}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .twoc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px 48px;padding:26px 0}
+@media (max-width:900px){:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .twoc{grid-template-columns:minmax(0,1fr)}}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .twoc p{color:var(--ink-2);margin:0 0 10px;max-width:66ch}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) table.idx{border-collapse:collapse;width:100%}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .idx td{padding:10px 18px 10px 0;border-bottom:1px solid var(--line);vertical-align:top}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .idx td:first-child{font-weight:600;white-space:nowrap}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .idx td:last-child{text-align:right;white-space:nowrap}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .idx button{background:none;border:0;padding:0;color:var(--acc);font-weight:600;cursor:pointer}
+:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .idx .na{color:var(--muted)}
+@media (max-width:600px){:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .idx tr{display:grid;grid-template-columns:minmax(0,1fr) auto;border-bottom:1px solid var(--line);padding:8px 0}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .idx td{border:0;padding:2px 0}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .idx td:nth-child(2){grid-column:1/-1;grid-row:2;color:var(--ink-2);font-size:14px}:is(#home,#players,#archetypes,#pairs,#returns,#lineup,#season,#trust) .idx td:last-child{grid-row:1;grid-column:2}}
 
 /* ---------- every page opens the same way: what it is in mono, the name, one line on what to do ---------- */
 .pghead{padding:8px 0 18px;border-bottom:2px solid var(--rule);margin-bottom:22px}
@@ -1076,7 +1076,7 @@ nav.pager button:hover b{color:var(--acc)}
 #lineup .hplay tr.sum td{font-weight:700;border-top:2px solid var(--rule);border-bottom:0}
 @media (max-width:560px){.lacc>summary{grid-template-columns:minmax(0,1fr) 22px}.at2{grid-column:1;grid-row:2;white-space:normal}.chev{grid-row:1/3;grid-column:2}}
 /* text runs the full width of its column, so captions line up with the tables and charts above them (rule of 11/10) */
-:is(#archetypes,#pairs,#lineup,#players,#season,#trust) :is(.cap,.lede2,p.rank,.note){max-width:none}
+:is(#archetypes,#pairs,#returns,#lineup,#players,#season,#trust) :is(.cap,.lede2,p.rank,.note){max-width:none}
 /* best / worst fits: one ruled row each, name left, number right */
 .pchips{display:flex;flex-direction:column;gap:0;margin-bottom:14px;border-top:1px solid var(--line)}
 .pchip{display:flex;justify-content:space-between;align-items:baseline;gap:12px;width:100%;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:8px 2px;font:14px var(--sans);text-align:left;background:none}
@@ -1279,6 +1279,78 @@ ul.tkeep li{font-size:13.5px;color:var(--ink-2);padding:6px 12px;border:1px dash
 ul.tkeep li b{color:var(--ink);font-weight:650}
 ul.tkeep .ok{color:var(--good);font-weight:700;margin-left:2px}
 
+/* ---- methodology in seven parts (draft 11/10) ---- */
+#trust .mnav{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:16px}
+#trust .mnav nav{display:flex;flex-wrap:wrap;gap:6px;flex:1 1 420px;min-width:0}
+#trust .mnav nav button{appearance:none;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:none;border-radius:999px;padding:5px 12px 5px 6px;font:500 13px var(--sans);color:var(--ink);cursor:pointer}
+#trust .mnav nav button:hover{border-color:var(--acc);color:var(--acc)}
+#trust .mnav nav .n{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--surface-2);font:600 11px var(--mono);color:var(--muted)}
+#trust .mexp{appearance:none;border:1px solid var(--ink);background:none;border-radius:999px;padding:6px 14px;font:600 13px var(--sans);color:var(--ink);cursor:pointer}
+#trust .mexp[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+#trust .meth section{padding:26px 0 22px}
+#trust .meth section > h3{font:700 22px/1.15 var(--sans);letter-spacing:-.02em}
+#trust .meth .n{font-size:13px}
+#trust .mvis p{font-size:16px;line-height:1.6;color:var(--ink-2);max-width:66ch;margin:0 0 10px}
+#trust .mvis p.mlead{font:600 19px/1.4 var(--sans);letter-spacing:-.01em;color:var(--ink)}
+#trust .mvis .sk{margin-right:2px}
+#trust .mdrops{display:flex;flex-direction:column;margin-top:6px;border-top:1px solid var(--line)}
+#trust details.md{border-bottom:1px solid var(--line)}
+#trust details.md>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:11px 2px;font:600 14px var(--sans);color:var(--ink)}
+#trust details.md>summary::-webkit-details-marker{display:none}
+#trust details.md>summary::after{content:"+";font:500 18px var(--mono);color:var(--muted)}
+#trust details.md[open]>summary::after{content:"−"}
+#trust details.md>summary:hover{color:var(--acc)}
+#trust .mdb{padding:2px 2px 16px;max-width:72ch}
+#trust .mdb p{font-size:14.5px;line-height:1.55;color:var(--ink-2);margin:0 0 10px}
+#trust .mdb ul{margin:0 0 10px;padding-left:18px;font-size:14.5px;line-height:1.6;color:var(--ink-2)}
+#trust .mdb ul.cols{columns:2;column-gap:28px}
+@media (max-width:560px){#trust .mdb ul.cols{columns:1}}
+#trust table.mt{margin:4px 0 12px;font-size:14px}
+#trust table.mt td{vertical-align:top}
+#trust .meth section > :not(h3){grid-column:2}
+
+/* ---- diminishing returns (draft 11/10) ---- */
+#returns .drc .h{margin-bottom:12px}
+.drpick{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px;margin-bottom:12px}
+.drpick button{appearance:none;border:0;background:none;border-radius:999px;padding:6px 14px;font:600 13px var(--sans);color:var(--muted);cursor:pointer}
+.drpick button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.drread{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;font-size:15px;color:var(--ink-2);margin-bottom:6px}
+.drread span{display:inline-flex;align-items:center;gap:6px}
+.drread i{width:10px;height:10px;border-radius:50%;background:var(--skc)}
+.drread b.num{color:var(--skc)}
+.drwrap{overflow-x:auto}
+.drsvg{display:block;width:100%;min-width:480px;height:auto;max-height:420px}
+.drsvg .gl{stroke:var(--line);stroke-width:1}
+.drsvg .z{stroke:var(--ink-2);stroke-width:1.5}
+.drsvg .yl{font:500 12px var(--mono);fill:var(--muted);text-anchor:end}
+.drsvg .xl{font:600 13px var(--mono);fill:var(--ink-2);text-anchor:middle}
+.drsvg .xt{font:italic 500 12px var(--sans);fill:var(--muted);text-anchor:middle}
+.drsvg .band{fill:var(--acc-soft)}
+.drsvg .ln{fill:none;stroke:var(--skc);stroke-width:3;stroke-linecap:round}
+.drsvg .pt{fill:var(--skc);stroke:var(--bg);stroke-width:2}
+.drsvg .ll{font:700 13px var(--sans);fill:var(--skc)}
+.drsvg .pv{font:700 13px var(--mono);fill:var(--skc);text-anchor:end}
+.pairrow{display:flex;flex-wrap:wrap;gap:12px 36px;margin:4px 0 14px}
+.pairfig{margin:0;display:flex;align-items:center;gap:12px}
+.pairfig svg{width:72px;height:72px}
+.pairfig line{stroke:var(--sk-cr);stroke-width:2}
+.pairfig circle{fill:var(--sk-cr);stroke:var(--bg);stroke-width:2}
+.pairfig figcaption{font-size:13.5px;line-height:1.35;color:var(--muted)}
+.pairfig figcaption b{color:var(--ink);font-size:16px}
+.drbig{font:500 18px/1.5 var(--sans);color:var(--ink);max-width:62ch;margin:0}
+.mixrow{display:flex;flex-direction:column;gap:10px}
+.mix{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mix b.num{font:700 20px var(--mono);margin-left:auto}
+.mix b.pos{color:var(--good)} .mix b.neg{color:var(--bad)}
+#returns table.drt{width:100%}
+.drnote{font-size:15px;color:var(--ink-2);margin:22px 0 0;padding:12px 16px;border-left:3px solid var(--acc);background:var(--acc-soft);border-radius:0 6px 6px 0}
+@media (max-width:560px){.drbig{font-size:16px}.pairrow{gap:10px 20px}.pairfig svg{width:56px;height:56px}}
+#trust .meth section > h3{grid-row:1 / span 2}
+#trust .mvis .mlead .num{font-family:inherit;font-weight:700}
+.drread .lead{display:inline-flex;gap:5px}
+.drwrap{max-width:820px}
+@media (max-width:560px){.drsvg{min-width:0}.drread{font-size:13.5px;gap:4px 12px}}
+
 </style>
 </head>
 <body>
@@ -1289,6 +1361,7 @@ ul.tkeep .ok{color:var(--good);font-weight:700;margin-left:2px}
     <button role="tab" id="tab-home" aria-selected="true" data-tab="home">Home</button>
     <button role="tab" id="tab-archetypes" aria-selected="false" data-tab="archetypes">Styles</button>
     <button role="tab" id="tab-pairs" aria-selected="false" data-tab="pairs">Style fit</button>
+    <button role="tab" id="tab-returns" aria-selected="false" data-tab="returns">Diminishing returns</button>
     <button role="tab" id="tab-players" aria-selected="false" data-tab="players">Players</button>
     <button role="tab" id="tab-season" aria-selected="false" data-tab="season" hidden>This season</button>
     <button role="tab" id="tab-lineup" aria-selected="false" data-tab="lineup">Lineup check</button>
@@ -1321,6 +1394,10 @@ ul.tkeep .ok{color:var(--good);font-weight:700;margin-left:2px}
   <div class="stack">
     <div class="panel stack" id="pairs-panel"></div>
   </div>
+</section>
+
+<section class="tab" id="returns" hidden>
+  <div class="panel stack" id="returns-main"></div>
 </section>
 
 <section class="tab" id="lineup" hidden>
@@ -1389,7 +1466,7 @@ ul.tkeep .ok{color:var(--good);font-weight:700;margin-left:2px}
 
   document.documentElement.setAttribute("data-card", "hardwood");   // one card finish everywhere (rule of 11/10)
   document.getElementById("brand").addEventListener("click", function(){ showTab("home"); });
-  var tabs = ["home","archetypes","pairs","players","season","lineup","trust"];
+  var tabs = ["home","archetypes","pairs","returns","players","season","lineup","trust"];
   var LIVE = null, LIVE_BY = {};
   function showTab(t, keepScroll){
     if (t === "about") t = "trust";
@@ -2013,6 +2090,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
       '<section><h2 class="h">Pages</h2><table class="idx"><tbody>' +
         pg(["archetypes", "Styles"], 'The ' + G + ' styles and who defines each one.') +
         pg(["pairs", "Style fit"], 'What each pair of styles adds or costs.') +
+        pg(["returns", "Diminishing returns"], 'What stacking the same tendency does.') +
         pg(["players", "Players"], 'Any player-season: style, impact, career.') +
         (LIVE ? pg(["season", LIVE.meta.season], 'This season’s players, updated every day.') : '') +
         pg(["lineup", "Lineup check"], 'Grade any five against every real five.') +
@@ -2030,7 +2108,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
   }
 
   // ---------- pager: every page ends with the page before and the page after, in the header's order ----------
-  var PAGE_LINE = { home: "Start here: the two questions and the answers.", archetypes: "The " + "16 styles and who defines each.", pairs: "What two styles add or cost by sharing the floor.", players: "Any player-season as a card: style composition, impact, fit, career.", season: "Every player this season, placed in the styles every morning.", lineup: "Grade any five against every real five.", trust: "Every step from raw data to the tests." };
+  var PAGE_LINE = { home: "Start here: the two questions and the answers.", archetypes: "The " + "16 styles and who defines each.", pairs: "What two styles add or cost by sharing the floor.", players: "Any player-season as a card: style composition, impact, fit, career.", season: "Every player this season, placed in the styles every morning.", lineup: "Grade any five against every real five.", trust: "Every step from raw data to the tests.", returns: "What stacking the same tendency does." };
   function pageName(t){ return t === "season" ? (LIVE ? LIVE.meta.season : "This season") : ($("#tab-" + t) ? $("#tab-" + t).textContent : t); }
   function setupPager(){
     var order = tabs.filter(function(t){ return t !== "season" || LIVE; });
@@ -2898,43 +2976,144 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
   }
 
   // ---------- methodology ----------
+  // ---------- methodology: seven sections, each a plain answer first, then named drop-downs with the exact methods ----------
   function renderTrust(){
-    var M = core.meta, SM = M.sample, F = core.fit, FA = F.factors;
-    var T = function(name){ return F.tests.filter(function(x){ return x.test === name; })[0]; };
-    var offOne = T("offense given defense, one strong"), offMany = T("offense given defense, many small");
-    var defT = F.tests.filter(function(x){ return x.test.indexOf("defense given") === 0; });
-    var minH = function(a){ return Math.min.apply(null, a.map(function(x){ return x.p_holm; })); };
-    var cc = termOf("on_ball_creation", "on_ball_creation"), ii = termOf("interior", "interior"), si = termOf("spacing", "interior");
+    var M = core.meta, SM = M.sample, F = core.fit;
     var N = function(v){ return '<span class="num">' + v + '</span>'; };
-    var words = ["zero", "one", "two", "three", "four", "five"];
-    var sec = function(n, title, body){ return '<section id="meth-' + n + '"><h3><span class="n">' + n + '</span>' + title + '</h3>' + body + '</section>'; };
-    var step = function(n, t, v, k){ return '<button type="button" data-m="' + n + '"><span class="n">' + n + '</span><span class="t">' + t + '</span><span class="v">' + v + '</span><span class="k">' + k + '</span></button>'; };
-    var rows = F.tests.map(function(t){ return '<tr><td>' + esc(t.test.split(", ")[0].replace(/^./, function(c){ return c.toUpperCase(); })) + '</td><td class="hide-sm">' + esc(t.test.split(", ")[1]) + '</td><td class="num">' + (t.p_calibrated < 1 / (F.draws + 1) ? "≤ " + fmtP(1 / (F.draws + 1)) : fmtP(t.p_calibrated)) + '</td><td class="num">' + fmtP(t.p_holm) + '</td><td class="num hide-sm">' + fmtP(t.p_raw_bootstrap) + '</td><td class="hide-sm">' + esc(termName(t.strongest_term)) + ' <span class="muted">(' + Math.abs(t.strongest_score_z).toFixed(1) + ' SE ' + (t.strongest_score_z < 0 ? 'below' : 'above') + ' zero)</span></td></tr>'; }).join("");
-    var tests = '<details class="all" style="margin-top:4px"><summary>The four points tests</summary><div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Block tested</th><th class="hide-sm">Statistic</th><th class="num">p</th><th class="num">Holm</th><th class="num hide-sm">Raw bootstrap</th><th class="hide-sm">Largest single term</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
-      '<p class="muted small" style="margin:8px 0 0">p is calibrated: the bootstrap rank of the statistic, adjusted by how the same test behaved on synthetic seasons with no effect (the most cautious of four kinds of noise). Holm corrects for the four tests. “Many small” sums all six terms’ evidence; “one strong” takes the single largest. ≤ ' + fmtP(1 / (F.draws + 1)) + ' means beyond every bootstrap draw.</p></details>';
-    $("#trust-main").innerHTML = '<div class="pghead"><div class="eyebrow">From raw NBA data to the tests, in eight steps</div><h1>Methodology</h1><p class="dek">How every number on this site is made. Pick a step to jump to it.</p></div>' +
-      '<div class="mpipe">' + step(1, "Data", (SM.possessions / 1e6).toFixed(2) + "M", "possessions rebuilt from play-by-play") + step(2, "Styles and tendencies", G + " styles", "from " + M.style_columns + " style stats") +
-        step(3, "The fit model", "12 terms", "six tendency pairings, offense and defense") + step(4, "Results", "p " + fmtP(offOne.p_holm), "offense block, Holm") +
-        step(5, "Robustness", "p " + fmtP(REVIEW.own_offense_holm), "offense with players’ own stats") + step(6, "Calibration and power", REVIEW.fa_low + "–" + REVIEW.fa_high + "%", "false alarms at a 5% bar") +
-        step(7, "Ratings", F.rating_half_life_days + " days", "half-life of a game’s weight") + step(8, "Scope", core.pairs.rows.length + " pairs", "projected, none fitted alone") + '</div>' +
-      '<div class="meth">' +
-      sec(1, "Data", '<p><b>' + N((SM.possessions / 1e6).toFixed(2)) + ' million possessions.</b> Every regular-season possession from ' + M.seasons[0] + ' to ' + M.seasons[M.seasons.length - 1] + ': ' + N(SM.games.toLocaleString()) + ' games, ' + N(SM.team_seasons) + ' team-seasons, ' + N(SM.rows.toLocaleString()) + ' lineup-game rows. Each possession is rebuilt from the play-by-play with both fives on the floor, taken from substitution stints and checked against the box scores; where a plus-minus disagreed with the box score, points were re-assigned from the play-by-play and possessions were never changed. Technical free throws (' + N(SM.technical_points_credited.toLocaleString()) + ' of ' + N(SM.technical_points.toLocaleString()) + ' points) are credited to the five on the floor. The sample holds ' + N(SM.player_seasons.toLocaleString()) + ' player-seasons, and every number on the site uses all of them; a style’s purest-seasons list is drawn from the ' + N(SM.player_seasons_purest_eligible.toLocaleString()) + ' with ' + N(M.purest_minutes.toLocaleString()) + '+ minutes.</p>') +
-      sec(2, "Styles and tendencies", '<p>Every player-season is described by ' + N(M.style_columns) + ' style statistics (where he shoots, how often he has the ball, passing, rebounding, defense), standardized within season. Minutes-weighted k-means on those columns gives ' + N(G) + ' styles. Membership is by distance: each player-season holds a share of every style, so a player who plays two ways is recorded as both. Styles sort players by how they play, not how well. Three tendencies were fixed in October 2026, before any test. <b>Off-ball shooting</b> (the spacing term): three-point volume, corner threes, catch-and-shoot, spot-ups, open threes. <b>On-ball creation</b>: drives, usage, time of possession and dribbles, passes and potential assists, pick-and-roll handling, pull-ups, unassisted makes. <b>Paint presence</b>: rim attempts, paint touches, rebounding chances, box-outs, putbacks, rim defense. Each style has a level of each tendency; a player-season’s levels are the mix of his styles, in standard-deviation units.</p>') +
-      sec(3, "The fit model", '<p>Possessions are grouped by game, offense five and defense five. Points per 100 possessions = the five offense players’ season effects + the five defense players’ + home + six trait terms. A trait term is a pair of tendencies (off-ball shooting × off-ball shooting, off-ball shooting × on-ball creation, and so on through paint presence × paint presence) summed over the lineup’s ten player pairs, so it measures what two tendencies do together beyond what each player brings alone. Every player effect is free in every season; a trait term is therefore identified only from the same players doing better or worse next to different teammates. Six offense and six defense terms are fitted by ridge with penalty ' + N(Math.round(F.trait_penalty).toLocaleString()) + ' (10<sup>5.5</sup>), chosen by five-fold cross-validation over games. A term’s size is per pairing, each player one standard deviation above average on the named tendency.</p>') +
-      sec(4, "Results", '<p>On offense, overlapping tendencies crowd each other. The six offense terms, tested as a block with the six defense terms fitted (so the result is not the defense’s in disguise), give Holm p = ' + N(fmtP(offOne.p_holm)) + ' with the single largest term as the statistic and ' + N(fmtP(offMany.p_holm)) + ' with all six terms’ evidence summed. The largest term is two creators, ' + N(pts(cc.off)) + ' points per 100 per pairing, ' + N(Math.abs(offOne.strongest_score_z).toFixed(1)) + ' SE below zero; two bigs, ' + N(pts(ii.off)) + '; an off-ball shooter beside a big, ' + N(pts(si.off)) + '. Defense given offense gives Holm p = ' + N(fmtP(minH(defT))) + ': there is no defensive style effect on points. The tests are a sign-flip bootstrap by team-season, ' + N(F.draws.toLocaleString()) + ' draws (smallest attainable p ' + N(fmtP(1 / (F.draws + 1))) + '), calibrated on the null location and scale of synthetic seasons, Holm-corrected over the four.</p>' + tests) +
-      sec(5, "Robustness", '<p>Tendency levels by style read a star nearer his role (Curry’s off-ball shooting: ' + N(REVIEW.curry_style) + ' by style, ' + N(REVIEW.curry_own) + ' by his own stats). Refitting with each player’s own stats as his tendencies: offense Holm p = ' + N(fmtP(REVIEW.own_offense_holm)) + '; two creators ' + N(pts(REVIEW.own_cc)) + ' per pairing against ' + N(pts(cc.off)) + ' by style, two bigs ' + N(pts(REVIEW.own_ii)) + ' against ' + N(pts(ii.off)) + ', off-ball shooter + big ' + N(pts(REVIEW.own_si)) + ' against ' + N(pts(si.off)) + '; defense Holm p = ' + N(fmtP(REVIEW.own_defense_holm)) + '.</p>' +
-        '<p>Holding lineup exposure fixed (for each season, ten bands of how much a five played, for the offense five and the defense five, absorbed with the player effects): offense Holm p = ' + N(fmtP(REVIEW.exp_off_one)) + ' with the single largest term and ' + N(fmtP(REVIEW.exp_off_many)) + ' with all six summed; two creators ' + N(pts(REVIEW.exp_cc)) + ' per pairing against ' + N(pts(cc.off)) + ', off-ball shooter + big ' + N(pts(REVIEW.exp_si)) + ', two bigs ' + N(pts(REVIEW.exp_ii)) + '; defense Holm p = ' + N(fmtP(REVIEW.exp_def)) + '. Fresh null seasons on that design (two kinds of noise) kept every false-alarm rate under 5%.</p>') +
-      sec(6, "Calibration, power and prediction", '<p><b>False alarms.</b> Each test rule was checked on ' + N(REVIEW.sims_per_check) + ' fresh synthetic seasons per kind of noise (four kinds), built on the real possessions with no style effect and new random seeds: single tests fired ' + N(REVIEW.fa_low + "%") + ' to ' + N(REVIEW.fa_high + "%") + ' of the time at a 5% bar, and any of the four after Holm ' + N(REVIEW.holm_low + "%") + ' to ' + N(REVIEW.holm_high + "%") + '.</p>' +
-        '<p><b>Power.</b> With crowding of the fitted size planted (two +1 SD creators cost 0.5 per 100), the offense tests caught it in ' + N(REVIEW.pow_full + "%") + ' of synthetic seasons; at half that size, ' + N(REVIEW.pow_half + "%") + '. The tests are built for tendency-shaped effects: one style pair worth 2 or 4 points per 100 on its own was caught ' + N(REVIEW.pow_pair2 + "%") + ' and ' + N(REVIEW.pow_pair4 + "%") + ' of the time, and a scatter of pair effects (sd 0.5) ' + N(REVIEW.pow_dense + "%") + '.</p>' +
-        '<p><b>Prediction.</b> Nested cross-validation over games (five outer folds; penalties chosen inside each): adding the trait terms to the player effects lowered held-out error in ' + N(REVIEW.ho_folds + " of 5") + ' folds, a gain about ' + N(REVIEW.ho_share + "%") + ' the size of what the player effects add. With each five’s style mix also free, ' + N(REVIEW.ho_folds_anchored + " of 5") + ' folds and about ' + N(REVIEW.ho_share_anchored + "%") + '. A single possession is near a coin flip; the effect’s size reads in points per 100.</p>') +
-      sec(7, "Player ratings", '<p>A rating is a player’s effect on points per 100 possessions with the other nine players held fixed: ridge on these possessions, fitted on points net of the six trait terms. A season’s rating uses that season and the ' + words[F.rating_window_seasons - 1] + ' before it, older games weighted by 0.5<sup>days/' + F.rating_half_life_days + '</sup>. Half-life was chosen by out-of-sample prediction of the next season’s possessions; 450 to 700 days is a plateau. Each season is centered on the league-average possession; defense is points prevented.</p>' +
-        '<p><b>Box-score prior.</b> The ridge pulls each player toward what his box score predicts instead of toward zero, so a short or noisy run lands near a sensible value rather than near average. The box score covers the same window with the same decay, per 100 possessions: points, true shot attempts, threes, free throws, assists, turnovers, offensive and defensive rebounds, steals, blocks, fouls, fouls drawn, possessions used, shots defended at the rim and FG% allowed there, and height. Each stat is padded with league average by its own stabilization point, the sample at which half its spread between players is skill, measured from odd versus even games over the 13 seasons. The prior’s weights come from a possession-weighted regression of the plain ratings on those stats, fitted only on seasons outside the five centered on the one being rated, so a season never trains its own prior. The penalty with the prior, ' + N(Number(F.rating_prior_penalty).toLocaleString()) + ' (' + N(Number(F.rating_penalty).toLocaleString()) + ' without it), was picked by predicting each next season’s possessions in date order, with every input ending before the season predicted; 7,500 to 13,000 is flat. Over six such seasons the prior cut prediction error by 0.57% against 0.45% for the plain rating, better in all six.</p>') +
-      sec(8, "Scope", '<p>The finding is three tendencies tested as a block of six offense terms; the grid applies them to each of ' + N(core.pairs.rows.length) + ' style pairs as two full-time players; none was fitted alone. On points the effect is offensive; defense shows trait effects in shot quality, free throws, offensive rebounds and turnovers. Net moves more with model details. With own stats, both crowding terms hold, the off-ball shooter + big complement does not; null simulations were not rerun there. Player seasons are held fixed, coaches choose who shares the floor: the terms are associations. The exposure control removes either noise from barely-played lineups or fit that earned their minutes. Ratings carry what comes with a role; short runs pull toward what the box score predicts. The data starts in 2013-14, so 2013-14 ratings rest on one season and 2014-15 on two; every season from 2015-16 on uses the full three, and the first two lean harder on the box-score prior. Regular season only.</p><p><b>Players don’t adapt.</b> Each player-season keeps the tendencies he showed that season, with those teammates. The fit doesn’t model a player changing his role to suit a new lineup.</p>') +
-      '</div>';
+    var T = function(name){ return F.tests.filter(function(x){ return x.test === name; })[0]; };
+    var cc = termOf("on_ball_creation", "on_ball_creation"), ii = termOf("interior", "interior"), si = termOf("spacing", "interior");
+    var tbl = function(head, rows, numCols){ numCols = numCols || []; return '<div class="tablewrap"><table class="at mt"><thead><tr>' + head.map(function(h, k){ return '<th' + (numCols.indexOf(k) >= 0 ? ' class="num"' : '') + '>' + h + '</th>'; }).join('') + '</tr></thead><tbody>' +
+      rows.map(function(r){ return '<tr>' + r.map(function(c, k){ return '<td' + (numCols.indexOf(k) >= 0 ? ' class="num"' : '') + '>' + c + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>'; };
+    var dd = function(id, title, body){ return '<details class="md" id="m-' + id + '"><summary>' + title + '</summary><div class="mdb">' + body + '</div></details>'; };
+    var sec = function(n, title, lead, body, drops){ return '<section id="meth-' + n + '"><h3><span class="n">' + n + '</span>' + title + '</h3><div class="mvis"><p class="mlead">' + lead + '</p>' + body + '</div><div class="mdrops">' + drops + '</div></section>'; };
+    var p = function(t){ return '<p>' + t + '</p>'; };
+    var seasons = M.seasons[0] + ' to ' + M.seasons[M.seasons.length - 1];
+    var testRow = function(name, how){ var t = T(name); return [esc(name.split(", ")[0].replace(/^./, function(c){ return c.toUpperCase(); }).replace(" given ", ", with ") + " fitted"), how, N(fmtP(t.p_calibrated)), N(fmtP(t.p_holm))]; };
+    var titles = ["Data", "Styles and tendencies", "The fit model", "What the model finds", "What survives the checks", "Player ratings", "Scope"];
+
+    var s1 = sec(1, titles[0], 'Every regular-season possession from ' + seasons + ': ' + N((SM.possessions / 1e6).toFixed(2) + ' million') + ' possessions, ' + N(SM.games.toLocaleString()) + ' games and ' + N(SM.player_seasons.toLocaleString()) + ' player-seasons.',
+      p('We rebuilt both fives from play-by-play and substitutions, then checked the scoring against the box scores. That gives the model the attacking five, the defending five and the points scored. All ' + SM.player_seasons.toLocaleString() + ' player-seasons enter the analysis.'),
+      dd("data-checks", "Sample and checks", tbl(["Sample", "Count"], [["Possessions", N((SM.possessions / 1e6).toFixed(2) + " million")], ["Games", N(SM.games.toLocaleString())], ["Team-seasons", N(SM.team_seasons)], ["Lineup-game rows", N(SM.rows.toLocaleString())], ["Player-seasons", N(SM.player_seasons.toLocaleString())]], [1]) +
+        p('When a lineup’s plus-minus disagreed with the box score, points were reassigned from the play-by-play. Possession counts never changed.') +
+        p('Of 13,771 technical-free-throw points, 13,088 are credited to the five on the floor. The other 683 came when the two fives never shared a possession in that game, so there is no row to put them on.') +
+        p('A style’s purest-seasons list is drawn from the ' + N(SM.player_seasons_purest_eligible.toLocaleString()) + ' player-seasons with 1,000+ minutes.')));
+
+    var s2 = sec(2, titles[1], 'Players are grouped into ' + G + ' styles using ' + M.style_columns + ' statistics that describe how they play. Each player-season keeps a mix of styles.',
+      p('Every style has three tendency levels: ' + skChip(0) + ' ' + skChip(1) + ' ' + skChip(2) + ' They capture spacing, creating with the ball and activity around the rim. A player’s levels come from his style mix, so they describe how he plays, not how good he is.'),
+      dd("style-construction", "Style construction", p('The ' + M.style_columns + ' style statistics cover shooting, ball handling, passing, rebounding and defense. They are standardized within season, then grouped by minutes-weighted k-means. Membership is by distance: every player-season keeps a share of every style.') +
+          p('We compared 15, 16, 20 and 22 styles. Sixteen was the most stable:') + tbl(["Stability check", "Agreement"], [["Across k-means restarts", N("0.78")], ["Leaving each season out and refitting", N("0.84")]], [1]) + p('The 22-style version is the 16 plus six carve-outs.')) +
+      dd("tendency-inputs", "Tendency inputs", p('The three tendencies were fixed in October 2026, before any test.') +
+          tbl(["Tendency", "Inputs"], [[skChip(0), "Three-point volume, corner threes, catch-and-shoot, spot-ups, open threes"], [skChip(1), "Drives, usage, time of possession and dribbles, passes and potential assists, pick-and-roll handling, pull-ups, unassisted makes"], [skChip(2), "Rim attempts, paint touches, rebounding chances, box-outs, putbacks, rim defense"]]) +
+          p('Each style has a level of each tendency. A player-season’s levels are the mix of its styles, in standard-deviation units.')));
+
+    var s3 = sec(3, titles[2], 'For every two teammates, the model asks whether their tendencies help or get in each other’s way. Ten pairs per five, six kinds of pair.',
+      p('Six offense and six defense pairing terms are fitted together with every player’s own effect. A five’s <b>synergy score</b> is what its tendencies add or cost together, beyond the players’ own ratings.'),
+      dd("model-inputs", "Model inputs", p('Possessions are grouped by game, offense five and defense five. The outcome is points per 100 possessions. Fitted together:') +
+          '<ul><li>the five attacking players’ offense effects for that season</li><li>the five defending players’ defense effects for that season</li><li>home court</li><li>six offense pairing terms</li><li>six defense pairing terms</li></ul>' +
+          p('Every player has his own offense and defense effect in every season, so the pairing terms are learned from the same players doing better or worse next to different teammates.')) +
+      dd("pair-types", "The six kinds of pair", tbl(["First", "Second"], [[skChip(0), skChip(0)], [skChip(0), skChip(1)], [skChip(0), skChip(2)], [skChip(1), skChip(1)], [skChip(1), skChip(2)], [skChip(2), skChip(2)]]) +
+          p('Each kind is summed over the five’s ten teammate pairs, separately on offense and defense: 12 terms. A term’s size is points per 100 possessions for one pairing, with both players one standard deviation above average on the named tendency.')) +
+      dd("fit-penalty", "Fitting and penalty", tbl(["Choice", "Setting"], [["Estimator", "Ridge regression"], ["Penalty", N("316,228") + ' (10<sup>5.5</sup>)'], ["Penalty chosen by", "Five-fold cross-validation over games"]])));
+
+    var s4 = sec(4, titles[3], 'On offense, two creators cost ' + N(sign(cc.off, 2)) + ' points per 100 per pairing and two bigs ' + N(sign(ii.off, 2)) + '. An off-ball shooter beside a big adds ' + N(sign(si.off, 2)) + '.',
+      p('The offense signal holds after correcting for all four tests. On defense, the points tests found no pairing effect.'),
+      dd("points-tests", "The four points tests", p('Offense is tested with the defense terms fitted, and defense with the offense terms fitted, so neither result is the other in disguise. Each side gets two tests: one adds up the evidence across all six pairings, the other takes the strongest single pairing.') +
+          tbl(["What was tested", "How", "p", "After correcting for four tests"], [testRow("offense given defense, many small", "All six pairings"), testRow("offense given defense, one strong", "Strongest pairing"), testRow("defense given offense, many small", "All six pairings"), testRow("defense given offense, one strong", "Strongest pairing")], [2, 3]) +
+          p('Sign-flip bootstrap by team-season, ' + F.draws.toLocaleString() + ' draws (the smallest possible p is ' + fmtP(1 / (F.draws + 1)) + '). The p column is calibrated against synthetic seasons with no effect, taking the most cautious of four kinds of noise; the last column is Holm-corrected over the four tests. Raw bootstrap p, in table order: 0.0001, 0.0001, 0.55, 0.76. Strongest pairing: two creators on offense (5.1 SE below zero); off-ball shooter + big on defense (1.0 SE below zero).')));
+
+    var s5 = sec(5, titles[4], 'Creator crowding survives every check: players’ own stats in place of their styles, and controls for how much each lineup played.',
+      p('Both crowding terms hold with players’ own stats. <b>The shooter + big boost does not: ' + N("+0.02") + ' against ' + N(sign(si.off, 2)) + '.</b> Synthetic seasons confirm the tests rarely fire by chance and catch an effect this size, and the pairing terms improve held-out prediction in all five folds.'),
+      dd("own-tendencies", "Players’ own stats", p('By style, a star reads closer to his role: Curry’s off-ball shooting is ' + N(REVIEW.curry_style) + ' by style and ' + N(REVIEW.curry_own) + ' by his own stats. Refit with each player’s own stats as his tendencies:') +
+          tbl(["Offense pairing", "By style", "By own stats"], [["Two creators", N(sign(cc.off, 2)), N("−0.27")], ["Two bigs", N(sign(ii.off, 2)), N("−0.16")], ["Off-ball shooter + big", N(sign(si.off, 2)), N("+0.02")]], [1, 2]) +
+          p('Offense Holm p = ' + N(fmtP(REVIEW.own_offense_holm)) + '. Defense Holm p = ' + N("0.65") + '.')) +
+      dd("lineup-exposure", "Lineup exposure", p('Within each season, lineups were split into ten bands by how much they played, for the offense five and the defense five, and absorbed with the player effects.') +
+          tbl(["Offense pairing", "Main model", "Exposure held fixed"], [["Two creators", N(sign(cc.off, 2)), N("−0.50")], ["Two bigs", N(sign(ii.off, 2)), N("+0.24")], ["Off-ball shooter + big", N(sign(si.off, 2)), N("+0.20")]], [1, 2]) +
+          p('Offense Holm p = ' + N("0.027") + ' with the strongest pairing, ' + N("0.10") + ' with all six. Defense Holm p = ' + N("0.12") + '. Fresh null seasons on this design (two kinds of noise) kept every false-alarm rate under 5%.')) +
+      dd("false-alarms", "False alarms", p('Each test rule was run on ' + REVIEW.sims_per_check + ' fresh synthetic seasons per kind of noise (four kinds), built on the real possessions with no style effect and new random seeds. At a 5% bar:') +
+          tbl(["Rule", "Fired"], [["Single tests", N(REVIEW.fa_low + "–" + REVIEW.fa_high + "%")], ["Any of the four, after Holm", N(REVIEW.holm_low + "–" + REVIEW.holm_high + "%")]], [1])) +
+      dd("detection-power", "Detection power", p('Known effects were planted in synthetic seasons:') +
+          tbl(["Planted effect", "Caught"], [["Crowding of the fitted size (two +1 SD creators cost 0.5 per 100)", N("100%")], ["Half that size", N("64%")], ["One style pair worth 2 points per 100 on its own", N("2.5%")], ["One style pair worth 4 points per 100 on its own", N("3.5%")], ["A scatter of pair effects (sd 0.5)", N("5%")]], [1]) +
+          p('The tests are built for effects shaped by the three tendencies, not for one isolated style pair.')) +
+      dd("held-out-prediction", "Held-out prediction", p('Nested cross-validation over games: five outer folds, penalties chosen inside each.') +
+          tbl(["Comparison", "Folds better", "Gain"], [["Pairing terms added to the player effects", N("5 of 5"), "about 4% of what the player effects add"], ["Same, with each five’s style mix also free", N("4 of 5"), "about 1%"]], [1]) +
+          p('A single possession is close to a coin flip, so the effect’s size reads in points per 100.')));
+
+    var s6 = sec(6, titles[5], 'A rating is a player’s effect on points per 100 possessions with the other nine players held fixed, after the pairing terms are taken out.',
+      p('Each rating uses that season and the two before it, older games counting less. A box-score prior steadies short or noisy runs, and it improved next-season prediction in all six seasons tested.'),
+      dd("rating-window", "Rating window", p('Ridge regression on points net of the six pairing terms. A game’s weight is 0.5<sup>days/' + F.rating_half_life_days + '</sup>: it loses half its weight every ' + F.rating_half_life_days + ' days. The half-life was chosen by predicting the next season’s possessions out of sample; 450 to 700 days is a plateau. Each season is centered on the league-average possession, and defense is points prevented.')) +
+      dd("box-score-prior", "Box-score prior", p('The ridge pulls each player toward what his box score predicts instead of toward zero. The box score covers the same window with the same decay, per 100 possessions:') +
+          '<ul class="cols"><li>points, true shot attempts, threes, free throws</li><li>assists, turnovers</li><li>offensive and defensive rebounds</li><li>steals, blocks</li><li>fouls, fouls drawn</li><li>possessions used</li><li>shots defended at the rim, FG% allowed there</li><li>height</li></ul>' +
+          p('Each stat is padded with league average up to its own stabilization point: the sample at which half its spread between players is skill, measured from odd versus even games over the 13 seasons.')) +
+      dd("prior-training", "Prior training", p('The prior’s weights come from a possession-weighted regression of the plain ratings on those stats, fitted only on seasons outside the five centered on the one being rated, so a season never trains its own prior.')) +
+      dd("rating-penalty", "Penalty selection", p('Penalties were picked by predicting each next season’s possessions in date order, with every input ending before the season predicted.') +
+          tbl(["Rating", "Penalty"], [["With the box-score prior", N("10,000")], ["Without it", N("3,162")]], [1]) +
+          p('With the prior, 7,500 to 13,000 is flat. Over six such seasons the prior cut prediction error by 0.57% against 0.45% for the plain rating, better in all six.')));
+
+    var s7 = sec(7, titles[6], 'The ' + core.pairs.rows.length + ' style pairs on Style fit are projections from one shared model; none was fitted on its own. The terms are associations: coaches choose who shares the floor.',
+      p('Players keep the tendencies they showed that season; the model doesn’t let anyone change his game for new teammates. The points finding is on offense. On defense, tendency effects show up in shot quality, free throws, offensive rebounds and turnovers. The synergy score’s offense-plus-defense total moves more with model choices than its offense part. Regular season only.'),
+      dd("interpretation", "Interpretation", p('The finding is three tendencies tested as one block of six offense terms. The grid applies those shared terms to each of ' + core.pairs.rows.length + ' style pairs as two full-time players.') +
+          p('With players’ own stats, both crowding terms hold and the shooter + big boost does not; the null simulations were not rerun for that version.') +
+          p('Holding lineup exposure fixed removes noise from barely-played lineups, but it can also absorb fit that earned a lineup its minutes.') +
+          p('Ratings carry what comes with a role, and short runs are pulled toward what the box score predicts.')) +
+      dd("early-seasons", "Early seasons", p('The data starts in 2013-14.') + tbl(["Rating season", "Seasons in the window"], [["2013-14", "One"], ["2014-15", "Two"], ["2015-16 on", "The full three"]]) + p('The first two seasons lean harder on the box-score prior.')));
+
+    $("#trust-main").innerHTML = '<div class="pghead"><div class="eyebrow">How every number on this site is made</div><h1>Methodology</h1><p class="dek">Seven parts, each answered plainly first. The exact methods sit in the drop-downs under each one.</p>' +
+        '<div class="mnav"><nav aria-label="Sections">' + titles.map(function(t, i){ return '<button type="button" data-m="' + (i + 1) + '"><span class="n">' + (i + 1) + '</span>' + t + '</button>'; }).join('') + '</nav><button type="button" class="mexp" aria-pressed="false">Expand all</button></div></div>' +
+      '<div class="meth">' + s1 + s2 + s3 + s4 + s5 + s6 + s7 + '</div>';
+    var host = $("#trust-main"), ex = host.querySelector(".mexp");
+    ex.addEventListener("click", function(){ var on = ex.getAttribute("aria-pressed") !== "true"; host.querySelectorAll("details.md").forEach(function(d){ d.open = on; }); ex.setAttribute("aria-pressed", on); ex.textContent = on ? "Collapse all" : "Expand all"; });
+    host.querySelectorAll(".mnav button[data-m]").forEach(function(b){ b.addEventListener("click", function(){ var s = document.getElementById("meth-" + b.dataset.m); if (s) s.scrollIntoView({ behavior: "smooth", block: "start" }); }); });
+  }
+  // ---------- diminishing returns: what stacking the same tendency does, from the fitted pair terms ----------
+  var DR_MAX = 4, DR_AT = 3;
+  function renderReturns(){
+    var host = $("#returns-main"); if (!host) return;
+    var cc = termOf("on_ball_creation", "on_ball_creation"), ii = termOf("interior", "interior"), ss = termOf("spacing", "spacing"), ci = termOf("on_ball_creation", "interior"), si = termOf("spacing", "interior");
+    var L = [{ k: 1, nm: "On-ball creators", b: cc.off }, { k: 2, nm: "Bigs", b: ii.off }, { k: 0, nm: "Off-ball shooters", b: ss.off }];
+    var pairs = function(n){ return n * (n - 1) / 2; };
+    var at = function(l, n){ return pairs(n) * l.b; };
+    // chart: players 1..DR_MAX across, points per 100 up; each line is the parabola C(n,2) x the pair term, drawn smooth with dots at whole players
+    var narrow = (host.clientWidth || 800) < 560, W = narrow ? 380 : 640, H = narrow ? 300 : 340, pl = narrow ? 34 : 52, pr = narrow ? 76 : 150, pt = 22, pb = 44;
+    var short = { 1: "Creators", 2: "Bigs", 0: "Shooters" };
+    var lo = Math.min(0, at(L[0], DR_MAX)), hi = Math.max(0, at(L[2], DR_MAX));
+    lo = Math.floor(lo - 0.3); hi = Math.ceil(hi + 0.3);
+    var X = function(n){ return pl + (W - pl - pr) * (n - 1) / (DR_MAX - 1); }, Y = function(v){ return pt + (H - pt - pb) * (hi - v) / (hi - lo); }, f = function(v){ return v.toFixed(1); };
+    var g = '';
+    for (var v = lo; v <= hi; v++) g += '<line class="' + (v === 0 ? 'z' : 'gl') + '" x1="' + pl + '" x2="' + (W - pr) + '" y1="' + f(Y(v)) + '" y2="' + f(Y(v)) + '"/><text class="yl" x="' + (pl - 10) + '" y="' + f(Y(v) + 4) + '">' + (v > 0 ? '+' : v < 0 ? MINUS : '') + Math.abs(v) + '</text>';
+    for (var n = 1; n <= DR_MAX; n++) g += '<text class="xl" x="' + f(X(n)) + '" y="' + (H - pb + 22) + '">' + n + '</text>';
+    g += '<text class="xt" x="' + f((pl + W - pr) / 2) + '" y="' + (H - 4) + '">players sharing the tendency</text>';
+    g += '<rect class="band" x="' + f(X(DR_AT) - 22) + '" y="' + pt + '" width="44" height="' + (H - pt - pb) + '" rx="6"/>';
+    L.forEach(function(l){
+      var d = ''; for (var s = 0; s <= 60; s++){ var x = 1 + (DR_MAX - 1) * s / 60; d += (s ? 'L' : 'M') + f(X(x)) + ' ' + f(Y(pairs(x) * l.b)); }
+      g += '<path class="ln s' + l.k + '" d="' + d + '"/>';
+      for (var m = 1; m <= DR_MAX; m++) g += '<circle class="pt s' + l.k + (m === DR_AT ? ' on' : '') + '" cx="' + f(X(m)) + '" cy="' + f(Y(at(l, m))) + '" r="' + (m === DR_AT ? 6.5 : 4.5) + '"/>';
+      var vEnd = at(l, DR_MAX);
+      g += '<text class="ll s' + l.k + '" x="' + f(X(DR_MAX) + 12) + '" y="' + f(Y(vEnd) + 4) + '">' + esc(narrow ? short[l.k] : l.nm) + '</text>';
+    });
+    L.forEach(function(l){ var v = at(l, DR_AT); g += '<text class="pv s' + l.k + '" x="' + f(X(DR_AT) - 12) + '" y="' + f(Y(v) + (v >= 0 ? -10 : 18)) + '">' + sign(v, 2) + '</text>'; });
+    var chart = '<svg class="drsvg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Pairing points per 100 possessions as 1 to ' + DR_MAX + ' players share a tendency">' + g + '</svg>';
+    var pick = '<div class="drpick" role="group" aria-label="Players sharing the tendency">' + [2, 3, 4].map(function(n){ return '<button type="button" data-n="' + n + '" aria-pressed="' + (n === DR_AT) + '">' + n + ' players</button>'; }).join('') + '</div>';
+    var read = '<div class="drread"><span class="lead"><b>' + DR_AT + ' players</b> make <b>' + pairs(DR_AT) + ' pairs</b></span>' + L.map(function(l){ return '<span class="s' + l.k + '"><i></i>' + esc(l.nm) + ' <b class="num">' + sign(at(l, DR_AT), 2) + '</b></span>'; }).join('') + '</div>';
+    var dots = function(n){ var R = 30, c = '', pts = []; for (var i = 0; i < n; i++){ var a = -Math.PI / 2 + 2 * Math.PI * i / n; pts.push([40 + R * Math.cos(a), 40 + R * Math.sin(a)]); }
+      for (i = 0; i < n; i++) for (var j = i + 1; j < n; j++) c += '<line x1="' + f(pts[i][0]) + '" y1="' + f(pts[i][1]) + '" x2="' + f(pts[j][0]) + '" y2="' + f(pts[j][1]) + '"/>';
+      pts.forEach(function(q){ c += '<circle cx="' + f(q[0]) + '" cy="' + f(q[1]) + '" r="7"/>'; });
+      return '<figure class="pairfig"><svg viewBox="0 0 80 80" aria-hidden="true">' + c + '</svg><figcaption><b class="num">' + n + '</b> players<br><b class="num">' + pairs(n) + '</b> ' + (pairs(n) === 1 ? 'pair' : 'pairs') + '</figcaption></figure>'; };
+    var pct = function(x){ return x < 0.001 ? (100 * x).toFixed(2) + '%' : (100 * x).toFixed(1) + '%'; };
+    host.innerHTML = '<div class="pghead"><div class="eyebrow">Question 2 · Do archetypes have diminishing returns?</div><h1>Diminishing returns</h1>' +
+        '<p class="dek">Creator crowding grows as more creators share the floor. Bigs follow the same pattern. Off-ball shooting compounds the other way.</p></div>' +
+      '<section class="c drc"><h2 class="h">How matching tendencies add up</h2>' + pick + read + '<div class="drwrap">' + chart + '</div>' +
+        '<p class="cap">Each player is +1 SD on the named tendency. The line is that pairing’s part of the offensive synergy score, in points per 100 possessions, on top of the players’ own ratings.</p></section>' +
+      '<section class="c"><h2 class="h">Why the curve bends</h2><div class="pairrow">' + [2, 3, 4].map(dots).join('') + '</div>' +
+        '<p class="drbig">Two players make one pair. Three make three. Four make six. Every creator you add crowds every creator already there, so each one costs more than the last. Every shooter you add spaces the floor for every shooter already there.</p></section>' +
+      '<section class="c duo"><div><h2 class="h">Mix matters too</h2><div class="mixrow"><div class="mix">' + skChip(1) + '<span class="qplus">+</span>' + skChip(2) + '<b class="num ' + cls(ci.off, 2) + '">' + sign(ci.off, 2) + '</b></div>' +
+          '<div class="mix">' + skChip(0) + '<span class="qplus">+</span>' + skChip(2) + '<b class="num ' + cls(si.off, 2) + '">' + sign(si.off, 2) + '</b></div></div><p class="cap">Per pairing, points per 100 possessions, on offense.</p></div>' +
+        '<div><h2 class="h">How often it happens</h2><table class="at drt"><thead><tr><th>Three or more</th><th class="num">Of possessions</th></tr></thead><tbody>' +
+          '<tr><td>' + skChip(1) + '</td><td class="num">' + pct(0.021159300037921634) + '</td></tr><tr><td>' + skChip(0) + '</td><td class="num">' + pct(0.028536192473365724) + '</td></tr><tr><td>' + skChip(2) + '</td><td class="num">' + pct(0.00022979862639410626) + '</td></tr></tbody></table>' +
+          '<p class="cap">Players at +1 SD or more on that tendency, all ' + (core.meta.sample.possessions / 1e6).toFixed(2) + ' million possessions.</p></div></section>' +
+      '<p class="drnote">The pair terms already produce the curve, and an earlier pre-registered check of creator counts found the same growing crowding.</p>';
+    host.querySelectorAll(".drpick button").forEach(function(b){ b.addEventListener("click", function(){ DR_AT = +b.dataset.n; renderReturns(); }); });
   }
 
-
-  document.addEventListener("click", function(e){ var b = e.target.closest(".mpipe button[data-m]"); if (b){ var s = document.getElementById("meth-" + b.dataset.m); if (s) s.scrollIntoView({ behavior: "smooth", block: "start" }); } });
   // ---------- boot ----------
   fetch("data/core.json").then(function(r){ if (!r.ok) throw new Error("core.json " + r.status); return r.json(); }).then(function(c){
     return fetch("data/season.json", { cache: "no-cache" }).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }).then(function(L){ start(c, L); });
@@ -2976,7 +3155,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     renderPlayer(sp);
     var sg = load("lab-group"); if (typeof sg === "number" && sg >= 0 && sg < G) state.group = sg;
     var so = load("lab-rating-out"); if (OUTS.indexOf(so) >= 0) state.ratingOut = so;
-    renderGroups(); renderPairs(); setupLineup(); renderTrust(); setupPager();
+    renderGroups(); renderPairs(); setupLineup(); renderTrust(); renderReturns(); setupPager();
     showTab(tabs.indexOf(h) >= 0 || h === "about" || h === "combos" ? h : "home", true);
   }
 })();
