@@ -2736,7 +2736,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     lineupIndex();
     var cc = termOf("on_ball_creation", "on_ball_creation"), ii = termOf("interior", "interior");
     $("#lineup-panel").innerHTML = '<div class="pghead"><div class="eyebrow">' + LROWS.length.toLocaleString() + ' real fives to measure against · ' + core.meta.seasons[0] + ' to ' + core.meta.seasons[core.meta.seasons.length - 1] + '</div><h1>Lineup check</h1><p class="dek">Deal any five players from any seasons. You get their own ratings, how their styles fit, a grade against every real five, and the swaps that would fit better.</p>' + luNote() +
-      '<details class="more"><summary>What to expect</summary><div><p>Overlapping tendencies crowd each other: two strong on-ball creators score about <span class="num">' + Math.abs(cc.off).toFixed(1) +
+      '<details class="more"><summary>What to expect</summary><div><p>Overlapping tendencies crowd each other: two ball-dominant creators score about <span class="num">' + Math.abs(cc.off).toFixed(1) +
       '</span> fewer points per 100 possessions than their own effects add up to, and two bigs about <span class="num">' + Math.abs(ii.off).toFixed(1) + '</span> fewer. Spacing works the other way: an off-ball shooter next to a big helps. The total is the model’s estimate from its twelve tendency-pairing terms, six on offense and six on defense, added together as net. The offense terms carry the evidence: no defensive effect on points was detected, and the defense half of every five’s score is close to zero.</p></div></details></div>' +
       '<div id="lineup-body"></div><p class="lu-sr" id="lu-live" aria-live="polite"></p>';
     var panel = $("#lineup-panel");
