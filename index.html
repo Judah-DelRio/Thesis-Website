@@ -494,19 +494,6 @@ ol.lu-fives{list-style:none;margin:10px 0 0;padding:0}
 }
 @media (max-width:380px){.lu-presets{grid-template-columns:minmax(0,1fr)}}
 @media (prefers-reduced-motion:no-preference){.fill,.trait i{transition:width .25s ease}}
-/* six factors table */
-table.factors th{font-size:13px;color:var(--muted);font-weight:600}
-table.factors th[scope="row"]{color:var(--ink);font-size:14.5px;white-space:nowrap}
-table.factors td.fc{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;gap:0 10px;align-items:center;padding:10px 6px}
-table.factors td.fc .code{grid-column:1;font-family:var(--mono);font-size:11.5px;color:var(--muted);align-self:end}
-table.factors td.fc .big{grid-column:2;grid-row:1/3;font:800 26px/1 var(--display);letter-spacing:.01em;text-align:right}
-table.factors td.fc .bar{grid-column:1;height:5px;background:var(--surface-2);border-radius:3px;overflow:hidden;min-width:70px;align-self:start;margin-top:3px}
-table.factors td.fc .bar i{display:block;height:100%}
-table.factors td.fc .bar i.pos{background:var(--good)} table.factors td.fc .bar i.neg{background:var(--bad)}
-table.factors td.fc .nat{grid-column:1/3;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
-table.factors tr.sum td,table.factors tr.sum th{border-top:2px solid var(--line);border-bottom:0;padding-top:10px}
-table.factors tr.sum .big{font:800 26px/1 var(--display)}
-@media (max-width:480px){table.factors td.fc{padding:8px 4px}table.factors td.fc .big{font-size:22px}table.factors td.fc .bar{min-width:46px}}
 .team{color:var(--muted);font-size:14px}
 .sn-ctl{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
 .sn-ctl label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted);font-weight:600}
@@ -625,13 +612,6 @@ footer{border-top:2px solid var(--rule)}
 :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .runs li{display:flex;align-items:center;gap:6px}
 :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .runs i{width:12px;height:12px;border-radius:2px;display:inline-block}
 :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .runs .yr{font:500 12px var(--mono);color:var(--muted)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .facs{display:grid;gap:2px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .facs .fg{font:600 11.5px var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-top:10px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .facs .fr{display:grid;grid-template-columns:minmax(0,170px) minmax(0,1fr) 52px;gap:12px;align-items:center;padding:3px 0}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .facs .fl{font-size:14px} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .facs .fl small{display:block;font:11.5px var(--mono);color:var(--muted)}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .facs .db{width:100%;height:16px;display:block}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .facs .fv{text-align:right;font-weight:600}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .facs .fsum{display:flex;justify-content:space-between;border-top:1px solid var(--ink-2);padding-top:8px;margin-top:8px;font-weight:600}
 :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 36px}
 @media (max-width:560px){:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fit{grid-template-columns:minmax(0,1fr)}}
 :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fit ol{list-style:none;margin:0;padding:0}
@@ -648,7 +628,7 @@ footer{border-top:2px solid var(--rule)}
 :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .tterms .tax{display:grid;grid-template-columns:minmax(0,170px) 1fr 1fr 1fr 52px;gap:0 12px;font-size:11px;color:var(--muted)}
 :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .tterms .tax span:nth-child(3){text-align:center} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .tterms .tax span:nth-child(4){text-align:right}
 :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .ci{stroke:var(--ink-2);stroke-width:1.2} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .faded{opacity:.4}
-@media (max-width:480px){:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .facs .fr,:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .tterms .tr{grid-template-columns:minmax(0,130px) minmax(0,1fr) 48px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .tterms .tax{grid-template-columns:minmax(0,130px) 1fr 1fr 1fr 48px}}
+@media (max-width:480px){:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .tterms .tr{grid-template-columns:minmax(0,130px) minmax(0,1fr) 48px}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .tterms .tax{grid-template-columns:minmax(0,130px) 1fr 1fr 1fr 48px}}
 :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star{position:relative}
 :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star svg{display:block;width:100%;height:auto;overflow:visible}
 :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .s0{--skc:var(--sp)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .s1{--skc:var(--cr)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .star .s2{--skc:var(--pt)}
@@ -719,8 +699,8 @@ footer{border-top:2px solid var(--rule)}
 :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 28px}
 :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .duo > div + div{border-left:1px solid var(--line);padding-left:28px}
 @media (max-width:640px){:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .duo{grid-template-columns:minmax(0,1fr)}:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .duo > div + div{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:16px;margin-top:16px}}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .facs .fr{grid-template-columns:minmax(0,128px) minmax(0,1fr) 46px} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .facs .fl{font-size:13px}
-:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fit{grid-template-columns:minmax(0,1fr);row-gap:14px} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fit li{font-size:13px;padding:5px 0}
+
+:is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fit{row-gap:14px} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .fit li{font-size:13px;padding:5px 0}
 :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .rank{font-size:13px;margin:0 0 8px;color:var(--ink-2)} :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .rank b{color:var(--ink)}
 :is(#home,#players,#archetypes,#pairs,#lineup,#season,#trust) .career{border-top:2px solid var(--rule);padding-top:14px;margin-top:6px}
 
@@ -1659,7 +1639,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
   }
 
 
-  // ---------- players: every player-season as a card, with the league, six factors, fit, peers and career beside it ----------
+  // ---------- players: every player-season as a card, with the league, fit, peers and career beside it ----------
   function rankShort(p, o){
     var r = p.rating_rank[o];
     return r >= 0.5 ? "better than " + Math.min(99, Math.round(100 * r)) + "%" : "behind " + Math.min(99, Math.round(100 * (1 - r))) + "%";
@@ -1800,22 +1780,8 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     return s + key;
   }
 
-  // ---- six factors, lineup fit, peers ----
-  var FAC = [ // index into factors / factors_pts, label, unit
-    { i: 0, end: "off", label: "Shooting", unit: "TS pts" }, { i: 2, end: "off", label: "Ball security", unit: "TOV per 100" }, { i: 4, end: "off", label: "Offensive boards", unit: "per 100 chances" },
-    { i: 1, end: "def", label: "Opponent shooting", unit: "TS pts" }, { i: 3, end: "def", label: "Forced turnovers", unit: "TOV per 100" }, { i: 5, end: "def", label: "Defensive boards", unit: "per 100 chances" } ];
-  var FACTOR_NOTE = "All six are how his team did with him on the floor, compared with an average player, not his own box score. Points per 100 possessions; red is good on both ends.";
+  // ---- lineup fit, peers ----
   var FIT_NOTE = "Points per 100 that a typical player of each style adds next to him, from his three tendencies against theirs. Fit only: the teammate’s own rating is not counted.";
-  function divBar(v, mx, h){ var x = 50 + 50 * Math.max(-1, Math.min(1, v / mx)), x0 = Math.min(50, x), w = Math.abs(x - 50);
-    return '<svg class="db" viewBox="0 0 100 ' + h + '" preserveAspectRatio="none" aria-hidden="true"><rect class="' + cls(v, 2) + '" x="' + x0.toFixed(2) + '" y="' + (h * 0.2) + '" width="' + Math.max(w, 0.4).toFixed(2) + '" height="' + (h * 0.6) + '" rx="1"/><line class="z" x1="50" x2="50" y1="0" y2="' + h + '" vector-effect="non-scaling-stroke"/></svg>'; }
-  function factorsHTML(p){
-    if (!p.factors_pts || !p.factors) return '<p class="cap">No six-factor split for this season yet.</p>';
-    var mx = Math.max(1, Math.max.apply(null, p.factors_pts.map(Math.abs)));
-    var row = function(f){ var v = p.factors_pts[f.i]; return '<div class="fr"><span class="fl">' + f.label + '<small>' + sign(p.factors[f.i]) + ' ' + f.unit + '</small></span>' + divBar(v, mx, 16) + '<span class="fv num ' + cls(v) + '">' + sign(v) + '</span></div>'; };
-    return '<div class="facs"><div class="fg">Offense</div>' + FAC.filter(function(f){ return f.end === "off"; }).map(row).join("") +
-      '<div class="fg">Defense</div>' + FAC.filter(function(f){ return f.end === "def"; }).map(row).join("") +
-      '<div class="fsum"><span>The six add up to his total impact</span>' + sv(p.rating.net) + '</div></div>';
-  }
   function fitHTML(p, n){
     var F = fitList(p), li = function(r){ var g = BYCODE[r.code]; return '<li><span class="sn"><i class="dot d-' + SKC[g.sk] + '"></i>' + esc(g.name) + '</span>' + sv(r.v, 2) + '</li>'; };
     return '<div class="fit"><div><div class="ft">Best next to him</div><ol>' + F.slice(0, n).map(li).join("") + '</ol></div><div><div class="ft">Worst next to him</div><ol>' + F.slice(-n).reverse().map(li).join("") + '</ol></div></div>';
@@ -1894,8 +1860,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
       '<div class="play"><div class="cardcol"><div class="stepper"><button type="button" id="prev" aria-label="Previous season"' + (cur ? "" : " disabled") + '>‹</button><select id="ssel" aria-label="Season">' + opts + '</select><button type="button" id="next" aria-label="Next season"' + (cur < S.length - 1 ? "" : " disabled") + '>›</button></div>' + cardHTML(p) + '</div><div>' +
         '<section class="c"><h2 class="h">League, ' + esc(rs(p)) + '</h2>' + liveNote + '<div class="pctl">' + pr("net", "Total") + pr("off", "Offense") + pr("def", "Defense") + '</div><div id="hist">' + (rated(p) ? histHTML(p, wR) : '') + '</div><p class="cap">Total impact of every player that season, half-point bins. Click a bar to list its players. ' + esc(RATING_NOTE) + '</p>' +
           '<details class="more"><summary>How the rating is made</summary><div><p>' + esc(RATING_TEXT) + '</p></div></details></section>' +
-        '<section class="c duo"><div><h2 class="h">Six factors</h2>' + factorsHTML(p) + '<p class="cap">' + FACTOR_NOTE + '</p></div>' +
-          '<div><h2 class="h">Lineup fit</h2>' + fitHTML(p, 5) + '<p class="cap">' + FIT_NOTE + '</p></div></section>' +
+        '<section class="c"><h2 class="h">Lineup fit</h2>' + fitHTML(p, 5) + '<p class="cap">' + FIT_NOTE + '</p></section>' +
         '<section class="c"><h2 class="h">Top ' + esc(main.name) + 's <b>' + p.season + '</b></h2><p class="rank">' + (A.ranked ? '<b>' + ord1(A.k) + ' of ' + A.n + '</b> with ' + f + '+ minutes.' : 'Under ' + f + ' minutes that season, so not ranked.') + '</p>' + peersHTML(p) + '</section>' +
       '</div></div>' +
       '<section class="career"><h2 class="h">Career</h2><div class="car">' + careerHTML(S, W, cur) + '</div><p class="cap">Total impact by season; the band is his main style each season. Click a point to open that season.</p></section>';
@@ -2900,7 +2865,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
       '<div class="mpipe">' + step(1, "Data", (SM.possessions / 1e6).toFixed(2) + "M", "possessions rebuilt from play-by-play") + step(2, "Styles and tendencies", G + " styles", "from " + M.style_columns + " style stats") +
         step(3, "The fit model", "12 terms", "six tendency pairings, offense and defense") + step(4, "Results", "p " + fmtP(offOne.p_holm), "offense block, Holm") +
         step(5, "Robustness", "p " + fmtP(REVIEW.own_offense_holm), "offense with players’ own stats") + step(6, "Calibration and power", REVIEW.fa_low + "–" + REVIEW.fa_high + "%", "false alarms at a 5% bar") +
-        step(7, "Ratings and six factors", F.rating_half_life_days + " days", "half-life of a game’s weight") + step(8, "Scope", core.pairs.rows.length + " pairs", "projected, none fitted alone") + '</div>' +
+        step(7, "Ratings", F.rating_half_life_days + " days", "half-life of a game’s weight") + step(8, "Scope", core.pairs.rows.length + " pairs", "projected, none fitted alone") + '</div>' +
       '<div class="meth">' +
       sec(1, "Data", '<p><b>' + N((SM.possessions / 1e6).toFixed(2)) + ' million possessions.</b> Every regular-season possession from ' + M.seasons[0] + ' to ' + M.seasons[M.seasons.length - 1] + ': ' + N(SM.games.toLocaleString()) + ' games, ' + N(SM.team_seasons) + ' team-seasons, ' + N(SM.rows.toLocaleString()) + ' lineup-game rows. Each possession is rebuilt from the play-by-play with both fives on the floor, taken from substitution stints and checked against the box scores; where a plus-minus disagreed with the box score, points were re-assigned from the play-by-play and possessions were never changed. Technical free throws (' + N(SM.technical_points_credited.toLocaleString()) + ' of ' + N(SM.technical_points.toLocaleString()) + ' points) are credited to the five on the floor. The sample holds ' + N(SM.player_seasons.toLocaleString()) + ' player-seasons, and every number on the site uses all of them; a style’s purest-seasons list is drawn from the ' + N(SM.player_seasons_purest_eligible.toLocaleString()) + ' with ' + N(M.purest_minutes.toLocaleString()) + '+ minutes.</p>') +
       sec(2, "Styles and tendencies", '<p>Every player-season is described by ' + N(M.style_columns) + ' style statistics (where he shoots, how often he has the ball, passing, rebounding, defense), standardized within season. Minutes-weighted k-means on those columns gives ' + N(G) + ' styles. Membership is by distance: each player-season holds a share of every style, so a player who plays two ways is recorded as both. Styles sort players by how they play, not how well. Three tendencies were fixed in October 2026, before any test. <b>Off-ball shooting</b> (the spacing term): three-point volume, corner threes, catch-and-shoot, spot-ups, open threes. <b>On-ball creation</b>: drives, usage, time of possession and dribbles, passes and potential assists, pick-and-roll handling, pull-ups, unassisted makes. <b>Paint presence</b>: rim attempts, paint touches, rebounding chances, box-outs, putbacks, rim defense. Each style has a level of each tendency; a player-season’s levels are the mix of his styles, in standard-deviation units.</p>') +
@@ -2911,9 +2876,8 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
       sec(6, "Calibration, power and prediction", '<p><b>False alarms.</b> Each test rule was checked on ' + N(REVIEW.sims_per_check) + ' fresh synthetic seasons per kind of noise (four kinds), built on the real possessions with no style effect and new random seeds: single tests fired ' + N(REVIEW.fa_low + "%") + ' to ' + N(REVIEW.fa_high + "%") + ' of the time at a 5% bar, and any of the four after Holm ' + N(REVIEW.holm_low + "%") + ' to ' + N(REVIEW.holm_high + "%") + '.</p>' +
         '<p><b>Power.</b> With crowding of the fitted size planted (two +1 SD creators cost 0.5 per 100), the offense tests caught it in ' + N(REVIEW.pow_full + "%") + ' of synthetic seasons; at half that size, ' + N(REVIEW.pow_half + "%") + '. The tests are built for tendency-shaped effects: one style pair worth 2 or 4 points per 100 on its own was caught ' + N(REVIEW.pow_pair2 + "%") + ' and ' + N(REVIEW.pow_pair4 + "%") + ' of the time, and a scatter of pair effects (sd 0.5) ' + N(REVIEW.pow_dense + "%") + '.</p>' +
         '<p><b>Prediction.</b> Nested cross-validation over games (five outer folds; penalties chosen inside each): adding the trait terms to the player effects lowered held-out error in ' + N(REVIEW.ho_folds + " of 5") + ' folds, a gain about ' + N(REVIEW.ho_share + "%") + ' the size of what the player effects add. With each five’s style mix also free, ' + N(REVIEW.ho_folds_anchored + " of 5") + ' folds and about ' + N(REVIEW.ho_share_anchored + "%") + '. A single possession is near a coin flip; the effect’s size reads in points per 100.</p>') +
-      sec(7, "Player ratings and the six factors", '<p>A rating is a player’s effect on points per 100 possessions with the other nine players held fixed: ridge on these possessions, fitted on points net of the six trait terms. A season’s rating uses that season and the ' + words[F.rating_window_seasons - 1] + ' before it, older games weighted by 0.5<sup>days/' + F.rating_half_life_days + '</sup>. Half-life was chosen by out-of-sample prediction of the next season’s possessions; 450 to 700 days is a plateau. Each season is centered on the league-average possession; defense is points prevented.</p>' +
-        '<p><b>Box-score prior.</b> The ridge pulls each player toward what his box score predicts instead of toward zero, so a short or noisy run lands near a sensible value rather than near average. The six factors below get the same treatment, each with a prior fitted to its own outcome, so they still add up to the rating. The box score covers the same window with the same decay, per 100 possessions: points, true shot attempts, threes, free throws, assists, turnovers, offensive and defensive rebounds, steals, blocks, fouls, fouls drawn, possessions used, shots defended at the rim and FG% allowed there, and height. Each stat is padded with league average by its own stabilization point, the sample at which half its spread between players is skill, measured from odd versus even games over the 13 seasons. The prior’s weights come from a possession-weighted regression of the plain ratings on those stats, fitted only on seasons outside the five centered on the one being rated, so a season never trains its own prior. The penalty with the prior, ' + N(Number(F.rating_prior_penalty).toLocaleString()) + ' (' + N(Number(F.rating_penalty).toLocaleString()) + ' without it), was picked by predicting each next season’s possessions in date order, with every input ending before the season predicted; 7,500 to 13,000 is flat. Over six such seasons the prior cut prediction error by 0.57% against 0.45% for the plain rating, better in all six.</p>' +
-        '<p><b>The six factors</b> are the same ridge on true shooting, turnovers per 100 and offensive rebounds per 100 chances, for offense and for defense (sign-flipped so + is good), each shrunk toward its own box-score prior (same inputs, same penalty), converted to points by a possession-weighted regression of net rating on the six (R² = ' + N(FA.r2_net_rating.toFixed(3)) + '). The regression leaves a small remainder (within ' + N(FA.leftover_95.toFixed(1)) + ' points for 95% of player-seasons), spread over the six in proportion to their size so they add up to the rating exactly. Their priors pass the same date-ordered test as the rating’s: next-season prediction of true shooting went from ' + N('0.37%') + ' to ' + N('0.50%') + ' (better in 7 of 7 seasons), turnovers ' + N('0.59%') + ' to ' + N('0.73%') + ' (7 of 7), offensive rebounds ' + N('0.82%') + ' to ' + N('0.88%') + ' (5 of 7).</p>') +
+      sec(7, "Player ratings", '<p>A rating is a player’s effect on points per 100 possessions with the other nine players held fixed: ridge on these possessions, fitted on points net of the six trait terms. A season’s rating uses that season and the ' + words[F.rating_window_seasons - 1] + ' before it, older games weighted by 0.5<sup>days/' + F.rating_half_life_days + '</sup>. Half-life was chosen by out-of-sample prediction of the next season’s possessions; 450 to 700 days is a plateau. Each season is centered on the league-average possession; defense is points prevented.</p>' +
+        '<p><b>Box-score prior.</b> The ridge pulls each player toward what his box score predicts instead of toward zero, so a short or noisy run lands near a sensible value rather than near average. The box score covers the same window with the same decay, per 100 possessions: points, true shot attempts, threes, free throws, assists, turnovers, offensive and defensive rebounds, steals, blocks, fouls, fouls drawn, possessions used, shots defended at the rim and FG% allowed there, and height. Each stat is padded with league average by its own stabilization point, the sample at which half its spread between players is skill, measured from odd versus even games over the 13 seasons. The prior’s weights come from a possession-weighted regression of the plain ratings on those stats, fitted only on seasons outside the five centered on the one being rated, so a season never trains its own prior. The penalty with the prior, ' + N(Number(F.rating_prior_penalty).toLocaleString()) + ' (' + N(Number(F.rating_penalty).toLocaleString()) + ' without it), was picked by predicting each next season’s possessions in date order, with every input ending before the season predicted; 7,500 to 13,000 is flat. Over six such seasons the prior cut prediction error by 0.57% against 0.45% for the plain rating, better in all six.</p>') +
       sec(8, "Scope", '<p>The finding is three tendencies tested as a block of six offense terms; the grid applies them to each of ' + N(core.pairs.rows.length) + ' style pairs as two full-time players; none was fitted alone. On points the effect is offensive; defense shows trait effects in shot quality, free throws, offensive rebounds and turnovers. Net moves more with model details. With own stats, both crowding terms hold, the off-ball shooter + big complement does not; null simulations were not rerun there. Player seasons are held fixed, coaches choose who shares the floor: the terms are associations. The exposure control removes either noise from barely-played lineups or fit that earned their minutes. Ratings carry what comes with a role; short runs pull toward what the box score predicts. The data starts in 2013-14, so 2013-14 ratings rest on one season and 2014-15 on two; every season from 2015-16 on uses the full three, and the first two lean harder on the box-score prior. Regular season only.</p><p><b>Players don’t adapt.</b> Each player-season keeps the tendencies he showed that season, with those teammates. The fit doesn’t model a player changing his role to suit a new lineup.</p>') +
       '</div>';
   }
