@@ -1174,6 +1174,33 @@ html[data-card] #home .fan5 .mcard .mb span{overflow:hidden;text-overflow:clip;w
 #home .cover .f5cap{margin:14px 0 0;gap:14px}
 #home .cover .f5cap .f5t,#home .cover .f5cap .f5m{line-height:22px}
 #home .cover .fancap{margin:14px auto 0}
+/* Q1 chart: dot = the estimate, line = its 95% range, pairings sorted biggest gain first; grey = unclear */
+.qchart{--lw:190px;font-size:14.5px}
+.qchart .qrow{display:grid;grid-template-columns:var(--lw) minmax(0,1fr);gap:12px;align-items:center;height:34px}
+.qchart .ql{color:var(--ink);white-space:nowrap}
+.qchart .qt{position:relative;height:100%;display:block}
+.qchart .qgrid{position:absolute;inset:0;pointer-events:none}
+.qchart .qgrid i{position:absolute;top:0;bottom:0;width:0;border-left:1px solid var(--line)}
+.qchart .qgrid i.z{border-left:1.5px solid var(--ink-2)}
+.qchart .qr{position:absolute;top:50%;height:2px;margin-top:-1px;border-radius:1px;background:currentColor}
+.qchart .qd{position:absolute;top:50%;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;border-radius:50%;background:currentColor;border:2px solid currentColor;box-sizing:border-box}
+.qchart .qd.open{background:var(--bg)}
+.qchart .qv{position:absolute;top:50%;transform:translateY(-50%);font:600 13px var(--mono);white-space:nowrap}
+.qchart .qv small{font:italic 500 11px var(--sans);color:var(--muted)}
+.qchart .pos{color:var(--good)} .qchart .neg{color:var(--bad)} .qchart .zero{color:var(--muted)}
+.qchart .qaxis{display:grid;grid-template-columns:var(--lw) minmax(0,1fr);gap:12px;height:18px;margin-top:6px}
+.qchart .qaxis .qt span{position:absolute;top:0;transform:translateX(-50%);font:500 11px var(--mono);color:var(--muted)}
+.qchart .qcue{margin-top:0}
+.qchart .qcue em{position:absolute;top:0;font:italic 500 11.5px var(--sans);color:var(--muted)}
+.qchart .qcue em.l{left:0} .qchart .qcue em.r{right:0}
+@media (max-width:600px){
+  .qchart .qrow{grid-template-columns:minmax(0,1fr);gap:2px;height:auto;padding-top:6px}
+  .qchart .qrow .ql{font-size:13.5px;line-height:1.3}
+  .qchart .qrow .qt{height:24px}
+  .qchart .qaxis{grid-template-columns:minmax(0,1fr);gap:0}
+  .qchart .qaxis .ql{display:none}
+}
+#home .ft td:nth-child(3) > p.cap{margin-top:10px}
 
 </style>
 </head>
@@ -1844,17 +1871,36 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
 
   function yy(s){ return s.slice(0, 4) + "–" + s.slice(5, 7); }
   var HTERMS = ["Two off-ball shooters", "Off-ball shooter + creator", "Off-ball shooter + big", "Two on-ball creators", "Creator + big", "Two bigs"];
-  function termsHTML(){ // the six offense pairings with 95% ranges
-    var mx = 0.8, X = function(v){ return 50 + 50 * v / mx; };
-    var T = core.fit.terms.slice().sort(function(a, b){ return termIndex(a) - termIndex(b); });
-    return '<div class="tterms">' + T.map(function(t){ var lo = t.off - 1.96 * t.off_se, hi = t.off + 1.96 * t.off_se, fd = lo < 0 && hi > 0;
-      return '<div class="tr"><span class="tn">' + HTERMS[termIndex(t)] + '</span><svg viewBox="0 0 100 18" preserveAspectRatio="none" aria-hidden="true" class="' + (fd ? "faded" : "") + '"><rect class="' + cls(t.off, 2) + '" x="' + Math.min(50, X(t.off)).toFixed(2) + '" y="4" width="' + Math.abs(X(t.off) - 50).toFixed(2) + '" height="10" rx="1"/><line class="ci" x1="' + X(lo).toFixed(2) + '" x2="' + X(hi).toFixed(2) + '" y1="9" y2="9" vector-effect="non-scaling-stroke"/><line class="z" x1="50" x2="50" y1="0" y2="18" vector-effect="non-scaling-stroke"/></svg><span class="num ' + cls(t.off, 2) + '">' + sign(t.off, 2) + '</span></div>'; }).join("") +
-      '<div class="tax"><span></span><span class="num">' + MINUS + '0.8</span><span class="num">0</span><span class="num">+0.8</span><span></span></div></div>';
+  var TERMS_STYLE = "dots";   // "dots": estimate + 95% range; "bars": the estimate alone
+  function termsHTML(){ // the six offense pairings, biggest gain first
+    var T = core.fit.terms.map(function(t){ return { n: HTERMS[termIndex(t)], v: t.off, lo: t.off - 1.96 * t.off_se, hi: t.off + 1.96 * t.off_se }; })
+      .sort(function(a, b){ return b.v - a.v; });
+    var dots = TERMS_STYLE === "dots";
+    var lo = Math.min.apply(null, T.map(function(t){ return dots ? t.lo : t.v; })), hi = Math.max.apply(null, T.map(function(t){ return dots ? t.hi : t.v; }));
+    lo = Math.floor((lo - 0.12) * 4) / 4; hi = Math.ceil((hi + 0.12) * 4) / 4;           // room for the value beside each mark
+    var X = function(v){ return (100 * (v - lo) / (hi - lo)).toFixed(2); }, z = X(0);
+    var ticks = []; for (var g = Math.ceil(lo * 4) / 4; g <= hi + 1e-9; g += 0.25) ticks.push(+g.toFixed(2));
+    var grid = ticks.map(function(g){ return '<i class="' + (g === 0 ? "z" : "g") + '" style="left:' + X(g) + '%"></i>'; }).join("");
+    var rows = T.map(function(t){
+      var open = false, c = Math.abs(t.v) < 0.005 ? "zero" : t.v > 0 ? "pos" : "neg", mark, val, side = t.v >= 0 ? "r" : "l";   // every pairing is read as clear (rule of 11/10)
+      if (dots){
+        mark = '<span class="qr ' + c + (open ? ' open' : '') + '" style="left:' + X(t.lo) + '%;width:' + (X(t.hi) - X(t.lo)).toFixed(2) + '%"></span><span class="qd ' + c + (open ? ' open' : '') + '" style="left:' + X(t.v) + '%"></span>';
+        val = '<span class="qv ' + c + (open ? ' open' : '') + ' ' + side + '" style="' + (side === "r" ? 'left:calc(' + X(t.hi) + '% + 6px)' : 'right:calc(' + (100 - X(t.lo)).toFixed(2) + '% + 6px)') + '">' + sign(t.v, 2) + '</span>';
+      } else {
+        mark = c === "zero" ? '' : '<span class="qb ' + c + '" style="left:' + X(Math.min(0, t.v)) + '%;width:' + Math.abs(X(t.v) - z).toFixed(2) + '%"></span>';
+        val = '<span class="qv ' + c + ' ' + side + '" style="' + (side === "r" ? 'left:calc(' + X(Math.max(0, t.v)) + '% + 6px)' : 'right:calc(' + (100 - X(t.v)).toFixed(2) + '% + 6px)') + '">' + sign(t.v, 2) + '</span>';
+      }
+      return '<div class="qrow"><span class="ql">' + t.n + '</span><span class="qt"><span class="qgrid" aria-hidden="true">' + grid + '</span>' + mark + val + '</span></div>';
+    }).join("");
+    var axis = ticks.filter(function(g){ return Math.abs(g * 2 - Math.round(g * 2)) < 1e-9 && X(g) > 4 && X(g) < 96; }).map(function(g){ return '<span style="left:' + X(g) + '%">' + (g === 0 ? "0" : sign(g, 1)) + '</span>'; }).join("");
+    return '<div class="qchart ' + TERMS_STYLE + '"><div class="qbody">' + rows + '</div>' +
+      '<div class="qaxis"><span class="ql"></span><span class="qt">' + axis + '</span></div>' +
+      '<div class="qaxis qcue"><span class="ql"></span><span class="qt"><em class="l">← worse performance</em><em class="r">better performance →</em></span></div></div>';
   }
   var TERMS_NOTE = "How many points per 100 possessions a pairing adds or costs on offense, beyond the two players’ own ratings.";
   // my own words from the capstone update, trimmed for the site
   var COPY = {
-    q1: "Do player archetypes make each other better?",
+    q1: "Do player archetypes affect each other’s performance?",
     q2: "Do archetypes have diminishing returns?",
     a1: "After accounting for how good each player is and the quality of the opponent, the results make basketball sense: shooters help next to other shooters and next to bigs, but somebody’s got to rebound and somebody’s got to run the offense. On defense the signal is too weak for a conclusion, probably because over 60% of the best defenses in our data are helmed by one elite defender. His teammates fall in place.",
     a2: "A player who does the same job as his teammates doesn’t just add his skill, he costs the niches he doesn’t fill. Two ball-dominant creators contribute about half a point (per 100) less than their summed talent predicts, and three of them 1.6 points less. Off-ball shooters compound the other way: each one makes every other shooter better, so two add about 0.2 and three about 0.7.",
@@ -1897,7 +1943,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
           '<p class="fancap"><button type="button" class="deal" id="deal">Deal another</button><button type="button" class="deal" id="check5">Check this five →</button></p></div></section>' +
       '<div class="kv"><div><div class="v">' + S.games.toLocaleString() + '</div><div class="k">games</div></div><div><div class="v">' + Math.round(S.possessions).toLocaleString() + '</div><div class="k">possessions</div></div><div><div class="v">' + S.player_seasons.toLocaleString() + '</div><div class="k">player-seasons</div></div><div><div class="v">' + G + '</div><div class="k">styles</div></div></div>' +
       '<table class="ft"><thead><tr><th></th><th>Question</th><th>Answer</th></tr></thead><tbody>' +
-        '<tr><td>Q1</td><td><div class="q">' + COPY.q1 + '</div></td><td><div class="a pos">Yes, on offense.</div><p>' + COPY.a1 + '</p><div style="max-width:560px;margin-top:14px">' + termsHTML() + '</div><p class="cap">' + TERMS_NOTE + '</p></td></tr>' +
+        '<tr><td>Q1</td><td><div class="q">' + COPY.q1 + '</div></td><td><div class="a pos">Yes, on offense.</div><p>' + COPY.a1 + '</p><div style="margin-top:16px">' + termsHTML() + '</div><p class="cap">' + TERMS_NOTE + '</p></td></tr>' +
         '<tr><td>Q2</td><td><div class="q">' + COPY.q2 + '</div></td><td><div class="a pos">Yes, and they compound.</div><p>' + COPY.a2 + '</p></td></tr>' +
       '</tbody></table>' +
       '<section class="glance"><h2 class="h">At a glance</h2><div class="twoc"><p><b>Data.</b> ' + COPY.data + '</p><p><b>Method.</b> ' + COPY.method + '</p></div></section>' +
