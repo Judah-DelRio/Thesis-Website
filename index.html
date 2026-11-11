@@ -2692,7 +2692,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     body.innerHTML = '<div class="lu-split"><div class="lu-left">' + rosterHTML() + '</div><div class="lu-right">' +
         acc("load", "Start from a real five", esc(ts), loaderHTML()) +
         acc("fit", "Lineup fit", fitT, '<div class="lu-fitwrap">' + verdictHTML(res) + (res ? pairsHTML(res) : '') + '</div>') +
-        acc("impact", "Lineup impact", LU.length === 5 ? '<span class="num ' + cls(+totImp) + '">' + sign(+totImp) + '</span> <small>total impact</small>' : LU.length ? '<span class="num">' + sign(+own.toFixed(1)) + '</span> <small>sum of ratings</small>' : '', impactHTML()) +
+        acc("impact", "Lineup impact", LU.length === 5 ? '<span class="num ' + cls(+totImp) + '">' + sign(+totImp) + '</span> <small>lineup score</small>' : LU.length ? '<span class="num">' + sign(+own.toFixed(1)) + '</span> <small>sum of ratings</small>' : '', impactHTML()) +
         acc("trade", LU.length === 5 ? "Player swaps" : "Who to add", trT, recommendHTML()) +
       '</div></div>';
     body.querySelectorAll("details.lacc").forEach(function(d){ d.addEventListener("toggle", function(){ LU_ACC[d.dataset.acc] = d.open; }); });
@@ -2747,7 +2747,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
         '<span class="avg" style="left:' + f(X(FM)) + '%">avg</span></div>' +
       '<figcaption class="muted small">The ' + LROWS.length.toLocaleString() + ' real fives with ' + core.fit.lineups.min_possessions + '+ possessions together, ' + core.meta.seasons[0] + ' to ' + core.meta.seasons[core.meta.seasons.length - 1] + '.</figcaption></figure>';
   }
-  function tilesHTML(){        // ratings + fit vs an average real five = total impact; shown to one decimal, built from the rounded parts so it adds up as printed
+  function tilesHTML(){        // impact scores + synergy vs an average real five = lineup score; shown to one decimal, built from the rounded parts so it adds up as printed
     if (LU.length !== 5) return '';
     var res = lineupFit(LU), FM = core.fit.fit_mean, FMo = core.fit.fit_mean_off, r1 = function(v){ return +v.toFixed(1); };
     var own = { net: 0, off: 0 }; LU.forEach(function(r){ var R = ratingShown(players[r].rating); own.net += R.net; own.off += R.off; });
@@ -2755,8 +2755,8 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var fit = { net: r1(res.tot - FM), off: r1(res.off - FMo) }; fit.def = r1(fit.net - fit.off);
     var tot = { net: r1(own.net + fit.net), off: r1(own.off + fit.off) }; tot.def = r1(tot.net - tot.off);
     var tile = function(k, o, cl, id){ return '<div class="lt-tile' + cl + '"><span class="k">' + k + '</span><span class="v num ' + cls(o.net) + '"' + (id || '') + '>' + sign(o.net) + '</span><span class="od">Off <span class="num">' + sign(o.off) + '</span> · Def <span class="num">' + sign(o.def) + '</span></span></div>'; };
-    return '<div class="lu-tiles" role="group" aria-label="Total impact, points per 100 possessions">' + tile("Impact scores", own, "") + '<span class="op" aria-hidden="true">+</span>' +
-      tile("Synergy vs average", fit, "") + '<span class="op" aria-hidden="true">=</span>' + tile("Total impact", tot, " tot", ' id="lu-exp" data-exp="' + tot.net.toFixed(1) + '"') + '</div>' +
+    return '<div class="lu-tiles" role="group" aria-label="Lineup score, points per 100 possessions">' + tile("Impact scores", own, "") + '<span class="op" aria-hidden="true">+</span>' +
+      tile("Synergy vs average", fit, "") + '<span class="op" aria-hidden="true">=</span>' + tile("Lineup score", tot, " tot", ' id="lu-exp" data-exp="' + tot.net.toFixed(1) + '"') + '</div>' +
       '<p class="cap">Points per 100 possessions. Synergy vs average is this five’s synergy score minus the ' + svp(FM) + ' a typical real five already gets.</p>' + luNote();
   }
   function fivesPct(v){       // share of the real fives (not this one) with a lower fit
@@ -2883,7 +2883,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var sk = function(c){ var g = BYCODE[c.main_group]; return g ? SKC[g.sk] : "sp"; };
     var arrow = function(v){ return '<span class="num ' + cls(v, 2) + '">' + (v > 0.005 ? '▲' : v < -0.005 ? '▼' : '') + ' ' + sign(v, 2) + '</span>'; };
     TC_WHY = {};
-    var totShown = function(ids){ var o = 0; ids.forEach(function(r){ o += ratingShown(players[r].rating).net; }); return +(+o.toFixed(1) + +(lineupFit(ids).tot - core.fit.fit_mean).toFixed(1)).toFixed(1); };   // the Total impact tile, so a card's Impact is exactly the tile's change
+    var totShown = function(ids){ var o = 0; ids.forEach(function(r){ o += ratingShown(players[r].rating).net; }); return +(+o.toFixed(1) + +(lineupFit(ids).tot - core.fit.fit_mean).toFixed(1)).toFixed(1); };   // the Lineup score tile, so a card's Impact is exactly the tile's change
     var card = function(sl, pick){
       var p = players[sl.r], nm = names[sl.k], c = pick.c, g = BYCODE[c.main_group], dx = totShown(LU.map(function(r, k){ return k === sl.k ? c.row_id : r; })) - totShown(LU), id = "w" + sl.k + "_" + c.row_id;
       TC_WHY[id] = { t: c.player + ' in for ' + nm, h: whyTable(sl, c, pick.d).replace('<details class="lu-why"><summary>Why</summary>', '').replace(/<\/details>$/, '') };
@@ -2896,7 +2896,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var gains = rows.filter(function(w){ return w.pick && w.pick.d > 0; }), keeps = rows.filter(function(w){ return !(w.pick && w.pick.d > 0); }).sort(function(a, b){ return a.sl.k - b.sl.k; });
     var anyGain = gains.length > 0;
     return '<section class="tsec"><div class="thead"><div>' +
-        '<p class="lede2">The real player' + (season ? ' from <span class="num">' + season + '</span>' : '') + ' who fits each spot best, best swap first. <b>Synergy</b> is the change in the synergy score; <b>Impact</b> is the change in total impact.</p></div>' +
+        '<p class="lede2">The real player' + (season ? ' from <span class="num">' + season + '</span>' : '') + ' who fits each spot best, best swap first. <b>Synergy</b> is the change in the synergy score; <b>Impact</b> is the change in the lineup score.</p></div>' +
         '<label class="tsea">Targets from<select id="lu-tsea" aria-label="Season the trade targets come from"><option value=""' + (season ? '' : ' selected') + '>Any season</option>' + core.meta.seasons.map(function(x){ return '<option value="' + x + '"' + (x === season ? ' selected' : '') + '>' + x + (x === their ? ' (their season)' : '') + '</option>'; }).join("") + '</select></label></div>' +
       (anyGain ? '<ol class="tboard">' + gains.map(function(w){ return card(w.sl, w.pick); }).join("") + '</ol><div class="twhy" id="tc-why" hidden></div>' :
         '<p class="lede2" style="margin:4px 0 0">No swap improves the fit.</p>') +
@@ -2952,7 +2952,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var r = -1; players.forEach(function(p, i){ if (r < 0 && p.player === "LeBron James" && p.season === "2015-16") r = i; });
     if (r < 0) return '';
     var ids = [r, r, r, r, r], f = lineupFit(ids).tot, e = expectedOf(ids, f);
-    return '<p class="lu-note"><b>What this measures.</b> The synergy score is how well these players’ styles fit together, not how good they are. Total impact adds the five players’ impact scores to that fit. Five copies of LeBron James in his 2015-16 prime would crowd each other’s play styles (' + sv(f, 1) + ' synergy score) but still beat every real five in my data (' + sv(e, 1) + ' total impact). Each player is taken as he played that season. The model doesn’t let anyone change his game to suit new teammates: a LeBron next to four other LeBrons doesn’t become a Movement Shooter or a Drop Big.</p>';
+    return '<p class="lu-note"><b>What this measures.</b> The synergy score is how well these players’ styles fit together, not how good they are. The lineup score adds the five players’ impact scores to that synergy. Five copies of LeBron James in his 2015-16 prime would crowd each other’s play styles (' + sv(f, 1) + ' synergy score) but still beat every real five in my data (' + sv(e, 1) + ' lineup score). Each player is taken as he played that season. The model doesn’t let anyone change his game to suit new teammates: a LeBron next to four other LeBrons doesn’t become a Movement Shooter or a Drop Big.</p>';
   }
   function setupLineup(){
     lineupIndex();
