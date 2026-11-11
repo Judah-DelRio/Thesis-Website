@@ -1353,10 +1353,16 @@ header.top .brand .bt>span em{font-style:normal;color:var(--acc)}
 header.top .brand:hover strong{color:var(--acc)}
 @media (max-width:760px){header.top .brand strong{font-size:23px}header.top .brand .mark{width:34px;height:34px;padding:7px 7px 8px}header.top .brand .bt>span{font-size:10px!important}}
 
-/* Players: total impact defined up front */
-#players p.pintro{font:400 17px/1.55 var(--sans);color:var(--ink);background:var(--acc-soft);border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:12px 16px;margin:4px 0 18px;max-width:80ch}
-#players p.pintro b{font-weight:700}
-@media (max-width:560px){#players p.pintro{font-size:15.5px}}
+/* Players: the impact score defined up front, in the same opening as every other tab */
+#players .pintro{margin:14px 0 6px;padding:0 0 16px;border-bottom:2px solid var(--rule)}
+#players .pintro .eyebrow{margin-bottom:6px}
+#players .pi-eq{font:700 clamp(22px,2.6vw,28px)/1.15 var(--sans);letter-spacing:-.025em;color:var(--ink);margin:0 0 8px;text-wrap:balance}
+#players .pi-eq span{font:400 .9em var(--mono);color:var(--muted);padding:0 .12em}
+#players .pintro .dek{max-width:66ch}
+
+/* the card's corner is the impact score, labelled */
+html[data-card] .pcard .bar .cost{display:flex;flex-direction:column;align-items:center;line-height:1.05;border-radius:10px;padding:4px 10px 5px}
+html[data-card] .pcard .bar .cost small{font:700 8.5px/1.2 var(--sans);letter-spacing:.12em;text-transform:uppercase;opacity:.85;margin-bottom:2px;white-space:nowrap}
 
 </style>
 </head>
@@ -1389,7 +1395,11 @@ header.top .brand:hover strong{color:var(--acc)}
 
 <section class="tab" id="players" hidden>
   <div class="pcrumb"><span>Players</span><div class="search" id="player-search"></div></div>
-  <p class="pintro"><b>Total impact</b> is a player’s own rating: the points per 100 possessions he adds over an average player in his place, with his teammates and opponents accounted for. Zero is average; +2 means his team scores about two more points per 100 possessions than it would with an average player, or allows two fewer.</p>
+  <div class="pintro">
+    <div class="eyebrow">The number in each card’s corner</div>
+    <p class="pi-eq">Impact score <span>=</span> offense <span>+</span> defense</p>
+    <p class="dek">Points per 100 possessions a player adds over an average player in his place. Offense is what his team scores beyond average with him on the floor; defense is what it keeps opponents from scoring. Zero is average. It ignores how styles fit together: that is the synergy score, on <a href="#pairs">Style Fit</a> and <a href="#lineup">Lineup Check</a>.</p>
+  </div>
   <div id="pview"></div>
 </section>
 
@@ -1433,7 +1443,7 @@ header.top .brand:hover strong{color:var(--acc)}
   var mpg = function(p){ return p.GP > 0 ? (p.MIN / p.GP).toFixed(1) : "0.0"; };
   var order = function(p){ return p.shares.map(function(v, i){ return i; }).sort(function(a, b){ return p.shares[b] - p.shares[a]; }); };
   var styleLine = function(p){ var o = order(p); return gn(codes[o[0]]) + ", some " + gn(codes[o[1]]); };
-  var OUTS = ["net", "off", "def"], OUT_NAME = { net: "Total impact", off: "Offense", def: "Defense" };
+  var OUTS = ["net", "off", "def"], OUT_NAME = { net: "Impact score", off: "Offense", def: "Defense" };
   var pv = function(r, o){ return r[PCOL[o]]; };
   var pse = function(r, o){ return r[PCOL[o + "_se"]]; };
   var fmtP = function(p){ return p < 0.0001 ? "< 0.0001" : p < 0.01 ? String(+p.toPrecision(2)) : p.toFixed(p < 0.1 ? 3 : 2); };
@@ -1828,7 +1838,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     return GR.map(function(g){ var x = pairX(p.traits, g.traits), v = 0; for (var q = 0; q < 6; q++) v += x[q] * bn[q]; return { code: g.code, v: v }; }).sort(function(a, b){ return b.v - a.v; });
   }
 
-  // ---- the league that season: every rated player's total impact in half-point bins; click a bin to list its players ----
+  // ---- the league that season: every rated player's impact score in half-point bins; click a bin to list its players ----
   var HMIN = 0, HBIN = null;
   function histHTML(p, W){
     var all = D.league[p.season] || [], rows = all.filter(function(q){ return q.MIN >= HMIN; }), bw = 0.5;
@@ -1839,7 +1849,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var c = []; for (var i = 0; i < nb; i++) c.push(0); rows.forEach(function(q){ c[bin(q.rating.net)]++; });
     var me = bin(p.rating.net), H = 190, top = 34, bot = 22, mxc = Math.max.apply(null, c) || 1;
     var X = function(v){ return (v - lo) / (hi - lo) * W; }, Y = function(n){ return H - bot - (H - bot - top) * n / mxc; };
-    var s = '<svg class="hist" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Total impact of ' + rows.length + ' players in ' + p.season + '">';
+    var s = '<svg class="hist" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Impact score of ' + rows.length + ' players in ' + p.season + '">';
     c.forEach(function(n, i){
       if (!n) return;
       var x = X(lo + i * bw) + 0.5, w = X(lo + bw) - X(lo) - 1, rng = sign(lo + i * bw) + ' to ' + sign(lo + (i + 1) * bw);
@@ -1877,7 +1887,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var x = host.querySelector(".hx"); if (x) x.addEventListener("click", function(){ HBIN = null; redraw(); });
   }
 
-  // ---- career: total impact by season over a band of his main style (one color per skill, a gap at every change, every run labelled) ----
+  // ---- career: impact score by season over a band of his main style (one color per skill, a gap at every change, every run labelled) ----
   function styleRuns(list){
     var runs = [];
     list.forEach(function(q, k){ var g = BYCODE[q.main_group].i, last = runs[runs.length - 1];
@@ -1899,7 +1909,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var vals = list.map(function(q){ return q.rating.net; }), lo = Math.min(-1, Math.floor(Math.min.apply(null, vals))), hi = Math.max(1, Math.ceil(Math.max.apply(null, vals)));
     var X = function(k){ return L + step * (k + 0.5); }, Y = function(v){ return top + (H - top - bot) * (hi - v) / (hi - lo); };
     var by = H - bot + 24;
-    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Total impact by season, with his main style underneath">';
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Impact score by season, with his main style underneath">';
     for (var t = Math.ceil(lo / 2) * 2; t <= hi; t += 2) s += '<g class="ax"><line x1="' + L + '" x2="' + (W - Rr) + '" y1="' + Y(t) + '" y2="' + Y(t) + '"/><text x="' + (L - 6) + '" y="' + (Y(t) + 4) + '" text-anchor="end">' + sign(t, 0) + '</text></g>';
     s += '<line class="zl" x1="' + L + '" x2="' + (W - Rr) + '" y1="' + Y(0) + '" y2="' + Y(0) + '"/>';
     s += '<path class="ln" d="' + list.map(function(q, k){ return (k ? "L" : "M") + X(k).toFixed(1) + " " + Y(q.rating.net).toFixed(1); }).join("") + '"/>';
@@ -1933,7 +1943,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var R = ratingShown(p.rating), main = BYCODE[p.main_group], A = arch(p), f = archFloor(p);
     var flav = A.ranked ? ord1(A.k) + ' of ' + A.n + ' ' + esc(main.name) + 's in ' + p.season + ' (' + f + '+ minutes).' : 'Only ' + Math.round(p.MIN) + ' minutes in ' + p.season + ', short of the ' + f + ' needed to rank.';
     return '<article class="pcard k-' + SKC[main.sk] + '" aria-label="' + esc(p.player + ", " + p.season) + '">' +
-      '<div class="bar"><span class="cn">' + esc(p.player) + '</span><span class="cost num ' + cls(R.net) + '" title="Total impact' + (rated(p) ? '' : ', his ' + esc(rs(p)) + ' rating') + '">' + sign(R.net) + '</span></div>' +
+      '<div class="bar"><span class="cn">' + esc(p.player) + '</span><span class="cost num ' + cls(R.net) + '" title="Impact score' + (rated(p) ? '' : ', his ' + esc(rs(p)) + ' rating') + '"><small>Impact score</small>' + sign(R.net) + '</span></div>' +
       '<div class="art"><div class="star" id="player-star"></div></div>' +
       '<div class="type"><span class="tm">' + esc(main.name) + '</span><span class="set">' + p.season + '</span></div>' +
       '<div class="rules"><p>' + esc(main.note) + '</p><p class="flav">' + flav + '</p></div>' +
@@ -1995,12 +2005,12 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     host.innerHTML =
       '<div class="ph"><div><h1>' + esc(p.player) + '</h1><div class="facts"><span><b>' + esc(main.name) + '</b> in ' + p.season + '</span><span>' + esc(teamName(p.team)) + '</span><span class="num">' + mpg(p) + ' min a game</span></div>' + liveLine(p) + '</div></div>' +
       '<div class="play"><div class="cardcol"><div class="stepper"><button type="button" id="prev" aria-label="Previous season"' + (cur ? "" : " disabled") + '>‹</button><select id="ssel" aria-label="Season">' + opts + '</select><button type="button" id="next" aria-label="Next season"' + (cur < S.length - 1 ? "" : " disabled") + '>›</button></div>' + cardHTML(p) + '</div><div>' +
-        '<section class="c"><h2 class="h">League, ' + esc(rs(p)) + '</h2>' + liveNote + '<div class="pctl">' + pr("net", "Total") + pr("off", "Offense") + pr("def", "Defense") + '</div><div id="hist">' + (rated(p) ? histHTML(p, wR) : '') + '</div><p class="cap">Total impact of every player that season, half-point bins. Click a bar to list its players. ' + esc(RATING_NOTE) + '</p>' +
+        '<section class="c"><h2 class="h">League, ' + esc(rs(p)) + '</h2>' + liveNote + '<div class="pctl">' + pr("net", "Impact score") + pr("off", "Offense") + pr("def", "Defense") + '</div><div id="hist">' + (rated(p) ? histHTML(p, wR) : '') + '</div><p class="cap">Impact score of every player that season, half-point bins. Click a bar to list its players. ' + esc(RATING_NOTE) + '</p>' +
           '<details class="more"><summary>How the rating is made</summary><div><p>' + esc(RATING_TEXT) + '</p></div></details></section>' +
         '<section class="c"><h2 class="h">Lineup fit</h2>' + fitHTML(p, 5) + '<p class="cap">' + FIT_NOTE + '</p></section>' +
         '<section class="c"><h2 class="h">Top ' + esc(main.name) + 's <b>' + p.season + '</b></h2><p class="rank">' + (A.ranked ? '<b>' + ord1(A.k) + ' of ' + A.n + '</b> with ' + f + '+ minutes.' : 'Under ' + f + ' minutes that season, so not ranked.') + '</p>' + peersHTML(p) + '</section>' +
       '</div></div>' +
-      '<section class="career"><h2 class="h">Career</h2><div class="car">' + careerHTML(S, W, cur) + '</div><p class="cap">Total impact by season; the band is his main style each season. Click a point to open that season.</p></section>';
+      '<section class="career"><h2 class="h">Career</h2><div class="car">' + careerHTML(S, W, cur) + '</div><p class="cap">Impact score by season; the band is his main style each season. Click a point to open that season.</p></section>';
     var go = function(k){ renderPlayer(S[k].row_id); };
     host.querySelector("#prev").addEventListener("click", function(){ go(cur - 1); });
     host.querySelector("#next").addEventListener("click", function(){ go(cur + 1); });
@@ -2068,7 +2078,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
   }
   function fiveCardHTML(r){
     var q = players[r], g = BYCODE[q.main_group];
-    return '<button type="button" class="mcard k-' + SKC[g.sk] + '" data-row="' + r + '" aria-label="Open ' + esc(q.player) + ', ' + q.season + '"><div class="mb"><span>' + esc(shortName(q.player)) + '</span></div><div class="ma"><b class="' + cls(q.rating.net) + '">' + sign(q.rating.net) + '</b><small>total impact</small></div><div class="mt">' + esc(g.name) + '</div></button>';
+    return '<button type="button" class="mcard k-' + SKC[g.sk] + '" data-row="' + r + '" aria-label="Open ' + esc(q.player) + ', ' + q.season + '"><div class="mb"><span>' + esc(shortName(q.player)) + '</span></div><div class="ma"><b class="' + cls(q.rating.net) + '">' + sign(q.rating.net) + '</b><small>impact score</small></div><div class="mt">' + esc(g.name) + '</div></button>';
   }
   // long surnames shrink until they fit the nameplate; the card itself never changes size
   function fitFiveText(host){
@@ -2165,7 +2175,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     if (!rated.length){ $("#sn-top").hidden = true; return; }
     var top = rated.slice().sort(function(a, b){ return b.rating.net - a.rating.net; }).slice(0, 100);
     $("#sn-top-body").innerHTML = '<p class="muted small" style="margin:0 4px 6px">Same rating as the player pages: this season with the two before it, older games counting less, so early on it still leans on last season, and rookies start low.</p>' +
-      '<div class="tablewrap"><table class="sn"><thead><tr><th class="num">#</th><th>Player</th><th class="hide-sm">Main style</th><th class="num">Total</th><th class="num">Off</th><th class="num">Def</th><th class="num hide-sm">Min</th></tr></thead><tbody>' +
+      '<div class="tablewrap"><table class="sn"><thead><tr><th class="num">#</th><th>Player</th><th class="hide-sm">Main style</th><th class="num">Impact score</th><th class="num">Off</th><th class="num">Def</th><th class="num hide-sm">Min</th></tr></thead><tbody>' +
       top.map(function(p, i){ return '<tr><td class="num">' + (i + 1) + '</td><td><button type="button" class="linkbtn" data-top="' + p.row_id + '">' + esc(p.player) + '</button> <span class="muted small">' + esc(p.team) + '</span></td><td class="hide-sm">' + esc(gn(p.main)) + '</td><td class="num">' + sv(p.rating.net) + '</td><td class="num">' + sv(p.rating.off) + '</td><td class="num">' + sv(p.rating.def) + '</td><td class="num hide-sm">' + Math.round(p.MIN).toLocaleString() + '</td></tr>'; }).join("") +
       '</tbody></table></div>';
     $("#sn-top-body").querySelectorAll("button[data-top]").forEach(function(b){ b.addEventListener("click", function(){ renderPlayer(+b.dataset.top); showTab("players"); }); });
@@ -2195,7 +2205,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     }).join("");
     var th = function(key, label, cls){ var on = SN.sort === key, t = key === "name" || key === "main" || key === "next", up = on && ((t ? 1 : -1) * (SN.flip ? -1 : 1) > 0);
       return '<th class="' + (cls || '') + '" aria-sort="' + (on ? (up ? 'ascending' : 'descending') : 'none') + '"><button type="button" class="sortbtn' + (on ? ' on' : '') + '" data-sort="' + key + '">' + label + '<i aria-hidden="true">' + (on ? (up ? '▲' : '▼') : '▼') + '</i></button></th>'; };
-    $("#sn-table").innerHTML = rows.length ? '<div class="tablewrap"><table class="sn"><thead><tr>' + th("name", "Player") + th("main", "Main style") + th("next", "Next style", "hide-sm") + th("net", "Total", "num") + th("gp", "GP", "num") + th("min", "Min", "num hide-sm") + '</tr></thead><tbody>' + tr + '</tbody></table></div>' +
+    $("#sn-table").innerHTML = rows.length ? '<div class="tablewrap"><table class="sn"><thead><tr>' + th("name", "Player") + th("main", "Main style") + th("next", "Next style", "hide-sm") + th("net", "Impact score", "num") + th("gp", "GP", "num") + th("min", "Min", "num hide-sm") + '</tr></thead><tbody>' + tr + '</tbody></table></div>' +
       '<p class="muted small" style="margin:6px 0 0"><span class="num">' + rows.length + '</span> players' + (rows.length > shown.length ? ', first ' + shown.length + ' shown' : '') + '. The percentage is how much of the style mix that style takes.</p>'
       : '<p class="muted">No player matches.</p>';
     $("#sn-table").querySelectorAll("button[data-past]").forEach(function(b){ b.addEventListener("click", function(){ renderPlayer(+b.dataset.past); showTab("players"); }); });
@@ -2609,7 +2619,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
   }
   function ratingLine(p){
     var r = ratingShown(p.rating);
-    return '<span class="lu-rt" aria-label="Rating: total impact ' + sign(r.net) + ', offense ' + sign(r.off) + ', defense ' + sign(r.def) + '">' +
+    return '<span class="lu-rt" aria-label="Impact score ' + sign(r.net) + ', offense ' + sign(r.off) + ', defense ' + sign(r.def) + '">' +
       OUTS.map(function(o){ return '<span class="rt-' + o + '" title="' + OUT_NAME[o] + ': ' + rankShort(p, o) + ' of NBA players in ' + rs(p) + '">' + OUT_NAME[o] + ' ' + sv(r[o]) + '<i>' + rankWord(p.rating_rank[o]) + '</i></span>'; }).join("") + (p.live && p.rating_from !== p.season ? '<span class="muted small">' + (p.rating_from ? p.rating_from + ' rating' : 'no rating yet') + '</span>' : '') + '</span>';
   }
   // a player's best season: his highest net rating among seasons with BEST_MIN+ minutes (any season if he has none)
@@ -2639,7 +2649,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
       if (k < LU.length && LU_EDIT !== k){
         var p = players[LU[k]];
         var br = bestSeasonRow(LU[k]), best = br === LU[k] ? '<span class="hc done" title="This is already his best season"><i aria-hidden="true">✓</i> Best season</span>' :
-          '<button type="button" class="hc lu-best" data-best="' + k + '" title="' + esc(players[br].season + ", " + sign(ratingShown(players[br].rating).net) + " total impact") + '" aria-label="Switch ' + esc(p.player) + ' to his best season, ' + esc(players[br].season) + '">Best season</button>';
+          '<button type="button" class="hc lu-best" data-best="' + k + '" title="' + esc(players[br].season + ", " + sign(ratingShown(players[br].rating).net) + " impact score") + '" aria-label="Switch ' + esc(p.player) + ' to his best season, ' + esc(players[br].season) + '">Best season</button>';
         li.push('<li class="hslot">' + n + '<button type="button" class="hx" data-drop="' + k + '" aria-label="Remove ' + esc(p.player) + '" title="Remove">×</button>' +
           '<a href="#players" data-row="' + LU[k] + '" class="hlink" aria-label="Open ' + esc(p.player + " " + p.season) + '">' + handCard(k) + '</a>' +
           '<div class="hbar"><button type="button" class="hc" data-swap="' + k + '">Swap</button>' + best + '</div></li>');
@@ -2663,7 +2673,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var tot = { net: 0, off: 0, def: 0 };
     var rows = LU.map(function(r){ var p = players[r], R = ratingShown(p.rating); tot.net += R.net; tot.off += R.off; tot.def += R.def;
       return '<tr><td><b>' + esc(p.player) + '</b>' + leanChips(p.traits) + '</td><td class="num t ' + cls(R.net) + '">' + sign(R.net) + '</td><td class="num q">' + sign(R.off) + '</td><td class="num q">' + sign(R.def) + '</td></tr>'; }).join("");
-    return '<div class="tablewrap"><table class="at hplay"><thead><tr><th>Player</th><th class="num">Total</th><th class="num">Off</th><th class="num">Def</th></tr></thead><tbody>' + rows +
+    return '<div class="tablewrap"><table class="at hplay"><thead><tr><th>Player</th><th class="num">Impact score</th><th class="num">Off</th><th class="num">Def</th></tr></thead><tbody>' + rows +
       '<tr class="sum"><td>Sum of their ratings</td><td class="num t ' + cls(tot.net) + '">' + sign(+tot.net.toFixed(1)) + '</td><td class="num q">' + sign(+tot.off.toFixed(1)) + '</td><td class="num q">' + sign(+tot.def.toFixed(1)) + '</td></tr></tbody></table></div>' +
       '<p class="cap">Points per 100 possessions. Chips show how he plays, not how good he is.</p>' + tilesHTML();
   }
@@ -2745,7 +2755,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var fit = { net: r1(res.tot - FM), off: r1(res.off - FMo) }; fit.def = r1(fit.net - fit.off);
     var tot = { net: r1(own.net + fit.net), off: r1(own.off + fit.off) }; tot.def = r1(tot.net - tot.off);
     var tile = function(k, o, cl, id){ return '<div class="lt-tile' + cl + '"><span class="k">' + k + '</span><span class="v num ' + cls(o.net) + '"' + (id || '') + '>' + sign(o.net) + '</span><span class="od">Off <span class="num">' + sign(o.off) + '</span> · Def <span class="num">' + sign(o.def) + '</span></span></div>'; };
-    return '<div class="lu-tiles" role="group" aria-label="Total impact, points per 100 possessions">' + tile("Ratings", own, "") + '<span class="op" aria-hidden="true">+</span>' +
+    return '<div class="lu-tiles" role="group" aria-label="Total impact, points per 100 possessions">' + tile("Impact scores", own, "") + '<span class="op" aria-hidden="true">+</span>' +
       tile("Synergy vs average", fit, "") + '<span class="op" aria-hidden="true">=</span>' + tile("Total impact", tot, " tot", ' id="lu-exp" data-exp="' + tot.net.toFixed(1) + '"') + '</div>' +
       '<p class="cap">Points per 100 possessions. Synergy vs average is this five’s synergy score minus the ' + svp(FM) + ' a typical real five already gets.</p>' + luNote();
   }
@@ -2942,12 +2952,12 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var r = -1; players.forEach(function(p, i){ if (r < 0 && p.player === "LeBron James" && p.season === "2015-16") r = i; });
     if (r < 0) return '';
     var ids = [r, r, r, r, r], f = lineupFit(ids).tot, e = expectedOf(ids, f);
-    return '<p class="lu-note"><b>What this measures.</b> The synergy score is how well these players’ styles fit together, not how good they are. Total impact adds each player’s own rating to that fit. Five copies of LeBron James in his 2015-16 prime would crowd each other’s play styles (' + sv(f, 1) + ' synergy score) but still beat every real five in my data (' + sv(e, 1) + ' total impact). Each player is taken as he played that season. The model doesn’t let anyone change his game to suit new teammates: a LeBron next to four other LeBrons doesn’t become a Movement Shooter or a Drop Big.</p>';
+    return '<p class="lu-note"><b>What this measures.</b> The synergy score is how well these players’ styles fit together, not how good they are. Total impact adds the five players’ impact scores to that fit. Five copies of LeBron James in his 2015-16 prime would crowd each other’s play styles (' + sv(f, 1) + ' synergy score) but still beat every real five in my data (' + sv(e, 1) + ' total impact). Each player is taken as he played that season. The model doesn’t let anyone change his game to suit new teammates: a LeBron next to four other LeBrons doesn’t become a Movement Shooter or a Drop Big.</p>';
   }
   function setupLineup(){
     lineupIndex();
     var cc = termOf("on_ball_creation", "on_ball_creation"), ii = termOf("interior", "interior");
-    $("#lineup-panel").innerHTML = '<div class="pghead"><div class="eyebrow">' + LROWS.length.toLocaleString() + ' real fives to measure against · ' + core.meta.seasons[0] + ' to ' + core.meta.seasons[core.meta.seasons.length - 1] + '</div><h1>Lineup Check</h1><p class="dek">Take any five players since 2013. You get their individual impact ratings, style fits, a letter grade, and the swaps that’ll fit your team better.</p>' +
+    $("#lineup-panel").innerHTML = '<div class="pghead"><div class="eyebrow">' + LROWS.length.toLocaleString() + ' real fives to measure against · ' + core.meta.seasons[0] + ' to ' + core.meta.seasons[core.meta.seasons.length - 1] + '</div><h1>Lineup Check</h1><p class="dek">Take any five players since 2013. You get their individual impact scores, style fits, a letter grade, and the swaps that’ll fit your team better.</p>' +
       '</div>' +
       '<div id="lineup-body"></div><p class="lu-sr" id="lu-live" aria-live="polite"></p>';
     var panel = $("#lineup-panel");
