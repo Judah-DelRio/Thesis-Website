@@ -1483,10 +1483,11 @@ header.top .brand:hover strong{color:var(--acc)}
   }
   document.querySelectorAll("nav.tabs button").forEach(function(b){ b.addEventListener("click", function(){ showTab(b.dataset.tab); }); });
   // the address bar carries the tab, the player-season (#players/<row>) or the five (#lineup/<rows>), so a link opens the same view
-  function hashFor(t){ return t === "players" && typeof state.player === "number" ? "players/" + state.player : t === "lineup" && typeof LU !== "undefined" && LU && LU.length ? "lineup/" + LU.join(",") : t; }
+  function hashFor(t){ return t === "archetypes" && typeof state.group === "number" ? "archetypes/" + state.group : t === "players" && typeof state.player === "number" ? "players/" + state.player : t === "lineup" && typeof LU !== "undefined" && LU && LU.length ? "lineup/" + LU.join(",") : t; }
   var TAB_TITLE = { home: "", archetypes: "Styles", pairs: "Style Fit", players: "Players", season: "2026-27", lineup: "Lineup Check", trust: "Methodology" };
   window.addEventListener("hashchange", function(){ if (!core) return; var H = (location.hash || "").slice(1).split("/"), h = H[0], a = H[1] || "";
     if (h === "players" && /^\d+$/.test(a) && players[+a] && +a !== state.player) renderPlayer(+a);
+    if (h === "archetypes" && /^\d+$/.test(a) && +a < G && +a !== state.group){ state.group = +a; store("lab-group", state.group); renderGroups(); }
     if (tabs.indexOf(h) >= 0 && $("#" + h).hidden) showTab(h); });
   window.addEventListener("popstate", function(){ window.dispatchEvent(new HashChangeEvent("hashchange")); });
   function setHash(h){ var t = TAB_TITLE[h.split("/")[0]]; document.title = (t ? t + " · " : "") + "Archetype Lineup Lab";
@@ -2275,7 +2276,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
       return '<section class="setrow"><div class="sethead"><span class="sk s' + k + '">' + SK_NAME[k] + '</span><span>' + SK_LINE[k] + '</span><span class="num">' + mine.length + ' styles</span></div>' +
         '<div class="setgrid">' + mine.map(styleCardMini).join("") + '</div></section>';
     }).join("");
-    $("#group-grid").querySelectorAll(".scard").forEach(function(c){ c.addEventListener("click", function(){ state.group = +c.dataset.g; store("lab-group", state.group); renderGroups(); $("#group-detail").scrollIntoView({behavior:"smooth", block:"start"}); }); });
+    $("#group-grid").querySelectorAll(".scard").forEach(function(c){ c.addEventListener("click", function(){ state.group = +c.dataset.g; store("lab-group", state.group); renderGroups(); setHash(hashFor("archetypes")); $("#group-detail").scrollIntoView({behavior:"smooth", block:"start"}); }); });
     var g = groups[state.group], RG = g.ratings_of_main_group_players, o = state.ratingOut, d = RG[o];
     ratingScale(o);
     var hi = g.highest_mean_z_features.slice(0, 5).sort(function(a, b){ return b.percentile - a.percentile; }), lo = g.lowest_mean_z_features.slice(0, 5).sort(function(a, b){ return a.percentile - b.percentile; });
@@ -2298,7 +2299,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
           '<p class="cap">The players with the most ' + (core.meta.purest_minutes || 1000).toLocaleString() + '+ minute seasons mainly in this style. Stats are per game.</p></section>' +
         '<section class="c"><details class="more"><summary>Purest seasons</summary><div><p class="cap" style="margin:0 0 6px">The ' + (core.meta.purest_minutes || 1000).toLocaleString() + '+ minute player-seasons closest to this style alone.</p><div class="tablewrap"><table class="at"><thead><tr><th>Player</th><th class="num">Season</th><th class="num">Share</th></tr></thead><tbody>' + pure + '</tbody></table></div></div></details></section>' +
       '</div></div>';
-    var step = function(dd){ var at = sorted.indexOf(state.group); state.group = sorted[(at + dd + sorted.length) % sorted.length]; store("lab-group", state.group); renderGroups(); };
+    var step = function(dd){ var at = sorted.indexOf(state.group); state.group = sorted[(at + dd + sorted.length) % sorted.length]; store("lab-group", state.group); renderGroups(); setHash(hashFor("archetypes")); };
     $("#gprev").addEventListener("click", function(){ step(-1); });
     $("#gnext").addEventListener("click", function(){ step(1); });
     $("#group-detail").querySelectorAll("button[data-row]").forEach(function(a){ a.addEventListener("click", function(){ renderPlayer(+a.dataset.row); showTab("players"); }); });
@@ -3108,7 +3109,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     if (h === "lineup" && /^\d+(,\d+){0,4}$/.test(harg)){ var hl = harg.split(",").map(Number).filter(function(r, i, a){ return !!players[r] && a.indexOf(r) === i; }); if (hl.length) LU_FROM_LINK = hl; }
     var sp = h === "players" && /^\d+$/.test(harg) && players[+harg] ? +harg : load("lab-player"); if (!(typeof sp === "number" && players[sp])){ sp = 0; var best = ""; players.forEach(function(p, i){ if (p._name === "tyrese haliburton" && p.season > best){ best = p.season; sp = i; } }); }
     renderPlayer(sp);
-    var sg = load("lab-group"); if (typeof sg === "number" && sg >= 0 && sg < G) state.group = sg;
+    var sg = h === "archetypes" && /^\d+$/.test(harg) ? +harg : load("lab-group"); if (typeof sg === "number" && sg >= 0 && sg < G) state.group = sg;
     var so = load("lab-rating-out"); if (OUTS.indexOf(so) >= 0) state.ratingOut = so;
     renderGroups(); renderPairs(); setupLineup(); renderTrust(); setupPager();
     showTab(tabs.indexOf(h) >= 0 || h === "about" || h === "combos" ? h : "home", true);
