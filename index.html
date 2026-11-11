@@ -1354,7 +1354,7 @@ header.top .brand:hover strong{color:var(--acc)}
 @media (max-width:760px){header.top .brand strong{font-size:23px}header.top .brand .mark{width:34px;height:34px;padding:7px 7px 8px}header.top .brand .bt>span{font-size:10px!important}}
 
 /* Players: the impact score defined up front, in the same opening as every other tab */
-#players .pintro{margin:14px 0 6px;padding:0 0 16px;border-bottom:2px solid var(--rule)}
+#players .pintro{margin:14px 0 14px;padding:0 0 16px;border-bottom:2px solid var(--rule)}
 #players .pintro .eyebrow{margin-bottom:6px}
 #players .pi-eq{font:700 clamp(22px,2.6vw,28px)/1.15 var(--sans);letter-spacing:-.025em;color:var(--ink);margin:0 0 8px;text-wrap:balance}
 #players .pi-eq span{font:400 .9em var(--mono);color:var(--muted);padding:0 .12em}
@@ -1364,6 +1364,7 @@ header.top .brand:hover strong{color:var(--acc)}
 html[data-card] #pview .pcard .bar .cost{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;line-height:1;border-radius:8px;padding:10px 18px 10px;min-width:112px;font-size:20px}
 html[data-card] #pview .pcard .bar .cost small{font:600 9px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;opacity:.75;white-space:nowrap}
 html[data-card] #pview .pcard .bar{align-items:center}
+#players .peerhead{display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:8px;padding:0 0 4px;font:600 10.5px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 
 </style>
 </head>
@@ -1395,12 +1396,12 @@ html[data-card] #pview .pcard .bar{align-items:center}
 </section>
 
 <section class="tab" id="players" hidden>
-  <div class="pcrumb"><span>Players</span><div class="search" id="player-search"></div></div>
   <div class="pintro">
     <div class="eyebrow">The number in each card’s corner</div>
     <p class="pi-eq">Impact score <span>=</span> offense <span>+</span> defense</p>
     <p class="dek">Points per 100 possessions a player adds over an average player in his place. Offense is what his team scores beyond average with him on the floor; defense is what it keeps opponents from scoring. Zero is average. It ignores how styles fit together: that is the synergy score, on <a href="#pairs">Style Fit</a> and <a href="#lineup">Lineup Check</a>.</p>
   </div>
+  <div class="pcrumb"><span>Find a player</span><div class="search" id="player-search"></div></div>
   <div id="pview"></div>
 </section>
 
@@ -1936,7 +1937,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
   }
   function peersHTML(p){
     var A = arch(p);
-    return '<ol class="peers">' + A.top.map(function(q, k){ return '<li class="' + (q.row_id === p.row_id ? "me" : "") + '"><span class="r">' + (k + 1) + '</span><button type="button" class="pn" data-row="' + q.row_id + '">' + esc(q.player) + '</button>' + sv(q.rating.net) + '</li>'; }).join("") + '</ol>';
+    return '<div class="peerhead"><span></span><span>Player</span><span>Impact score</span></div><ol class="peers">' + A.top.map(function(q, k){ return '<li class="' + (q.row_id === p.row_id ? "me" : "") + '"><span class="r">' + (k + 1) + '</span><button type="button" class="pn" data-row="' + q.row_id + '">' + esc(q.player) + '</button>' + sv(q.rating.net) + '</li>'; }).join("") + '</ol>';
   }
 
   // ---- the card ----
