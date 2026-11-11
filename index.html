@@ -1353,8 +1353,10 @@ header.top .brand .bt>span em{font-style:normal;color:var(--acc)}
 header.top .brand:hover strong{color:var(--acc)}
 @media (max-width:760px){header.top .brand strong{font-size:23px}header.top .brand .mark{width:34px;height:34px;padding:7px 7px 8px}header.top .brand .bt>span{font-size:10px!important}}
 
-/* Home: the two terms defined under the intro */
-#home .cover p.hdef{font-size:15px;line-height:1.55;color:var(--ink-2);border-left:3px solid var(--acc);padding:2px 0 2px 12px;margin-top:12px;max-width:60ch}
+/* Players: total impact defined up front */
+#players p.pintro{font:400 17px/1.55 var(--sans);color:var(--ink);background:var(--acc-soft);border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:12px 16px;margin:4px 0 18px;max-width:80ch}
+#players p.pintro b{font-weight:700}
+@media (max-width:560px){#players p.pintro{font-size:15.5px}}
 
 </style>
 </head>
@@ -1379,7 +1381,7 @@ header.top .brand:hover strong{color:var(--acc)}
 
 <section class="tab" id="archetypes" hidden>
   <div class="pghead"><div class="eyebrow" id="arch-eyebrow"></div><h1 id="arch-title">The 16 Styles</h1>
-    <p class="dek">A style is how a player plays, not how good he is; most players are a blend of two or three styles. The numbers on each card are how much more or less the style leans on each tendency than the average NBA player, in standard deviations: Movement Shooter’s +1.6, −0.7 and −0.9 mean far more off-ball shooting, less on-ball creation and less paint presence than average. They are differences in tendency, not in skill. The set is grouped by the tendency each style leans on most. Pick a card to open it.</p></div>
+    <p class="dek">A style is how a player plays, not how good he is; most players are a blend of two or three of them. The numbers on each card are how much more or less the style leans on each tendency than the average NBA player, in standard deviations: Movement Shooter’s +1.6, −0.7 and −0.9 mean far more off-ball shooting, less on-ball creation and less paint presence than average. They are differences in tendency, not in skill. The set is grouped by the tendency each style leans on most. Pick a card to open it.</p></div>
   <div id="group-grid"></div>
   <div id="group-detail"></div>
   <div id="group-ratings"></div>
@@ -1387,6 +1389,7 @@ header.top .brand:hover strong{color:var(--acc)}
 
 <section class="tab" id="players" hidden>
   <div class="pcrumb"><span>Players</span><div class="search" id="player-search"></div></div>
+  <p class="pintro"><b>Total impact</b> is a player’s own rating: the points per 100 possessions he adds over an average player in his place, with his teammates and opponents accounted for. Zero is average; +2 means his team scores about two more points per 100 possessions than it would with an average player, or allows two fewer.</p>
   <div id="pview"></div>
 </section>
 
@@ -2047,7 +2050,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
   var COPY = {
     q1: "Do player archetypes affect each other’s performance?",
     q2: "Do archetypes have diminishing returns?",
-    a1: "After accounting for how good each player is and the quality of the opponent, the results make basketball sense: in the modern NBA, lots of shooting helps, but somebody’s still got to rebound and somebody’s got to run the offense. On defense the signal is too weak for a conclusion, probably because over 60% of the best defenses in my data are helmed by one elite defender. His teammates fall in place.",
+    a1: "After accounting for how good each player is and the quality of the opponent, the results make basketball sense: in the modern NBA, lots of shooting helps, but somebody’s still got to rebound and somebody’s got to run the offense. On defense the signal is too weak for a conclusion, probably because over 60% of the best defenses in my data are helmed by one elite defender; his teammates fall in place.",
     a2: "A player who does the same job as his teammates doesn’t just add his skill, he costs the niches he doesn’t fill. Two ball-dominant creators contribute about half a point (per 100) less than their summed talent predicts, and three of them 1.6 points less. Off-ball shooters compound the other way: each one makes every other shooter better, so two add about 0.2 and three about 0.7.",
     data: "Every regular season from 2013-14 through 2025-26. Style stats from the NBA’s box score, tracking, hustle and Synergy play-type data. Every possession from the NBA’s play-by-play feed, all 15,669 games, checked against the official box scores.",
     method: "Each player-season is described by 168 style stats: what he does and where, never how well. Clustering those gives 16 styles, and each player is a mix of them. Players are rated from the possessions they played, then the model tests whether certain style pairings score more or less than the players’ ratings add up to.",
@@ -2082,8 +2085,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var pg = function(t, what){ return '<tr data-tab="' + t[0] + '" tabindex="0" role="link"><td>' + esc(t[1]) + '</td><td>' + what + '</td></tr>'; };
     host.innerHTML =
       '<section class="cover"><div><h1>How Do NBA Teams Synergize?</h1>' +
-        '<p>I sorted every player-season since ' + M[0] + ' into ' + G + ' playing styles, rated every player from the possessions he was on the floor for, and tested whether the styles add up to more, or less, than the sum of their parts.</p>' +
-        '<p class="hdef"><b>Total impact</b> is a player’s own rating: the points per 100 possessions he adds over an average player, with teammates and opponents accounted for. A five’s <b>synergy score</b> is what its styles add or cost together on top of that.</p></div>' +
+        '<p>I sorted every player-season since ' + M[0] + ' into ' + G + ' playing styles, rated every player from the possessions he was on the floor for, and tested whether the styles add up to more, or less, than the sum of their parts.</p></div>' +
         '<div><div class="fan5" id="fan">' + ids.map(fiveCardHTML).join("") + '</div>' +
           '<p class="f5cap"><span class="f5t">' + esc(teamName(F5.team)) + ' · ' + F5.season + '</span><span class="f5m"><span class="num">' + F5.poss.toLocaleString() + '</span> possessions together · synergy score <span class="f5s">' + gradeChip(F5.fit) + sv(F5.fit, 2) + '</span></span></p>' +
           '<p class="fancap"><button type="button" class="deal" id="deal">Deal another</button><button type="button" class="deal" id="check5">Check this five →</button></p></div></section>' +
