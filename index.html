@@ -844,7 +844,7 @@ table.at{width:100%;border-collapse:collapse;font-size:13.5px}
 #group-ratings .rrow[aria-pressed="true"]{background:var(--acc-soft)}
 #group-ratings .rrow .nm{display:flex;align-items:center;gap:8px}
 
-/* ---------- Style fit ---------- */
+/* ---------- Style Fit ---------- */
 .fitlead{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px 48px;align-items:start}
 @media (max-width:1000px){.fitlead{grid-template-columns:minmax(0,1fr)}}
 .fitlead .heatwrap{overflow-x:auto;background:none;border:0;padding:0}
@@ -869,7 +869,7 @@ table.at{width:100%;border-collapse:collapse;font-size:13.5px}
 #pairs .termcard{background:none;border:0;padding:0;margin-top:18px;box-shadow:none}
 #pairs .finding,#pairs .termbox{background:none;border:0;padding:0}
 
-/* ---------- Lineup check: the hand ---------- */
+/* ---------- Lineup Check: the hand ---------- */
 .hhead{display:flex;justify-content:space-between;align-items:baseline}
 .hgrid{list-style:none;margin:0;padding:6px 0 0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:22px 18px}
 @media (max-width:900px){.hgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
@@ -967,7 +967,7 @@ table.at{width:100%;border-collapse:collapse;font-size:13.5px}
 #season .sn-ctl label{font:600 11px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 @media (min-width:641px){#season .sn-ctl input,#season .sn-ctl select{font-size:14px;padding:8px 10px}}
 /* Prizm mini cards: the name and type bars sit 4px inside the bezel ring (6px in) and their outer corners follow its curve (16 - 10 = 6px) */
-/* ---------- Lineup check: start from a real five (top), the trade board ---------- */
+/* ---------- Lineup Check: start from a real five (top), the trade board ---------- */
 #lineup .lu-loadwrap{border-top:0;margin:0 0 18px;padding:0}
 #lineup .lu-loadwrap>summary{display:flex;align-items:baseline;gap:10px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font:600 13px/1.3 var(--sans);letter-spacing:0;text-transform:none;color:var(--ink);background:var(--bg)}
 #lineup .lu-loadwrap>summary::before{content:"+";color:var(--acc);font-weight:700}
@@ -1029,7 +1029,7 @@ nav.pager b{font:700 clamp(20px,2.4vw,28px)/1.1 var(--sans);letter-spacing:-.02e
 nav.pager .d{font-size:13px;color:var(--muted);max-width:40ch}
 nav.pager button:hover b{color:var(--acc)}
 @media (max-width:560px){nav.pager .pg-prev .k{font-size:10px}nav.pager .d{display:none}}
-/* ---------- Lineup check, split: the five stacked at the left, closed sections at the right ---------- */
+/* ---------- Lineup Check, split: the five stacked at the left, closed sections at the right ---------- */
 .lu-split{display:grid;grid-template-columns:minmax(300px,380px) minmax(0,1fr);gap:28px 44px;align-items:start}
 @media (max-width:900px){.lu-split{grid-template-columns:minmax(0,1fr)}}
 .lu-left .hgrid{grid-template-columns:minmax(0,1fr)!important;gap:20px}
@@ -1084,7 +1084,7 @@ nav.pager button:hover b{color:var(--acc)}
 .pchip:hover span:first-child{color:var(--acc)}
 /* each set's cards share the full row width, so no row stops short of the right edge */
 @media (min-width:900px){.setgrid{display:flex;gap:18px}.setgrid>*{flex:1 1 0;min-width:0}}
-/* Lineup check: what the numbers mean */
+/* Lineup Check: what the numbers mean */
 #lineup .lu-note{max-width:none;margin:12px 0 0;padding:10px 14px;border-left:3px solid var(--acc);background:var(--acc-soft);color:var(--ink-2);font-size:14px;line-height:1.55;border-radius:0 6px 6px 0}
 #lineup .lu-note b{color:var(--ink)}
 /* header: the name bigger, the byline beside it (rule of 11/10) */
@@ -1279,7 +1279,7 @@ ul.tkeep li{font-size:13.5px;color:var(--ink-2);padding:6px 12px;border:1px dash
 ul.tkeep li b{color:var(--ink);font-weight:650}
 ul.tkeep .ok{color:var(--good);font-weight:700;margin-left:2px}
 
-/* ---- methodology in seven parts (draft 11/10) ---- */
+/* ---- methodology in seven parts  ---- */
 #trust .mnav{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:16px}
 #trust .mnav nav{display:flex;flex-wrap:wrap;gap:6px;flex:1 1 420px;min-width:0}
 #trust .mnav nav button{appearance:none;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:none;border-radius:999px;padding:5px 12px 5px 6px;font:500 13px var(--sans);color:var(--ink);cursor:pointer}
@@ -1312,7 +1312,7 @@ ul.tkeep .ok{color:var(--good);font-weight:700;margin-left:2px}
 @media (min-width:761px){#trust .meth section > h3{grid-row:1 / span 2}}
 #trust .mvis .mlead .num{font-family:inherit;font-weight:700}
 
-/* ---- methodology spec sheets + stacking chart (draft 11/10) ---- */
+/* ---- methodology spec sheets + stacking chart  ---- */
 #trust dl.spec{margin:2px 0 10px;display:grid;grid-template-columns:minmax(120px,max-content) minmax(0,1fr);border-top:1px solid var(--line);max-width:78ch}
 #trust dl.spec>div{display:contents}
 #trust dl.spec dt,#trust dl.spec dd{margin:0;padding:8px 12px 8px 0;border-bottom:1px solid var(--line);font-size:14.5px;line-height:1.5}
@@ -1338,19 +1338,37 @@ ul.tkeep .ok{color:var(--good);font-weight:700;margin-left:2px}
 #trust ul.scope{margin:0;padding-left:18px;font-size:15.5px;line-height:1.6;color:var(--ink-2);max-width:72ch}
 #trust ul.scope li{margin:0 0 4px}
 
+/* header lockup: three-bar mark in the tendency colors, bigger name, byline underneath */
+header.top{padding:14px 0 12px}
+header.top .brand{display:flex;align-items:center;gap:12px;font:inherit;letter-spacing:0}
+header.top .brand .mark{flex:none;display:flex;align-items:flex-end;gap:3px;width:40px;height:40px;padding:8px 8px 9px;border-radius:9px;background:var(--ink);box-sizing:border-box}
+header.top .brand .mark b{flex:1;border-radius:2px;background:var(--sp)}
+header.top .brand .mark b:nth-child(1){height:55%}
+header.top .brand .mark b:nth-child(2){height:100%;background:var(--cr)}
+header.top .brand .mark b:nth-child(3){height:75%;background:var(--pt)}
+header.top .brand .bt{display:flex!important;flex-direction:column;gap:4px;min-width:0;margin:0!important}
+header.top .brand strong{font:800 27px/1 var(--sans);letter-spacing:-.03em;color:var(--ink)}
+header.top .brand .bt>span{display:block!important;margin:0!important;font:600 11px/1.2 var(--sans)!important;letter-spacing:.14em!important;text-transform:uppercase;color:var(--muted)}
+header.top .brand .bt>span em{font-style:normal;color:var(--acc)}
+header.top .brand:hover strong{color:var(--acc)}
+@media (max-width:760px){header.top .brand strong{font-size:23px}header.top .brand .mark{width:34px;height:34px;padding:7px 7px 8px}header.top .brand .bt>span{font-size:10px!important}}
+
+/* Home: the two terms defined under the intro */
+#home .cover p.hdef{font-size:15px;line-height:1.55;color:var(--ink-2);border-left:3px solid var(--acc);padding:2px 0 2px 12px;margin-top:12px;max-width:60ch}
+
 </style>
 </head>
 <body>
 <div class="wrap">
 <header class="top">
-  <button class="brand" type="button" id="brand">Archetype Lineup Lab<span>Capstone project · Judah Del Rio</span></button>
+  <button class="brand" type="button" id="brand"><i class="mark" aria-hidden="true"><b></b><b></b><b></b></i><span class="bt"><strong>Archetype Lineup Lab</strong><span>Capstone project · <em>Judah Del Rio</em></span></span></button>
   <nav class="tabs" role="tablist">
     <button role="tab" id="tab-home" aria-selected="true" data-tab="home">Home</button>
     <button role="tab" id="tab-archetypes" aria-selected="false" data-tab="archetypes">Styles</button>
-    <button role="tab" id="tab-pairs" aria-selected="false" data-tab="pairs">Style fit</button>
+    <button role="tab" id="tab-pairs" aria-selected="false" data-tab="pairs">Style Fit</button>
     <button role="tab" id="tab-players" aria-selected="false" data-tab="players">Players</button>
     <button role="tab" id="tab-season" aria-selected="false" data-tab="season" hidden>This season</button>
-    <button role="tab" id="tab-lineup" aria-selected="false" data-tab="lineup">Lineup check</button>
+    <button role="tab" id="tab-lineup" aria-selected="false" data-tab="lineup">Lineup Check</button>
     <button role="tab" id="tab-trust" aria-selected="false" data-tab="trust">Methodology</button>
   </nav>
 </header>
@@ -1360,8 +1378,8 @@ ul.tkeep .ok{color:var(--good);font-weight:700;margin-left:2px}
 <section class="tab" id="home" hidden><div id="hview"></div></section>
 
 <section class="tab" id="archetypes" hidden>
-  <div class="pghead"><div class="eyebrow" id="arch-eyebrow"></div><h1 id="arch-title">The 16 styles</h1>
-    <p class="dek">A style is how a player plays, not how good he is; most players mix two or three. The numbers on each card are how much more or less the style leans on each tendency than the average NBA player, in standard deviations: Movement Shooter’s +1.6, −0.7 and −0.9 mean far more off-ball shooting, less on-ball creation and less paint presence than average. They are differences in tendency, not in skill. The set is grouped by the tendency each style leans on most. Pick a card to open it.</p></div>
+  <div class="pghead"><div class="eyebrow" id="arch-eyebrow"></div><h1 id="arch-title">The 16 Styles</h1>
+    <p class="dek">A style is how a player plays, not how good he is; most players are a blend of two or three styles. The numbers on each card are how much more or less the style leans on each tendency than the average NBA player, in standard deviations: Movement Shooter’s +1.6, −0.7 and −0.9 mean far more off-ball shooting, less on-ball creation and less paint presence than average. They are differences in tendency, not in skill. The set is grouped by the tendency each style leans on most. Pick a card to open it.</p></div>
   <div id="group-grid"></div>
   <div id="group-detail"></div>
   <div id="group-ratings"></div>
@@ -1438,7 +1456,7 @@ ul.tkeep .ok{color:var(--good);font-weight:700;margin-left:2px}
     RATING_SHORT = w + "-season rating: this season and the " + (before === 1 ? "one" : before === 2 ? "two" : String(before)) + " before it, older games weighted down (a game’s weight halves every " + hl + " days).";
     RATING_TEXT = "His effect on points per 100 possessions, where 0 is a league-average possession. Fitted on every possession of the season and the " +
       (before === 2 ? "two" : String(before)) + " before it (" + w + " seasons), with older games weighted down: a game’s weight halves every " + hl + " days. " +
-      "All ten players on the floor are fitted at once, so his teammates and opponents are held fixed; the fit of his lineups’ styles is taken out first (Style fit tab); " +
+      "All ten players on the floor are fitted at once, so his teammates and opponents are held fixed; the fit of his lineups’ styles is taken out first (Style Fit tab); " +
       "a short run of minutes is pulled toward what his box score predicts, not toward average (ridge penalty " + Number(F.rating_prior_penalty).toLocaleString() + "; Methodology tab); each season is centered on the league average. " +
       "The rating holds teammates and opponents fixed and carries what comes with his role.";
   }
@@ -1466,10 +1484,14 @@ ul.tkeep .ok{color:var(--good);font-weight:700;margin-left:2px}
   document.querySelectorAll("nav.tabs button").forEach(function(b){ b.addEventListener("click", function(){ showTab(b.dataset.tab); }); });
   // the address bar carries the tab, the player-season (#players/<row>) or the five (#lineup/<rows>), so a link opens the same view
   function hashFor(t){ return t === "players" && typeof state.player === "number" ? "players/" + state.player : t === "lineup" && typeof LU !== "undefined" && LU && LU.length ? "lineup/" + LU.join(",") : t; }
+  var TAB_TITLE = { home: "", archetypes: "Styles", pairs: "Style Fit", players: "Players", season: "2026-27", lineup: "Lineup Check", trust: "Methodology" };
   window.addEventListener("hashchange", function(){ if (!core) return; var H = (location.hash || "").slice(1).split("/"), h = H[0], a = H[1] || "";
     if (h === "players" && /^\d+$/.test(a) && players[+a] && +a !== state.player) renderPlayer(+a);
     if (tabs.indexOf(h) >= 0 && $("#" + h).hidden) showTab(h); });
-  function setHash(h){ try { if (location.hash !== "#" + h) history.replaceState(null, "", "#" + h); } catch(e){} }
+  window.addEventListener("popstate", function(){ window.dispatchEvent(new HashChangeEvent("hashchange")); });
+  function setHash(h){ var t = TAB_TITLE[h.split("/")[0]]; document.title = (t ? t + " · " : "") + "Archetype Lineup Lab";
+    try { if (location.hash === "#" + h) return; var cur = (location.hash || "").slice(1);
+      if (h.split("/")[0] === "lineup" && cur.split("/")[0] === "lineup") history.replaceState(null, "", "#" + h); else history.pushState(null, "", "#" + h); } catch(e){} }
 
   // ---------- search ----------
   function searchRows(q, includeLow){
@@ -2058,8 +2080,9 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var S = core.meta.sample, M = core.meta.seasons, F5 = HOME5, ids = roleOrder(F5.ids);
     var pg = function(t, what){ return '<tr data-tab="' + t[0] + '" tabindex="0" role="link"><td>' + esc(t[1]) + '</td><td>' + what + '</td></tr>'; };
     host.innerHTML =
-      '<section class="cover"><div><h1>How do NBA teams synergize?</h1>' +
-        '<p>I sorted every player-season since ' + M[0] + ' into ' + G + ' playing styles, rated every player from the possessions he was on the floor for, and tested whether the styles add up to more, or less, than the sum of their parts.</p></div>' +
+      '<section class="cover"><div><h1>How Do NBA Teams Synergize?</h1>' +
+        '<p>I sorted every player-season since ' + M[0] + ' into ' + G + ' playing styles, rated every player from the possessions he was on the floor for, and tested whether the styles add up to more, or less, than the sum of their parts.</p>' +
+        '<p class="hdef"><b>Total impact</b> is a player’s own rating: the points per 100 possessions he adds over an average player, with teammates and opponents accounted for. A five’s <b>synergy score</b> is what its styles add or cost together on top of that.</p></div>' +
         '<div><div class="fan5" id="fan">' + ids.map(fiveCardHTML).join("") + '</div>' +
           '<p class="f5cap"><span class="f5t">' + esc(teamName(F5.team)) + ' · ' + F5.season + '</span><span class="f5m"><span class="num">' + F5.poss.toLocaleString() + '</span> possessions together · synergy score <span class="f5s">' + gradeChip(F5.fit) + sv(F5.fit, 2) + '</span></span></p>' +
           '<p class="fancap"><button type="button" class="deal" id="deal">Deal another</button><button type="button" class="deal" id="check5">Check this five →</button></p></div></section>' +
@@ -2071,10 +2094,10 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
       '<section class="glance"><h2 class="h">At a glance</h2><div class="twoc"><p><b>Data.</b> ' + COPY.data + '</p><p><b>Method.</b> ' + COPY.method + '</p></div></section>' +
       '<section><h2 class="h">Pages</h2><table class="idx"><tbody>' +
         pg(["archetypes", "Styles"], 'The ' + G + ' styles and who defines each one.') +
-        pg(["pairs", "Style fit"], 'What each pair of styles adds or costs.') +
+        pg(["pairs", "Style Fit"], 'What each pair of styles adds or costs.') +
         pg(["players", "Players"], 'Any player-season: style, impact, career.') +
         (LIVE ? pg(["season", LIVE.meta.season], 'This season’s players, updated every day.') : '') +
-        pg(["lineup", "Lineup check"], 'Grade any five against every real five.') +
+        pg(["lineup", "Lineup Check"], 'Grade any five against every real five.') +
         pg(["trust", "Methodology"], 'Every step from raw data to the tests.') +
       '</tbody></table></section>';
     host.querySelectorAll(".mcard").forEach(function(b){ b.addEventListener("click", function(){ renderPlayer(+b.dataset.row); showTab("players"); }); });
@@ -2237,7 +2260,6 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
       '<div class="art">' + meterSVG(g.traits, true) + '</div>' +
       '<div class="type"><span class="tm">Leans ' + SK_NAME[c.sk].toLowerCase() + '</span><span class="set">' + core.meta.seasons[0].slice(0, 4) + '–' + core.meta.seasons[core.meta.seasons.length - 1].slice(5) + '</span></div>' +
       '<div class="rules"><p>' + esc(g.note) + '</p><p class="flav">' + g.player_seasons_main_group.toLocaleString() + ' player-seasons have it as their main style.<span class="thk">Think ' + esc(g.flagship_players.slice(0, 3).map(function(e){ return e.player; }).join(", ")) + '.</span></p></div>' +
-      '<div class="foot"><span>Its players, average total impact ' + sign(net) + '</span><span class="pt" title="Average offense and defense of the players who mainly play it, points per 100"><span><small>OFF</small><b class="num ' + cls(off) + '">' + sign(off) + '</b></span><i></i><span><small>DEF</small><b class="num ' + cls(def) + '">' + sign(def) + '</b></span></span></div>' +
     '</article>';
   }
   function pctBars(arr, isLo){
@@ -2257,14 +2279,13 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var g = groups[state.group], RG = g.ratings_of_main_group_players, o = state.ratingOut, d = RG[o];
     ratingScale(o);
     var hi = g.highest_mean_z_features.slice(0, 5).sort(function(a, b){ return b.percentile - a.percentile; }), lo = g.lowest_mean_z_features.slice(0, 5).sort(function(a, b){ return a.percentile - b.percentile; });
-    var flag = g.flagship_players.map(function(e){   // one line per player: tenure, how much of his game is this style, his line, his impact
+    var flag = g.flagship_players.map(function(e){   // one line per player: tenure, how much of his game is this style, his line
       var span = e.seasons === 1 ? e.first_season : e.first_season.slice(0, 4) + '–' + e.last_season.slice(5), q = Math.round(100 * e.share);
       var tip = e.teams.join(", ") + ' · ' + e.seasons + (e.seasons === 1 ? ' season' : ' seasons') + ' in this style';
       return '<tr><td class="fln"><button type="button" class="pl" data-row="' + e.row_id + '" title="' + esc(tip) + '">' + esc(e.player) + '</button></td>' +
         '<td class="num fly">' + span + '</td>' +
         '<td class="num fls"><span class="fbar"><i style="width:' + q + '%;background:' + SKVAR[leanOf(g)] + '"></i></span><span>' + q + '%</span></td>' +
-        '<td class="num hide-sm">' + e.ppg.toFixed(1) + '</td><td class="num hide-sm">' + e.rpg.toFixed(1) + '</td><td class="num hide-sm">' + e.apg.toFixed(1) + '</td>' +
-        '<td class="num">' + sv(e.net) + '</td></tr>';
+        '<td class="num hide-sm">' + e.ppg.toFixed(1) + '</td><td class="num hide-sm">' + e.rpg.toFixed(1) + '</td><td class="num hide-sm">' + e.apg.toFixed(1) + '</td></tr>';
     }).join("");
     var pure = g.purest_seasons.map(function(e){ return '<tr><td><button type="button" class="pl" data-row="' + e.row_id + '">' + esc(e.player) + '</button><span class="tm">' + esc(e.team) + '</span></td><td class="num">' + e.season + '</td><td class="num">' + pct(e.share) + '</td></tr>'; }).join("");
     $("#group-detail").innerHTML =
@@ -2273,8 +2294,8 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
       '<div class="play"><div class="cardcol">' + styleCardBig(g) + '</div><div>' +
         '<section class="c duo"><div><h2 class="h">Does more of</h2>' + pctBars(hi, false) + '</div><div><h2 class="h">Does less of</h2>' + pctBars(lo, true) + '</div></section>' +
         '<p class="cap" style="margin-top:-8px">Where the typical player of this style ranks among all NBA player-seasons on each stat (minutes-weighted percentile).</p>' +
-        '<section class="c"><h2 class="h">Flagship players</h2><div class="tablewrap"><table class="at flt"><thead><tr><th>Player</th><th class="num">Years</th><th class="num">In style</th><th class="num hide-sm">Pts</th><th class="num hide-sm">Reb</th><th class="num hide-sm">Ast</th><th class="num">Impact</th></tr></thead><tbody>' + flag + '</tbody></table></div>' +
-          '<p class="cap">The players with the most ' + (core.meta.purest_minutes || 1000).toLocaleString() + '+ minute seasons mainly in this style. Stats are per game; impact is the player’s own, not the style’s.</p></section>' +
+        '<section class="c"><h2 class="h">Flagship players</h2><div class="tablewrap"><table class="at flt"><thead><tr><th>Player</th><th class="num">Years</th><th class="num">In style</th><th class="num hide-sm">Pts</th><th class="num hide-sm">Reb</th><th class="num hide-sm">Ast</th></tr></thead><tbody>' + flag + '</tbody></table></div>' +
+          '<p class="cap">The players with the most ' + (core.meta.purest_minutes || 1000).toLocaleString() + '+ minute seasons mainly in this style. Stats are per game.</p></section>' +
         '<section class="c"><details class="more"><summary>Purest seasons</summary><div><p class="cap" style="margin:0 0 6px">The ' + (core.meta.purest_minutes || 1000).toLocaleString() + '+ minute player-seasons closest to this style alone.</p><div class="tablewrap"><table class="at"><thead><tr><th>Player</th><th class="num">Season</th><th class="num">Share</th></tr></thead><tbody>' + pure + '</tbody></table></div></div></details></section>' +
       '</div></div>';
     var step = function(dd){ var at = sorted.indexOf(state.group); state.group = sorted[(at + dd + sorted.length) % sorted.length]; store("lab-group", state.group); renderGroups(); };
@@ -2288,6 +2309,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     return o === "net" ? n : o === "off" ? f : +(n - f).toFixed(1);
   }
   function renderGroupRatings(){
+    $("#group-ratings").innerHTML = ""; return;   // ratings stay off the Styles page (rule of 11/10)
     var o = state.ratingOut; ratingScale(o);
     var sorted = groups.map(function(g, i){ return i; }).sort(function(a, b){ return groups[b].ratings_of_main_group_players[o].mean - groups[a].ratings_of_main_group_players[o].mean; });
     $("#group-ratings").innerHTML = '<h2 class="h">Who plays each style: their ratings</h2><div class="rhead"><p class="cap" style="margin:0">Each strip is the spread of ratings among the players whose main style it is, weighted by possessions, sorted by the average. It ranks the players, not the styles: a style whose players happen to be stars sits high even if the style adds nothing.</p>' +
@@ -2457,7 +2479,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
     var chip = function(r){ return '<button type="button" class="pchip" data-k="' + r._k + '"><span>' + esc(pairName(r)) + '</span>' + sv(pv(r, o), 2) + '</button>'; };
     var tr = byPct.slice(0, 5).concat(byPct.slice(-5)).map(function(r){ var q = ppct(r, o); return '<tr data-k="' + r._k + '"><td class="num r">' + RANK[r._k] + '</td><td><button type="button" class="pl" data-k="' + r._k + '">' + esc(pairName(r)) + '</button></td><td class="num">' + sv(pv(r, o), 2) + '</td><td class="hide-sm why">' + esc(pairWhyWords(r, o)) + '</td></tr>'; }).join("");
     $("#pairs-panel").innerHTML =
-      '<div class="pghead"><div class="eyebrow">' + rows.length + ' style pairings · from six tendency terms · every possession since ' + core.meta.seasons[0] + '</div><h1>Style fit</h1>' +
+      '<div class="pghead"><div class="eyebrow">' + rows.length + ' style pairings · from six tendency terms · every possession since ' + core.meta.seasons[0] + '</div><h1>Style Fit</h1>' +
         '</div>' +
       '<section class="c fittop"><h2 class="h">The five best and five worst fits</h2><div class="tablewrap"><table class="at"><thead><tr><th class="num">Rank</th><th>Pairing</th><th class="num">Per 100</th><th class="hide-sm">Why</th></tr></thead><tbody>' + tr + '</tbody></table></div>' +
         '</section>' +
@@ -2467,7 +2489,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
         '<div class="readcol"><div id="pair-read" aria-live="polite"></div>' +
         '</div></div>' +
       '<section class="c"><p class="lede2">Every style mixes three tendencies: the ' + skChip(0) + ' spots up off the catch, the ' + skChip(1) + ' runs the offense, the ' + skChip(2) + ' lives in the paint. On offense, each pairing:</p>' + termsHTML(true) + '</section>' +
-      '<section class="c"><h2 class="h">In a real five</h2><p class="lede2">Five players make ten pairings, and they add up. <button type="button" class="linkbtn" data-tab="lineup">Lineup check</button> does the sum for any five you pick and ranks it against every real five since ' + core.meta.seasons[0] + '.</p>' + testsBlock() + '</section>';
+      '<section class="c"><h2 class="h">In a real five</h2><p class="lede2">Five players make ten pairings, and they add up. <button type="button" class="linkbtn" data-tab="lineup">Lineup Check</button> does the sum for any five you pick and ranks it against every real five since ' + core.meta.seasons[0] + '.</p>' + testsBlock() + '</section>';
     $("#pairs-panel").querySelectorAll("[data-tab]").forEach(function(b){ b.addEventListener("click", function(){ showTab(b.dataset.tab); }); });
     var svg = $("#pairs-panel .heat"), read = $("#pair-read");
     function show(k){ read.innerHTML = pairCardHTML(rows[k]); svg.querySelectorAll("rect.sel").forEach(function(e){ e.classList.remove("sel"); }); var el = svg.querySelector('rect[data-k="' + k + '"]'); if (el) el.classList.add("sel"); }
@@ -2922,7 +2944,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
   function setupLineup(){
     lineupIndex();
     var cc = termOf("on_ball_creation", "on_ball_creation"), ii = termOf("interior", "interior");
-    $("#lineup-panel").innerHTML = '<div class="pghead"><div class="eyebrow">' + LROWS.length.toLocaleString() + ' real fives to measure against · ' + core.meta.seasons[0] + ' to ' + core.meta.seasons[core.meta.seasons.length - 1] + '</div><h1>Lineup check</h1><p class="dek">Take any five players since 2013. You get their individual impact ratings, style fits, a letter grade, and the swaps that’ll fit your team better.</p>' +
+    $("#lineup-panel").innerHTML = '<div class="pghead"><div class="eyebrow">' + LROWS.length.toLocaleString() + ' real fives to measure against · ' + core.meta.seasons[0] + ' to ' + core.meta.seasons[core.meta.seasons.length - 1] + '</div><h1>Lineup Check</h1><p class="dek">Take any five players since 2013. You get their individual impact ratings, style fits, a letter grade, and the swaps that’ll fit your team better.</p>' +
       '</div>' +
       '<div id="lineup-body"></div><p class="lu-sr" id="lu-live" aria-live="polite"></p>';
     var panel = $("#lineup-panel");
@@ -3037,7 +3059,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
       dd("early-seasons", "Early seasons", p('2013-14 ratings rest on one season and 2014-15 on two; both lean harder on the prior.')));
 
     var s7 = sec(7, titles[6], 'What the method can’t tell you.',
-      '<ul class="scope"><li>The terms are associations: coaches choose who shares the floor.</li><li>Players keep the tendencies they showed that season; nobody changes his game for new teammates.</li><li>The ' + core.pairs.rows.length + ' style pairs on Style fit are projections from the shared terms, two full-time players each; none was fitted alone.</li><li>On points the effect is offensive; on defense, tendency effects show up in shot quality, free throws, offensive rebounds and turnovers.</li><li>Ratings carry what comes with a role; short runs lean on the prior.</li><li>Regular season only.</li></ul>', '');
+      '<ul class="scope"><li>The terms are associations: coaches choose who shares the floor.</li><li>Players keep the tendencies they showed that season; nobody changes his game for new teammates.</li><li>The ' + core.pairs.rows.length + ' style pairs on Style Fit are projections from the shared terms, two full-time players each; none was fitted alone.</li><li>On points the effect is offensive; on defense, tendency effects show up in shot quality, free throws, offensive rebounds and turnovers.</li><li>Ratings carry what comes with a role; short runs lean on the prior.</li><li>Regular season only.</li></ul>', '');
 
     $("#trust-main").innerHTML = '<div class="pghead"><div class="eyebrow">Methods only</div><h1>Methodology</h1>' +
         '<div class="mnav"><nav aria-label="Sections">' + titles.map(function(t, i){ return '<button type="button" data-m="' + (i + 1) + '"><span class="n">' + (i + 1) + '</span>' + t + '</button>'; }).join('') + '</nav><button type="button" class="mexp" aria-pressed="false">Expand all</button></div></div>' +
@@ -3075,7 +3097,7 @@ function PCT(v){ return Math.round(100 * v) + "%"; }
       var tb = $("#tab-season"); tb.textContent = L.meta.season; tb.hidden = false;
       renderSeason();
     }
-    $("#arch-title").textContent = "The " + G + " styles";
+    $("#arch-title").textContent = "The " + G + " Styles";
     $("#arch-eyebrow").textContent = G + " styles · minutes-weighted k-means on " + c.meta.style_columns + " style stats · " + c.meta.sample.player_seasons.toLocaleString() + " player-seasons";
     $("#boot").hidden = true;
     makeSearch($("#player-search"), { id: "player-q", placeholder: "Find a player, e.g. Haliburton", includeLow: function(){ return true; }, onPick: renderPlayer });
